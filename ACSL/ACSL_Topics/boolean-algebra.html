@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boolean Algebra - ACSL Topics</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Boolean Algebra</h1>
+        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    </header>
+
+    <main class="topic-content">
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>Boolean algebra is the branch of algebra where variables and constants have exactly two values: <em>true</em> and <em>false</em>, usually denoted as 1 and 0 respectively.</p>
+            
+            <div class="key-points">
+                <h3>Why is it Important?</h3>
+                <ul>
+                    <li>Used in programming for conditionals and loops</li>
+                    <li>Forms the basis for digital circuits in computer hardware</li>
+                    <li>Powers search engine queries and filters</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Operators and Precedence</h2>
+            <div class="reference-box">
+                <p>The core operators (AND, OR, NOT, XOR) and their order of precedence in Boolean Algebra are identical to those used in Bit-String Flicking.</p>
+                <a href="bit-string.html#operators" class="reference-link">
+                    View Operators and Precedence in Bit-String Flicking →
+                </a>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>XNOR Operation</h2>
+            <div class="operator-explanation">
+                <p>The XNOR of two values is true whenever the values are the same. It is the NOT of the XOR function.</p>
+                <div class="operator-notation">
+                    <p>Uses the ⊙ operator: <code>x ⊙ y = <span class="overline">x ⊕ y</span></code></p>
+                    <p>Can be built from basic operators: <code>x ⊙ y = xy + <span class="overline">x</span><span class="overline">y</span></code></p>
+                </div>
+            </div>
+
+            <div class="operator-card">
+                <h4>XNOR (⊙)</h4>
+                <table class="truth-table">
+                    <thead>
+                        <tr>
+                            <th>x</th>
+                            <th>y</th>
+                            <th>x ⊙ y</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0</td><td>0</td><td>1</td></tr>
+                        <tr><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>1</td><td>0</td><td>0</td></tr>
+                        <tr><td>1</td><td>1</td><td>1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Boolean Laws and Properties</h2>
+            <div class="laws-grid">
+                <div class="law-card">
+                    <h4>Commutative Law</h4>
+                    <p>Similar to the commutative property in regular algebra - the order of operands does not matter for a single operation.</p>
+                    <div class="law-equations">
+                        <p>x + y = y + x</p>
+                        <p>x · y = y · x</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Associative Law</h4>
+                    <p>Regrouping of the terms in an expression doesn't change the value.</p>
+                    <div class="law-equations">
+                        <p>(x + y) + z = x + (y + z)</p>
+                        <p>x · (y · z) = (x · y) · z</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Idempotent Law</h4>
+                    <p>A term OR itself or AND itself is equal to that term.</p>
+                    <div class="law-equations">
+                        <p>x + x = x</p>
+                        <p>x · x = x</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Annihilator Law</h4>
+                    <p>A term that is OR'ed with 1 is 1; a term AND'ed with 0 is 0.</p>
+                    <div class="law-equations">
+                        <p>x + 1 = 1</p>
+                        <p>x · 0 = 0</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Identity Law</h4>
+                    <p>A term OR'ed with 0 or AND'ed with 1 will equal that term.</p>
+                    <div class="law-equations">
+                        <p>x + 0 = x</p>
+                        <p>x · 1 = x</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Complement Law</h4>
+                    <p>A term OR'ed with its opposite equals 1; AND'ed with its opposite equals 0.</p>
+                    <div class="law-equations">
+                        <p>x + <span class="overline">x</span> = 1</p>
+                        <p>x · <span class="overline">x</span> = 0</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Absorptive Law</h4>
+                    <p>Expressions can be simplified by absorbing like terms.</p>
+                    <div class="law-equations">
+                        <p>x + xy = x</p>
+                        <p>x + <span class="overline">x</span>y = x + y</p>
+                        <p>x(x + y) = x</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Distributive Law</h4>
+                    <p>Similar to the distributive property in regular algebra - distributing an operation over a set of operands yields the same result.</p>
+                    <div class="law-equations">
+                        <p>x · (y + z) = xy + xz</p>
+                        <p>(x + y) · (p + q) = xp + xq + yp + yq</p>
+                        <p>(x + y)(x + z) = x + yz</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>DeMorgan's Law</h4>
+                    <p>An OR (AND) expression that is negated equals the AND (OR), with each term negated.</p>
+                    <div class="law-equations">
+                        <p><span class="overline">x + y</span> = <span class="overline">x</span> · <span class="overline">y</span></p>
+                        <p><span class="overline">x · y</span> = <span class="overline">x</span> + <span class="overline">y</span></p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>Double Negation</h4>
+                    <p>A term that is inverted twice is equal to the original term.</p>
+                    <div class="law-equations">
+                        <p><span class="double-overline">x</span> = x</p>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h4>XOR and XNOR Relationship</h4>
+                    <div class="law-equations">
+                        <p>x ⊙ y = <span class="overline">x ⊕ y</span> = x ⊕ <span class="overline">y</span> = <span class="overline">x</span> ⊕ y</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Practice Problems</h2>
+            
+            <div class="practice-problem">
+                <h3>Problem 1 (Junior)</h3>
+                <p>Simplify the following Boolean expression:</p>
+                <div class="problem-expression">
+                    <p class="math-expression">A(A<span class="overline">B</span> + B) + <span class="overline">B</span>(A + B)</p>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem1-answer" placeholder="Enter simplified expression">
+                        <button onclick="checkBooleanAnswer(1)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem1-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem1-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Distribute A in first term:
+                                <p class="step-result">AA<span class="overline">B</span> + AB + <span class="overline">B</span>(A + B)</p>
+                            </li>
+                            <li>Simplify AA<span class="overline">B</span> using idempotent law (A·A = A):
+                                <p class="step-result">A<span class="overline">B</span> + AB + <span class="overline">B</span>(A + B)</p>
+                            </li>
+                            <li>Distribute <span class="overline">B</span> in last term:
+                                <p class="step-result">A<span class="overline">B</span> + AB + <span class="overline">B</span>A + <span class="overline">B</span>B</p>
+                            </li>
+                            <li><span class="overline">B</span>B = 0 by complement law:
+                                <p class="step-result">A<span class="overline">B</span> + AB + <span class="overline">B</span>A</p>
+                            </li>
+                            <li>A<span class="overline">B</span> = <span class="overline">B</span>A by commutative law:
+                                <p class="step-result">A<span class="overline">B</span> + AB + A<span class="overline">B</span></p>
+                            </li>
+                            <li>A<span class="overline">B</span> + A<span class="overline">B</span> = A<span class="overline">B</span> by idempotent law:
+                                <p class="step-result">A<span class="overline">B</span> + AB</p>
+                            </li>
+                            <li>Factor out A:
+                                <p class="step-result">A(<span class="overline">B</span> + B)</p>
+                            </li>
+                            <li><span class="overline">B</span> + B = 1 by complement law:
+                                <p class="step-result">A(1) = A</p>
+                            </li>
+                            <li>Final answer: A</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 2 (Junior)</h3>
+                <p>How many ordered pairs make the following Boolean expression TRUE?</p>
+                <div class="problem-expression">
+                    <p class="math-expression">AB + <span class="overline">B</span>(A + C) + A<span class="overline">C</span></p>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem2-answer" placeholder="Enter number of ordered pairs">
+                        <button onclick="checkBooleanAnswer(2)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem2-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem2-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Let's create a truth table for three variables (A, B, C):
+                                <table class="truth-table solution-table">
+                                    <thead>
+                                        <tr>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>AB</th>
+                                            <th><span class="overline">B</span>(A+C)</th>
+                                            <th>A<span class="overline">C</span></th>
+                                            <th>Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                                        <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                                        <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                                        <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                                        <tr><td>1</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                                        <tr><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                                        <tr><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td></tr>
+                                        <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>Count the rows where the Result is 1: 5 rows</li>
+                        </ol>
+                        <p class="final-answer">Therefore, 5 ordered pairs make this expression TRUE.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 3 (Intermediate)</h3>
+                <p>Simplify the following Boolean expression:</p>
+                <div class="problem-expression">
+                    <p class="math-expression">(A + <span class="overline">B</span>)(A + B) + A<span class="overline">B</span></p>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem3-answer" placeholder="Enter simplified expression">
+                        <button onclick="checkBooleanAnswer(3)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem3-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem3-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Distribute first term (A + <span class="overline">B</span>)(A + B):
+                                <p class="step-result">AA + AB + A<span class="overline">B</span> + B<span class="overline">B</span></p>
+                            </li>
+                            <li>Simplify AA using idempotent law:
+                                <p class="step-result">A + AB + A<span class="overline">B</span> + B<span class="overline">B</span></p>
+                            </li>
+                            <li>B<span class="overline">B</span> = 0 by complement law:
+                                <p class="step-result">A + AB + A<span class="overline">B</span></p>
+                            </li>
+                            <li>Factor out A:
+                                <p class="step-result">A(1 + B + <span class="overline">B</span>)</p>
+                            </li>
+                            <li>B + <span class="overline">B</span> = 1 by complement law:
+                                <p class="step-result">A(1 + 1)</p>
+                            </li>
+                            <li>1 + 1 = 1 by idempotent law:
+                                <p class="step-result">A(1) = A</p>
+                            </li>
+                            <li>Final answer: A</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 4 (Intermediate)</h3>
+                <p>How many ordered triples make the following Boolean expression FALSE?</p>
+                <div class="problem-expression">
+                    <p class="math-expression">A(<span class="overline">B</span> + C) + B(A + <span class="overline">C</span>) + <span class="overline">A</span><span class="overline">B</span><span class="overline">C</span></p>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem4-answer" placeholder="Enter number of ordered triples">
+                        <button onclick="checkBooleanAnswer(4)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem4-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem4-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Let's create a truth table for three variables (A, B, C):
+                                <table class="truth-table solution-table">
+                                    <thead>
+                                        <tr>
+                                            <th>A</th>
+                                            <th>B</th>
+                                            <th>C</th>
+                                            <th>A(<span class="overline">B</span>+C)</th>
+                                            <th>B(A+<span class="overline">C</span>)</th>
+                                            <th><span class="overline">A</span><span class="overline">B</span><span class="overline">C</span></th>
+                                            <th>Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                                        <tr><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                                        <tr><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                                        <tr><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                                        <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                                        <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                                        <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                                        <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+                                    </tbody>
+                                </table>
+                            </li>
+                            <li>Count the rows where the Result is 0: 2 rows</li>
+                            <li>The expression is FALSE when:
+                                <ul>
+                                    <li>(A,B,C) = (0,0,1)</li>
+                                    <li>(A,B,C) = (0,1,1)</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p class="final-answer">Therefore, 2 ordered triples make this expression FALSE.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 5 (Senior)</h3>
+                <p>Simplify the following Boolean expression:</p>
+                <div class="problem-expression">
+                    <p class="math-expression">(A + B)(<span class="overline">A</span><span class="overline">B</span>)(A + <span class="overline">B</span>)(<span class="overline">A</span>B)</p>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem5-answer" placeholder="Enter simplified expression">
+                        <button onclick="checkBooleanAnswer(5)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem5-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem5-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Let's examine each term:
+                                <ul>
+                                    <li>(A + B): Either A or B is 1</li>
+                                    <li>(<span class="overline">A</span><span class="overline">B</span>): Both A and B are 0</li>
+                                    <li>(A + <span class="overline">B</span>): A is 1 or B is 0</li>
+                                    <li>(<span class="overline">A</span>B): A is 0 and B is 1</li>
+                                </ul>
+                            </li>
+                            <li>Looking at (<span class="overline">A</span><span class="overline">B</span>) and (<span class="overline">A</span>B):
+                                <p class="step-result">These require B to be both 0 and 1, which is impossible</p>
+                            </li>
+                            <li>When we AND terms with contradictory requirements:
+                                <p class="step-result">The result must be 0</p>
+                            </li>
+                            <li>Final answer: 0</li>
+                        </ol>
+                        <p>This expression is a contradiction because it requires B to be both 0 and 1 simultaneously, which is impossible in Boolean algebra.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Based on <a href="https://categories.acsl.org/wiki/index.php?title=Boolean_Algebra" target="_blank">ACSL Boolean Algebra</a></p>
+    </footer>
+
+    <script src="lessons.js"></script>
+</body>
+</html> 

@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assembly Language Programming - ACSL Topics</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Assembly Language Programming</h1>
+        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    </header>
+
+    <main class="topic-content">
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>Assembly language is a low-level programming language that provides a direct mapping to machine code instructions. It serves as an intermediate step between high-level programming languages and machine code (sequences of 1's and 0's).</p>
+            <div class="process-flow">
+                <p>High-Level Language → Assembly Language → Machine Language (Binary)</p>
+            </div>
+
+            <h3>Importance in Modern Programming</h3>
+            <ul>
+                <li>Helps programmers better understand compiler operations and constraints</li>
+                <li>Essential for optimization when specific execution speed or space requirements must be met</li>
+                <li>Provides direct control over hardware resources</li>
+            </ul>
+
+            <h3>ACSL Assembly Language</h3>
+            <p>ACSL uses its own simplified assembly language to teach core concepts without the complexity of real-world assembly languages. While simplified, it maintains the fundamental concepts common to all assembly languages:</p>
+            
+            
+            
+        </section>
+
+        <section class="content-section">
+            <h2>ACSL Assembly Language Syntax</h2>
+            
+            <h3>Basic Program Structure</h3>
+            <p>Every ACSL assembly program follows these key rules:</p>
+            <ul>
+                <li>Programs run from top to bottom, except for branch instructions (BG, BE, BL, BU)</li>
+                <li>All operations use a special memory location called the "accumulator" (ACC)</li>
+                <li>ACC always starts at 0</li>
+            </ul>
+
+            <h3>Program Line Structure</h3>
+            <p>Each line has three parts:</p>
+            <div class="code-structure">
+                <code>LABEL  OPCODE  LOC</code>
+            </div>
+
+            <h3>Understanding Each Part</h3>
+            <ul>
+                <li><strong>LABEL:</strong> 
+                    <ul>
+                        <li>Optional name for a line (like a bookmark)</li>
+                        <li>Must start with a letter (A-Z or a-z)</li>
+                        <li>Case-sensitive</li>
+                    </ul>
+                </li>
+                <li><strong>OPCODE:</strong> 
+                    <ul>
+                        <li>The instruction to execute</li>
+                        <li>Must be uppercase</li>
+                        <li>Reserved words - cannot be used as labels (in uppercase form)</li>
+                    </ul>
+                </li>
+                <li><strong>LOC:</strong> 
+                    <ul>
+                        <li>Can be either a label reference or a direct number</li>
+                        <li>When using direct numbers (like "123"), it's called "immediate data"</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h3>Instruction Reference Chart</h3>
+            <div class="instruction-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>OPCODE</th>
+                            <th>DESCRIPTION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>LOAD*</td>
+                            <td>Puts value from LOC into ACC</td>
+                        </tr>
+                        <tr>
+                            <td>STORE</td>
+                            <td>Saves ACC value to LOC</td>
+                        </tr>
+                        <tr>
+                            <td>ADD*</td>
+                            <td>Adds LOC to ACC and stores result in ACC (result ≤ 999,999)</td>
+                        </tr>
+                        <tr>
+                            <td>SUB*</td>
+                            <td>Subtracts LOC from ACC and stores result in ACC (result ≤ 999,999)</td>
+                        </tr>
+                        <tr>
+                            <td>MULT*</td>
+                            <td>Multiplies ACC by LOC and stores result in ACC (result ≤ 999,999)</td>
+                        </tr>
+                        <tr>
+                            <td>DIV*</td>
+                            <td>Divides ACC by LOC and stores whole number result in ACC</td>
+                        </tr>
+                        <tr>
+                            <td>BG</td>
+                            <td>Jump to LOC if ACC > 0</td>
+                        </tr>
+                        <tr>
+                            <td>BE</td>
+                            <td>Jump to LOC if ACC = 0</td>
+                        </tr>
+                        <tr>
+                            <td>BL</td>
+                            <td>Jump to LOC if ACC < 0</td>
+                        </tr>
+                        <tr>
+                            <td>BU</td>
+                            <td>Jump to LOC unconditionally</td>
+                        </tr>
+                        <tr>
+                            <td>READ</td>
+                            <td>Input number into LOC</td>
+                        </tr>
+                        <tr>
+                            <td>PRINT</td>
+                            <td>Output value in LOC</td>
+                        </tr>
+                        <tr>
+                            <td>DC</td>
+                            <td>Define constant; assigns LOC to LABEL (requires LABEL)</td>
+                        </tr>
+                        <tr>
+                            <td>END</td>
+                            <td>Stop program</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="table-note">* Instructions marked with asterisk can use immediate data</p>
+            </div>
+        </section>
+        <section class="content-section">
+            <h2>Practice Problems</h2>
+            
+            <div class="practice-problem">
+                <h3>Problem 1</h3>
+                <p>What is printed when the following program is executed?</p>
+                
+                <div class="code-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>N</td>
+                                <td>DC</td>
+                                <td>47</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>LOAD</td>
+                                <td>N</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>DIV</td>
+                                <td>=7</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>P</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>MULT</td>
+                                <td>=8</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>ADD</td>
+                                <td>N</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>DIV</td>
+                                <td>=-30</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>ADD</td>
+                                <td>P</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>S</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>PRINT</td>
+                                <td>S</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>END</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="number" id="problem1-answer" placeholder="Enter your answer">
+                        <button onclick="checkAssemblyAnswer(1)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem1-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem1-explanation" class="explanation" style="display: none;">
+                        <h4>Explanation:</h4>
+                        <p>Let's solve this step by step:</p>
+                        <ol>
+                            <li>N is set to 47</li>
+                            <li>LOAD N puts the value of N (47) in ACC</li>
+                            <li>DIV =7 stores 6 in ACC (integer division of 47/7)</li>
+                            <li>STORE P saves 6 to the new variable P</li>
+                            <li>MULT =8 gives 48 in ACC (6*8)</li>
+                            <li>ADD N gives 95 in ACC (48+47)</li>
+                            <li>DIV =-30 gives -3 in ACC (95/-30)</li>
+                            <li>ADD P gives 3 in ACC (-3+6)</li>
+                            <li>STORE S saves 3 to S</li>
+                            <li>PRINT S outputs 3</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 2</h3>
+                <p>What is output after this program is executed?</p>
+                
+                <div class="code-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>DC</td>
+                                <td>36</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>LOAD</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>DIV</td>
+                                <td>=8</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>MULT</td>
+                                <td>=10</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>LOAD</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>SUB</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>D</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>DIV</td>
+                                <td>=9</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>MULT</td>
+                                <td>=7</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>ADD</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>E</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>SUB</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>DIV</td>
+                                <td>=6</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>G</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>PRINT</td>
+                                <td>G</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>END</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="number" id="problem2-answer" placeholder="Enter your answer">
+                        <button onclick="checkAssemblyAnswer(2)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem2-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem2-explanation" class="explanation" style="display: none;">
+                        <h4>Explanation:</h4>
+                        <p>Let's solve this step by step:</p>
+                        <ol>
+                            <li>A is set to 36</li>
+                            <li>LOAD A puts 36 in ACC</li>
+                            <li>DIV =8 gives 4 (36/8 = 4.5, but we take integer part)</li>
+                            <li>STORE B saves 4 to B</li>
+                            <li>MULT =10 gives 40</li>
+                            <li>STORE C saves 40 to C</li>
+                            <li>LOAD B puts 4 in ACC</li>
+                            <li>SUB A gives -32 (4-36)</li>
+                            <li>STORE D saves -32 to D</li>
+                            <li>DIV =9 gives -3</li>
+                            <li>MULT =7 gives -21</li>
+                            <li>ADD B gives -17 (-21+4)</li>
+                            <li>STORE E saves -17 to E</li>
+                            <li>SUB A gives -53 (-17-36)</li>
+                            <li>DIV =6 gives -8</li>
+                            <li>STORE G saves -8 to G</li>
+                            <li>PRINT G outputs -8</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 3</h3>
+                <p>What is the sum of the outputs of the following assembly language program after it is executed?</p>
+                
+                <div class="code-table">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>DC</td>
+                                <td>4213</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>DC</td>
+                                <td>16</td>
+                            </tr>
+                            <tr>
+                                <td>TOP</td>
+                                <td>LOAD</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>DIV</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>BE</td>
+                                <td>DOWN</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>LOAD</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>MULT</td>
+                                <td>B</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>E</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>LOAD</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>SUB</td>
+                                <td>E</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>F</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>PRINT</td>
+                                <td>F</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>LOAD</td>
+                                <td>C</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>STORE</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>BU</td>
+                                <td>TOP</td>
+                            </tr>
+                            <tr>
+                                <td>DOWN</td>
+                                <td>PRINT</td>
+                                <td>A</td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>END</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="number" id="problem3-answer" placeholder="Enter your answer">
+                        <button onclick="checkAssemblyAnswer(3)" class="submit-btn">Submit</button>
+                    </div>
+                    
+                    <div id="problem3-feedback" class="feedback-area"></div>
+                    
+                    <div id="problem3-explanation" class="explanation" style="display: none;">
+                        <h4>Explanation:</h4>
+                        <p>Let's solve this step by step:</p>
+                        <ol>
+                            <li>First iteration:
+                                <ul>
+                                    <li>A = 4213, B = 16</li>
+                                    <li>4213 ÷ 16 = 263 remainder 5</li>
+                                    <li>C = 263</li>
+                                    <li>E = 263 × 16 = 4208</li>
+                                    <li>F = 4213 - 4208 = 5</li>
+                                    <li>PRINT F outputs 5</li>
+                                    <li>A becomes 263</li>
+                                </ul>
+                            </li>
+                            <li>Second iteration:
+                                <ul>
+                                    <li>263 ÷ 16 = 16 remainder 7</li>
+                                    <li>C = 16</li>
+                                    <li>E = 16 × 16 = 256</li>
+                                    <li>F = 263 - 256 = 7</li>
+                                    <li>PRINT F outputs 7</li>
+                                    <li>A becomes 16</li>
+                                </ul>
+                            </li>
+                            <li>Third iteration:
+                                <ul>
+                                    <li>16 ÷ 16 = 1 remainder 0</li>
+                                    <li>C = 1</li>
+                                    <li>E = 1 × 16 = 16</li>
+                                    <li>F = 16 - 16 = 0</li>
+                                    <li>PRINT F outputs 0</li>
+                                    <li>A becomes 1</li>
+                                </ul>
+                            </li>
+                            <li>Fourth iteration:
+                                <ul>
+                                    <li>1 ÷ 16 = 0 remainder 1</li>
+                                    <li>C = 0</li>
+                                    <li>BE DOWN executes (because C = 0)</li>
+                                    <li>PRINT A outputs 1</li>
+                                </ul>
+                            </li>
+                            <li>Sum of all outputs: 5 + 7 + 0 + 1 = 13</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Based on information from ACSL Category Descriptions</p>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html> 

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Number Systems</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Computer Number Systems</h1>
+        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    </header>
+
+    <main class="content-container">
+        
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>All digital computers are electronic devices that ultimately can do one thing: detect whether an electrical signal is on or off. This basic information, called a <em>bit</em> (<strong>bi</strong>nary digi<strong>t</strong>), has two values:</p>
+            <ul>
+                <li>1 (or <em>true</em>) when the signal is on</li>
+                <li>0 (or <em>false</em>) when the signal is off</li>
+            </ul>
+        </section>
+
+        <section class="content-section">
+            <h2>Number Systems</h2>
+            <div class="number-systems-grid">
+                <div class="system-card">
+                    <h3>Binary (Base-2)</h3>
+                    <p>Uses digits: 0, 1</p>
+                    <p>Example: 10110₂</p>
+                    <p>Used for: Basic computer storage</p>
+                </div>
+                <div class="system-card">
+                    <h3>Octal (Base-8)</h3>
+                    <p>Uses digits: 0-7</p>
+                    <p>Example: 75021₈</p>
+                    <p>Used for: Compact representation of binary</p>
+                </div>
+                <div class="system-card">
+                    <h3>Decimal (Base-10)</h3>
+                    <p>Uses digits: 0-9</p>
+                    <p>Example: 97425</p>
+                    <p>Used for: Human calculations ("Standard" number system)</p>
+                </div>
+                <div class="system-card">
+                    <h3>Hexadecimal/Hex (Base-16)</h3>
+                    <p>Uses digits: 0-9, A-F (10-15)</p>
+                    <p>Example: 54A2DD₁₆</p>
+                    <p>Used for: Compact binary representation, colors</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Converting to Decimal</h2>
+            <p>To convert a number from any base to decimal (base-10), multiply each digit by its place value and sum the results.</p>
+            
+            <div class="conversion-example">
+                <h4>Examples:</h4>
+                <div class="example-card">
+                    <p class="title">Binary to Decimal</p>
+                    <p class="math-expression">1101<sub>2</sub> = (<b>1</b>×2<sup>3</sup>) + (<b>1</b>×2<sup>2</sup>) + (<b>0</b>×2<sup>1</sup>) + (<b>1</b>×2<sup>0</sup>) = 8 + 4 + 0 + 1 = 13</p>
+                </div>
+                <div class="example-card">
+                    <p class="title">Octal to Decimal</p>
+                    <p class="math-expression">175<sub>8</sub> = (<b>1</b>×8<sup>2</sup>) + (<b>7</b>×8<sup>1</sup>) + (<b>5</b>×8<sup>0</sup>) = 64 + 56 + 5 = 125</p>
+                </div>
+                <div class="example-card">
+                    <p class="title">Hex to Decimal</p>
+                    <p class="math-expression">A5<sub>16</sub> = (<b>10</b>×16<sup>1</sup>) + (<b>5</b>×16<sup>0</sup>) = 160 + 5 = 165</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Converting from Decimal</h2>
+            <p>To convert from decimal to another base:</p>
+            <div class="conversion-steps">
+                <ol>
+                    <li>Integer divide the decimal number by the target base and set the remainder to the side.</li>
+                    <li>Repeat the process for the quotient until it becomes 0.</li>
+                    <li>The remainders will be the digits of the number in the new base, from bottom to top.</li>
+                </ol>
+            </div>
+            <div class="example-card">
+                <p class="title">Example: Convert 92 to Binary</p>
+                <pre class="conversion-calc">
+92 ÷ 2 = 46 remainder 0
+46 ÷ 2 = 23 remainder 0
+23 ÷ 2 = 11 remainder 1
+11 ÷ 2 = 5  remainder 1
+5 ÷ 2 = 2   remainder 1
+2 ÷ 2 = 1   remainder 0
+1 ÷ 2 = 0   remainder 1
+                </pre>
+                <p class="result">Reading from bottom up: 92<sub>10</sub> = 1011100<sub>2</sub></p>
+            </div>
+            <div class="example-card">
+                <p class="title">Example: Convert 25847 to Hexadecimal</p>
+                <pre class="conversion-calc">
+25847 ÷ 16 = 1615 remainder 7
+1615 ÷ 16 = 100  remainder 15 (F)
+100 ÷ 16 = 6     remainder 4
+6 ÷ 16 = 0       remainder 6
+                </pre>
+                <p class="result">Reading from bottom up: 25847<sub>10</sub> = 64F7<sub>16</sub></p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Quick Conversions Between Bases</h2>
+            <p>There are shortcuts for converting between binary, octal, and hexadecimal without going through decimal!</p>
+
+            <div class="conversion-example">
+                <div class="example-card">
+                    <p class="title">Binary ↔ Octal</p>
+                    <p>Group binary digits by threes (from right)</p>
+                    <pre class="conversion-calc">
+Binary to Octal:
+111 101 010 = 752₈
+↓   ↓   ↓
+7   5   2
+
+Octal to Binary:
+375₈ = 011 111 101₂
+       ↓   ↓   ↓
+       3   7   5</pre>
+                </div>
+
+                <div class="example-card">
+                    <p class="title">Binary ↔ Hexadecimal</p>
+                    <p>Group binary digits by fours (from right)</p>
+                    <pre class="conversion-calc">
+Binary to Hex:
+1010 1111 = AF₁₆
+↓    ↓
+A    F
+
+Hex to Binary:
+FD₁₆ = 1111 1101₂
+       ↓    ↓
+       F    D</pre>
+                </div>
+
+                <div class="example-card">
+                    <p class="title">Octal ↔ Hexadecimal</p>
+                    <p>Convert through binary as an intermediate step:</p>
+                    <pre class="conversion-calc">
+Octal → Binary → Hex:
+375₈ → 011111101₂ → FD₁₆
+
+Hex → Binary → Octal:
+FD₁₆ → 11111101₂ → 375₈</pre>
+                </div>
+            </div>
+
+            <div class="tip-box">
+                <p><strong>Pro Tip:</strong> Memorize these patterns:</p>
+                <ul>
+                    <li>Octal: Each digit = 3 binary digits</li>
+                    <li>Hex: Each digit = 4 binary digits</li>
+                    <li>For Octal ↔ Hex: Use binary as a bridge!</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Practice Problems</h2>
+            <div class="practice-problem">
+                <h3>Problem 1 (Junior)</h3>
+                <p>Convert 3676₈ to hexadecimal.</p>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem1-answer" placeholder="Enter answer in hex">
+                        <button onclick="checkAnswer(1)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem1-feedback" class="feedback-area"></div>
+                    <div id="problem1-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Convert octal to binary: 3676₈ = 011 110 111 110₂</li>
+                            <li>Group by 4 bits: 0111 1011 1110₂</li>
+                            <li>Convert to hex: 7BE₁₆</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 2 (Junior)</h3>
+                <p>How many 5's appear in total when writing all decimal numbers from 1 to 75 in octal?</p>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem2-answer" placeholder="Enter your answer">
+                        <button onclick="checkAnswer(2)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem2-feedback" class="feedback-area"></div>
+                    <div id="problem2-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Convert each decimal number to octal:
+                                <pre>
+1₁₀ = 1₈
+2₁₀ = 2₈
+...
+45₁₀ = 55₈
+46₁₀ = 56₈
+...
+75₁₀ = 113₈</pre>
+                            </li>
+                            <li>Count the 5's in each number:
+                                <ul>
+                                    <li>45₁₀ = 55₈ (two 5's)</li>
+                                    <li>46₁₀ = 56₈ (one 5)</li>
+                                    <li>47₁₀ = 57₈ (one 5)</li>
+                                    <li>48₁₀ = 60₈ (no 5's)</li>
+                                    <li>51₁₀ = 63₈ (no 5's)</li>
+                                    <li>52₁₀ = 64₈ (no 5's)</li>
+                                    <li>53₁₀ = 65₈ (one 5)</li>
+                                    <li>54₁₀ = 66₈ (no 5's)</li>
+                                    <li>55₁₀ = 67₈ (no 5's)</li>
+                                    <li>...</li>
+                                </ul>
+                            </li>
+                            <li>Total count: 15 occurrences of 5</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 3 (Intermediate)</h3>
+                <p>Evaluate the expression and express the final answer in hex:</p>
+                <p class="math-expression">10₂ * 61₁₆ + 1001₂ * (1011₂ - A₁₆)</p>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem3-answer" placeholder="Enter answer in hex">
+                        <button onclick="checkAnswer(3)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem3-feedback" class="feedback-area"></div>
+                    <div id="problem3-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Convert numbers to decimal:
+                                <ul>
+                                    <li>10₂ = 2₁₀</li>
+                                    <li>61₁₆ = 97₁₀</li>
+                                    <li>1001₂ = 9₁₀</li>
+                                    <li>1011₂ = 11₁₀</li>
+                                    <li>A₁₆ = 10₁₀</li>
+                                </ul>
+                            </li>
+                            <li>Solve the parentheses: (11₁₀ - 10₁₀) = 1₁₀</li>
+                            <li>Multiply: 2₁₀ * 97₁₀ = 194₁₀</li>
+                            <li>Multiply: 9₁₀ * 1₁₀ = 9₁₀</li>
+                            <li>Add: 194₁₀ + 9₁₀ = 203₁₀</li>
+                            <li>Convert to hex: 203₁₀ = CB₁₆</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 4 (Intermediate)</h3>
+                <p>Convert 2023₁₀ to octal. Write the octal digits in ascending order.</p>
+                <p>Then convert this reordered octal number to hexadecimal.</p>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem4-answer" placeholder="Enter answer in hex">
+                        <button onclick="checkAnswer(4)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem4-feedback" class="feedback-area"></div>
+                    <div id="problem4-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Convert 2023₁₀ to octal:
+                                <pre>
+2023 ÷ 8 = 252 remainder 7
+252 ÷ 8 = 31  remainder 4
+31 ÷ 8 = 3    remainder 7
+3 ÷ 8 = 0     remainder 3</pre>
+                                Reading from bottom up: 2023₁₀ = 3747₈
+                            </li>
+                            <li>Reorder octal digits in ascending order: 3477₈</li>
+                            <li>Convert 3477₈ to binary:
+                                <pre>
+3 → 011
+4 → 100
+7 → 111
+7 → 111</pre>
+                                3477₈ = 011100111111₂
+                            </li>
+                            <li>Group binary digits by fours and convert to hex:
+                                <pre>
+0111 0011 1111
+ 7    3    F</pre>
+                                Final answer: 73F₁₆
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 5 (Senior)</h3>
+                <p>Evaluate and express in base 16 if both numbers are hexadecimal:</p>
+                <p class="math-expression">1F * 4D</p>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem5-answer" placeholder="Enter answer in hex">
+                        <button onclick="checkAnswer(5)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem5-feedback" class="feedback-area"></div>
+                    <div id="problem5-explanation" class="explanation" style="display: none;">
+                        <h4>Solution:</h4>
+                        <ol>
+                            <li>Convert hex numbers to decimal:
+                                <ul>
+                                    <li>1F₁₆ = (1×16¹) + (15×16⁰) = 16 + 15 = 31₁₀</li>
+                                    <li>4D₁₆ = (4×16¹) + (13×16⁰) = 64 + 13 = 77₁₀</li>
+                                </ul>
+                            </li>
+                            <li>Multiply in decimal:
+                                <pre>31₁₀ × 77₁₀ = 2,387₁₀</pre>
+                            </li>
+                            <li>Convert result to hexadecimal:
+                                <pre>
+2387 ÷ 16 = 149 remainder 3
+149 ÷ 16 = 9   remainder 5
+9 ÷ 16 = 0     remainder 9</pre>
+                                Reading from bottom up: 2387₁₀ = 953₁₆
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="lessons.js"></script>
+</body>
+</html> 

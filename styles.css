@@ -1,0 +1,36 @@
+.submit-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+}
+
+.submit-btn:hover {
+    background-color: #2980b9;
+}
+
+.why-btn {
+    background-color: #f1c40f; /* Yellow color */
+    color: black;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-left: 1rem; /* Align to the right */
+    transition: background-color 0.3s;
+}
+
+.why-btn:hover {
+    background-color: #d4ac0d;
+}
+
+.feedback-area {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+} 

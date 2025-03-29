@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Electronics</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Digital Electronics</h1>
+        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    </header>
+
+    <main class="content-container">
+        <section class="content-section">
+            <h2>Introduction to Digital Logic</h2>
+            <p>Digital electronics is all about processing binary signals (0s and 1s) using logic gates. Think of these gates as tiny decision-makers that follow specific rules to produce outputs based on their inputs.</p>
+            
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li><strong>Binary Signals:</strong> Only two possible states - 0 (OFF/LOW) or 1 (ON/HIGH)</li>
+                    <li><strong>Logic Gates:</strong> Basic building blocks that perform logical operations</li>
+                    <li><strong>Truth Tables:</strong> Show all possible input combinations and their resulting outputs</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Basic Logic Gates</h2>
+            <p>Each gate has a unique symbol and behavior. Let's explore them one by one:</p>
+
+            <div class="gate-container">
+                <div class="gate-card">
+                    <h3>NOT Gate (Inverter)</h3>
+                    <div class="gate-visual">
+                        <svg class="gate-svg" viewBox="0 0 100 60">
+                            <!-- NOT Gate -->
+                            <path d="M20,10 L20,50 L60,30 Z" class="gate-shape"/>
+                            <circle cx="65" cy="30" r="5" class="gate-circle"/>
+                            <!-- Input/Output lines -->
+                            <line x1="5" y1="30" x2="20" y2="30" class="gate-line"/>
+                            <line x1="70" y1="30" x2="85" y2="30" class="gate-line"/>
+                            <!-- Labels -->
+                            <text x="10" y="25" class="gate-label">A</text>
+                            <text x="75" y="25" class="gate-label">X</text>
+                        </svg>
+                    </div>
+                    <p>The simplest gate - it just flips the input:</p>
+                    <ul>
+                        <li>A is opposite of X</li>
+                    </ul>
+                    <div class="gate-example">
+                        <p>Example: If a light switch is OFF (0), the NOT gate makes it ON (1)</p>
+                    </div>
+                    <div class="truth-table">
+                        <table>
+                            <tr>
+                                <th>A</th>
+                                <th>X</th>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="gate-card">
+                    <h3>AND Gate</h3>
+                    <div class="gate-visual">
+                        <svg class="gate-svg" viewBox="0 0 100 60">
+                            <!-- AND Gate -->
+                            <path d="M20,10 L20,50 Q40,50 40,30 Q40,10 20,10" class="gate-shape"/>
+                            <!-- Input/Output lines -->
+                            <line x1="5" y1="20" x2="20" y2="20" class="gate-line"/>
+                            <line x1="5" y1="40" x2="20" y2="40" class="gate-line"/>
+                            <line x1="40" y1="30" x2="85" y2="30" class="gate-line"/>
+                            <!-- Labels -->
+                            <text x="10" y="15" class="gate-label">A</text>
+                            <text x="10" y="35" class="gate-label">B</text>
+                            <text x="75" y="25" class="gate-label">X</text>
+                        </svg>
+                    </div>
+                    <p>Only outputs 1 if BOTH inputs are 1:</p>
+                    <ul>
+                        <li>Like a series circuit - all switches must be ON</li>
+                        <li>Any 0 input makes the output 0</li>
+                    </ul>
+                    <div class="gate-example">
+                        <p>Example: A security system that needs both a key card AND correct PIN</p>
+                    </div>
+                    <div class="truth-table">
+                        <table>
+                            <tr>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>X</th>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="gate-card">
+                    <h3>OR Gate</h3>
+                    <div class="gate-visual">
+                        <svg class="gate-svg" viewBox="0 0 100 60">
+                            <!-- OR Gate -->
+                            <path d="M15,10 Q40,30 15,50 Q30,50 50,30 Q30,10 15,10" class="gate-shape"/>
+                            <!-- Input/Output lines -->
+                            <line x1="5" y1="20" x2="20" y2="20" class="gate-line"/>
+                            <line x1="5" y1="40" x2="20" y2="40" class="gate-line"/>
+                            <line x1="50" y1="30" x2="85" y2="30" class="gate-line"/>
+                            <!-- Labels -->
+                            <text x="10" y="15" class="gate-label">A</text>
+                            <text x="10" y="35" class="gate-label">B</text>
+                            <text x="75" y="25" class="gate-label">X</text>
+                        </svg>
+                    </div>
+                    <p>Outputs 1 if ANY input is 1:</p>
+                    <ul>
+                        <li>Like a parallel circuit - any switch being ON works</li>
+                        <li>Only outputs 0 if all inputs are 0</li>
+                    </ul>
+                    <div class="gate-example">
+                        <p>Example: A house alarm that triggers if ANY sensor detects movement</p>
+                    </div>
+                    <div class="truth-table">
+                        <table>
+                            <tr>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>X</th>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="gate-card">
+                    <h3>XOR Gate (Exclusive OR)</h3>
+                    <div class="gate-visual">
+                        <svg class="gate-svg" viewBox="0 0 100 60">
+                            <!-- XOR Gate -->
+                            <path d="M10,10 Q35,30 10,50" class="gate-curve"/>
+                            <path d="M15,10 Q40,30 15,50 Q30,50 50,30 Q30,10 15,10" class="gate-shape"/>
+                            <!-- Input/Output lines -->
+                            <line x1="5" y1="20" x2="20" y2="20" class="gate-line"/>
+                            <line x1="5" y1="40" x2="20" y2="40" class="gate-line"/>
+                            <line x1="50" y1="30" x2="85" y2="30" class="gate-line"/>
+                            <!-- Labels -->
+                            <text x="10" y="15" class="gate-label">A</text>
+                            <text x="10" y="35" class="gate-label">B</text>
+                            <text x="75" y="25" class="gate-label">X</text>
+                        </svg>
+                    </div>
+                    <p>Outputs 1 if inputs are DIFFERENT:</p>
+                    <ul>
+                        <li>1 when inputs are different (0,1 or 1,0)</li>
+                        <li>0 when inputs are same (0,0 or 1,1)</li>
+                    </ul>
+                    <div class="gate-example">
+                        <p>Example: A light controlled by two switches - it's ON only if switches are in different positions</p>
+                    </div>
+                    <div class="truth-table">
+                        <table>
+                            <tr>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>X</th>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="key-points">
+                <h3>Inverted Gates:</h3>
+                <p>Any gate can be turned into its inverse by adding a small circle (bubble) at its output:</p>
+                <ul>
+                    <li><strong>AND → NAND:</strong> Output is opposite of AND gate (1 unless both inputs are 1)</li>
+                    <li><strong>OR → NOR:</strong> Output is opposite of OR gate (1 only when both inputs are 0)</li>
+                    <li><strong>XOR → XNOR:</strong> Output is opposite of XOR gate (1 when inputs are the same)</li>
+                </ul>
+                <div class="gate-examples-grid">
+                    <div class="inverted-gate-example">
+                        <svg class="gate-svg" viewBox="0 0 120 60">
+                            <!-- Regular AND -->
+                            <path d="M20,10 L20,50 Q40,50 40,30 Q40,10 20,10" class="gate-shape"/>
+                            <text x="60" y="30" class="gate-label">→</text>
+                            <!-- NAND -->
+                            <path d="M80,10 L80,50 Q100,50 100,30 Q100,10 80,10" class="gate-shape"/>
+                            <circle cx="105" cy="30" r="3" class="gate-circle"/>
+                        </svg>
+                        <p class="gate-caption">AND becomes NAND</p>
+                    </div>
+                </div>
+                <p class="gate-note">The bubble (◦) means "NOT" - it inverts the output of whatever gate it's attached to.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Combining Gates</h2>
+            <p>Gates can be connected to create more complex circuits. The output of one gate becomes the input for another.</p>
+            
+            <div class="circuit-example">
+                <h3>Example: Security System</h3>
+                <div class="circuit-visual">
+                    <svg class="circuit-svg" viewBox="0 0 400 120">
+                        <!-- AND Gate 1 (Access Control) -->
+                        <path d="M80,20 L80,60 Q100,60 100,40 Q100,20 80,20" class="gate-shape"/>
+                        
+                        <!-- NOT Gate (Unauthorized Access) -->
+                        <path d="M120,30 L120,50 L140,40 Z" class="gate-shape"/>
+                        <circle cx="145" cy="40" r="3" class="gate-circle"/>
+                        
+                        <!-- OR Gate (Intrusion Detection) -->
+                        <path d="M65,80 Q90,100 65,120 Q80,120 100,100 Q80,80 65,80" class="gate-shape"/>
+                        
+                        <!-- Final OR Gate -->
+                        <path d="M245,50 Q270,70 245,90 Q260,90 280,70 Q260,50 245,50" class="gate-shape"/>
+                        
+                        <!-- Connections -->
+                        <line x1="30" y1="30" x2="80" y2="30" class="gate-line"/>
+                        <line x1="30" y1="50" x2="80" y2="50" class="gate-line"/>
+                        <line x1="100" y1="40" x2="120" y2="40" class="gate-line"/>
+                        <line x1="148" y1="40" x2="245" y2="60" class="gate-line"/>
+                        
+                        <line x1="30" y1="90" x2="65" y2="90" class="gate-line"/>
+                        <line x1="30" y1="110" x2="65" y2="110" class="gate-line"/>
+                        <line x1="100" y1="100" x2="245" y2="80" class="gate-line"/>
+                        <line x1="280" y1="70" x2="360" y2="70" class="gate-line"/>
+                        
+                        <!-- Labels -->
+                        <text x="35" y="25" class="gate-label">Key Card</text>
+                        <text x="35" y="45" class="gate-label">PIN Code</text>
+                        <text x="35" y="85" class="gate-label">Motion</text>
+                        <text x="35" y="105" class="gate-label">Window</text>
+                        <text x="365" y="65" class="gate-label">Alarm</text>
+                    </svg>
+                </div>
+                <div class="circuit-explanation">
+                    <p>This security system has three components:</p>
+                    <ol>
+                        <li><strong>Access Verification (First AND + NOT Gates):</strong>
+                            <ul>
+                                <li>AND gate checks if both key card AND PIN are provided</li>
+                                <li>NOT gate inverts this - output is 1 for unauthorized access</li>
+                            </ul>
+                        </li>
+                        <li><strong>Intrusion Detection (Bottom OR Gate):</strong>
+                            <ul>
+                                <li>Monitors detection of either motion OR window sensors</li>
+                                <li>Output is 1 if either sensor detects intrusion</li>
+                            </ul>
+                        </li>
+                        <li><strong>Alarm Trigger (Final OR Gate):</strong>
+                            <ul>
+                                <li>Triggers if EITHER unauthorized access OR intrusion is detected</li>
+                                <li>Output is 1 if any input is 1</li>
+                            </ul>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Practice Problems</h2>
+            <div class="practice-problem">
+                <h3>Problem 1 (Junior)</h3>
+                <p>Simplify the Boolean expression represented by this circuit using the fewest numbers of parentheses:</p>
+                <div class="circuit-diagram">
+                    <svg class="circuit-svg" viewBox="0 0 400 150">
+                        <!-- Input A split -->
+                        <line x1="50" y1="40" x2="80" y2="40" class="gate-line"/>
+                        <line x1="80" y1="40" x2="80" y2="110" class="gate-line"/>
+                        <line x1="80" y1="40" x2="160" y2="40" class="gate-line"/>
+                        
+                        <!-- Input B and vertical split line -->
+                        <line x1="50" y1="130" x2="90" y2="130" class="gate-line"/>
+                        <line x1="90" y1="60" x2="160" y2="60" class="gate-line"/>
+                        <line x1="90" y1="60" x2="90" y2="130" class="gate-line"/>
+                        <line x1="90" y1="130" x2="120" y2="130" class="gate-line"/>
+                        
+                        <!-- NOT Gate for B -->
+                        <path d="M120,120 L120,140 L140,130 Z" class="gate-shape"/>
+                        <circle cx="145" cy="130" r="3" class="gate-circle"/>
+                        
+                        <!-- Top AND Gate -->
+                        <path d="M160,30 L160,70 Q180,70 180,50 Q180,30 160,30" class="gate-shape"/>
+                        
+                        <!-- Bottom AND Gate -->
+                        <path d="M160,100 L160,140 Q180,140 180,120 Q180,100 160,100" class="gate-shape"/>
+                        
+                        <!-- OR Gate -->
+                        <path d="M240,60 Q265,85 240,110 Q255,110 275,85 Q255,60 240,60" class="gate-shape"/>
+                        
+                        <!-- Connections -->
+                        <line x1="80" y1="110" x2="160" y2="110" class="gate-line"/>
+                        <line x1="145" y1="130" x2="160" y2="130" class="gate-line"/>
+                        
+                        <!-- Connections to OR gate -->
+                        <line x1="180" y1="50" x2="240" y2="75" class="gate-line"/>
+                        <line x1="180" y1="120" x2="240" y2="95" class="gate-line"/>
+                        
+                        <!-- Output -->
+                        <line x1="275" y1="85" x2="320" y2="85" class="gate-line"/>
+                        
+                        <!-- Labels -->
+                        <text x="40" y="45" class="gate-label-large">A</text>
+                        <text x="40" y="135" class="gate-label-large">B</text>
+                        <text x="330" y="90" class="gate-label-large">X</text>
+                    </svg>
+                </div>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem1-answer" placeholder="Enter Boolean expression">
+                        <button onclick="checkDigitalAnswer(1)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem1-feedback" class="feedback-area"></div>
+                    <div id="problem1-explanation" class="explanation" style="display: none;">
+                        <h4>Solution Walkthrough:</h4>
+                        <ol>
+                            <li>Let's break down the circuit from inputs to output:
+                                <ul>
+                                    <li>Input A splits to both AND gates</li>
+                                    <li>Input B goes to top AND gate and through NOT gate to bottom AND gate</li>
+                                    <li>Both AND outputs combine in the OR gate</li>
+                                </ul>
+                            </li>
+                            <li>Writing the initial expression:
+                                <ul>
+                                    <li>Top AND: (A·B)</li>
+                                    <li>Bottom AND: (A·<span class="overline">B</span>)</li>
+                                    <li>OR combines these: (A·B) + (A·<span class="overline">B</span>)</li>
+                                </ul>
+                            </li>
+                            <li>Simplifying the expression (See <a href="boolean-algebra.html" class="reference-link">Boolean Algebra Laws →</a>):
+                                <ul>
+                                    <li>Start with: (A·B) + (A·<span class="overline">B</span>)</li>
+                                    <li>Factor out A: A(B + <span class="overline">B</span>)</li>
+                                    <li>B + <span class="overline">B</span> = 1 (complement law)</li>
+                                    <li>Therefore: A(1) = A</li>
+                                </ul>
+                            </li>
+                            <li>The final simplified expression is: A</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 2 (Junior)</h3>
+                <p>How many ordered triples make the Boolean expression for this circuit FALSE?</p>
+                <div class="circuit-diagram">
+                    <img src="images/circuit1.jpg" alt="Circuit with NOT, AND, and OR gates" class="problem-circuit" width="300" height="200">
+                </div>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem2-answer" placeholder="Enter number of triples">
+                        <button onclick="checkDigitalAnswer(2)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem2-feedback" class="feedback-area"></div>
+                    <div id="problem2-explanation" class="explanation" style="display: none;">
+                        <h4>Solution Walkthrough:</h4>
+                        <ol>
+                            <li>Let's break down the circuit from inputs to output:
+                                <ul>
+                                    <li>Top path: (<span class="overline">A</span>·B)</li>
+                                    <li>Middle path: (<span class="overline">B</span>·A)</li>
+                                    <li>Bottom path: (A·C)</li>
+                                    <li>Final expression: (<span class="overline">A</span>·B) + (<span class="overline">B</span>·A) + (A·C)</li>
+                                </ul>
+                            </li>
+                            <li>Simplifying the expression:
+                                <ul>
+                                    
+                                    <li>The first two terms form an XOR between A and B</li>
+                                    <li>Therefore: (A⊕B) + A·C</li>
+                                </ul>
+                            </li>
+                            <li>Finding when (A⊕B) + A·C is FALSE:
+                                <ul>
+                                    <li>Expression is FALSE when both (A⊕B) = 0 and (A·C) = 0</li>
+                                    <li>This occurs when A and B are the same (for XOR=0) AND either A=0 or C=0</li>
+                                    <li>When A=0: B must be 0, C can be 0 or 1 (2 triples)</li>
+                                    <li>When A=1: B must be 1, C must be 0 (1 triple)</li>
+                                    <li>Total: 3 triples make it FALSE</li>
+                                </ul>
+                            </li>
+                            <li>The answer is: 3</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 3 (Intermediate)</h3>
+                <p>How many ordered triples make this circuit TRUE?</p>
+                <div class="circuit-diagram">
+                    <img src="images/circuit2.png" alt="Complex circuit with NOT, AND, and OR gates" class="problem-circuit" width="375" height="250">
+                </div>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem3-answer" placeholder="Enter number of triples">
+                        <button onclick="checkDigitalAnswer(3)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem3-feedback" class="feedback-area"></div>
+                    <div id="problem3-explanation" class="explanation" style="display: none;">
+                        <h4>Solution Walkthrough:</h4>
+                        <ol>
+                            <li>The circuit can be expressed as:
+                                <ul>
+                                    <li>NOT(A) · NOT[(NOT(A)·B) + (NOT(B+A) · NOT(B+C))]</li>
+                                </ul>
+                            </li>
+                            <li>Let's analyze when this could be TRUE:
+                                <ul>
+                                    <li>First term: NOT(A) must be 1, so A must be 0</li>
+                                    <li>When A = 0:
+                                        <ul>
+                                            <li>NOT(A)·B becomes B</li>
+                                            <li>NOT(B+A) becomes NOT(B)</li>
+                                            <li>Expression becomes: 1 · NOT[B + (NOT(B) · NOT(B+C))]</li>
+                                        </ul>
+                                    </li>
+                                    <li>For any values of B and C:
+                                        <ul>
+                                            <li>If B = 0: NOT(B) = 1, and NOT(B+C) will be 1 when C = 0</li>
+                                            <li>If B = 1: First term is 1, second term is 0</li>
+                                            <li>In all cases, the expression inside NOT[] is never 0</li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>Therefore:
+                                <ul>
+                                    <li>The expression is always FALSE for all input combinations</li>
+                                    <li>No ordered triple (A,B,C) makes this circuit TRUE</li>
+                                </ul>
+                            </li>
+                            <li>The answer is: 0</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="lessons.js"></script>
+</body>
+</html> 
