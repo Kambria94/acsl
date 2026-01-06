@@ -1,71 +1,59 @@
 <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AS Knowledge</title>
-    <link rel="stylesheet" href="ACSL/styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <title>ACSL Topics Guide</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
     <header>
-        <h1>AS Knowledge</h1>
-        <nav class="nav-menu">
-            <div class="dropdown">
-                <button class="dropbtn">Menu ▾</button>
-                <div class="dropdown-content">
-                    <a href="ACSL/acsl.html">ACSL</a>
-                    <a href="#">Resources</a>
-                    <a href="contact">Contact</a>
-                    <a href="privacy">Privacy</a>
-                </div>
-            </div>
-        </nav>
+        <h1>ACSL Competition Topics</h1>
+        <p>A comprehensive guide to topics covered in ACSL contests</p>
     </header>
 
-    <main class="about-section">
-        <div class="vision-block">
-            <h2>Our Vision</h2>
-            <p class="vision-statement">We believe that knowledge is the cornerstone of human progress and innovation. At AS Knowledge, we are dedicated to creating a world where quality education knows no boundaries.</p>
-        </div>
-
-        <div class="mission-block">
-            <h2>Our Mission</h2>
-            <p>AS Knowledge is committed to democratizing education and making knowledge accessible to all. We strive to create an environment where learning becomes an engaging journey of discovery and growth.</p>
-            
-            <div class="mission-pillars">
-                <div class="pillar">
-                    <div class="pillar-icon">🎯</div>
-                    <h3>Accessible Learning</h3>
-                    <p>Breaking down barriers to ensure quality education reaches every eager mind.</p>
-                </div>
-                <div class="pillar">
-                    <div class="pillar-icon">🌟</div>
-                    <h3>Innovation</h3>
-                    <p>Embracing new technologies and methodologies to enhance the learning experience.</p>
-                </div>
-                <div class="pillar">
-                    <div class="pillar-icon">🤝</div>
-                    <h3>Community</h3>
-                    <p>Building a supportive network of learners and educators who grow together.</p>
-                </div>
+    <main>
+        <section id="regular-division">
+            <h2>Classroom, Intermediate, and Senior Topics</h2>
+            <div class="topics-grid" id="regular-topics">
+                <!-- Topics will be populated by JavaScript -->
             </div>
-        </div>
+        </section>
 
-        <div class="impact-block">
-            <h2>Our Impact</h2>
-            <p>Through our comprehensive resources and dedicated approach, we're creating lasting change in education:</p>
-            <ul class="impact-list">
-                <li>Fostering critical thinking and problem-solving skills</li>
-                <li>Building strong foundations for lifelong learning</li>
-                <li>Creating engaging and interactive learning experiences</li>
-                <li>Supporting educators with innovative teaching resources</li>
-            </ul>
-        </div>
+        <section id="junior-division">
+            <h2>Junior Division Topics</h2>
+            <div class="topics-grid" id="junior-topics">
+                <!-- Topics will be populated by JavaScript -->
+            </div>
+        </section>
 
-        <div class="join-block">
-            <h2>Join Our Journey</h2>
-            <p>Be part of our mission to transform education and empower learners worldwide. Together, we can create a future where knowledge knows no limits.</p>
-        </div>
+        <section id="elementary-division">
+            <h2>Elementary Division Topics</h2>
+            <div class="topics-grid" id="elementary-topics">
+                <!-- Topics will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <section id="invitational">
+            <h2>Invitational Competition Topics</h2>
+            <div class="topics-grid" id="invitational-topics">
+                <!-- Topics will be populated by JavaScript -->
+            </div>
+        </section>
     </main>
+
+    <footer>
+        <p>Based on information from ACSL Category Descriptions</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <div id="topicModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle"></h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
 </body>
+</html> 
