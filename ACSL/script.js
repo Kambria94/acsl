@@ -98,6 +98,15 @@ function createTopicCard(topic) {
         } else if (topic === 'Digital Electronics') {
             window.location.href = 'ACSL_Topics/digital-electronics.html';
         }
+        else if (topic === 'Data Structures') {
+            window.location.href = 'ACSL_Topics/data-structures.html';
+        }
+        else if (topic === 'Prefix/Infix/Postfix Notation') {
+            window.location.href = 'ACSL_Topics/prefix-infix-postfix.html';
+        }
+        else if (topic === 'What Does This Program Do?') {
+            window.location.href = 'ACSL_Topics/wdtpd-branching.html';
+        }
         // Add more topic pages as they're created
     });
     
