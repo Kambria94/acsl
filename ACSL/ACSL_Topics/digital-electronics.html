@@ -509,6 +509,101 @@
                     </div>
                 </div>
             </div>
+
+            <div class="practice-problem">
+                <h3>Problem 4 (Intermediate)</h3>
+                <p>Simplify the Boolean expression represented by this circuit using the fewest numbers of parentheses:</p>
+                <div class="circuit-diagram">
+                    <img src="images/circuit3.png" alt="Circuit with OR, AND, and NOT gates" class="problem-circuit" width="450" height="300">
+                </div>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem4-answer" placeholder="Enter Boolean expression">
+                        <button onclick="checkDigitalAnswer(4)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem4-feedback" class="feedback-area"></div>
+                    <div id="problem4-explanation" class="explanation" style="display: none;">
+                        <h4>Solution Walkthrough:</h4>
+                        <ol>
+                            <li>Starting expression: ((A + (B·C)) + (A·<span class="overline">C</span>))·(A + B + <span class="overline">B</span>)</li>
+                            <li>Let's simplify each part:
+                                <ul>
+                                    <li>First, the right side: (A + B + <span class="overline">B</span>)</li>
+                                    <li>B + <span class="overline">B</span> = 1 (complement law)</li>
+                                    <li>So A + B + <span class="overline">B</span> = A + 1 = 1</li>
+                                </ul>
+                            </li>
+                            <li>Now the left side: (A + (B·C)) + (A·<span class="overline">C</span>)
+                                <ul>
+                                    <li>Distribute A: A + (B·C) + (A·<span class="overline">C</span>)</li>
+                                    <li>Since A appears alone, any term with A is redundant</li>
+                                    <li>Therefore: A + (B·C)</li>
+                                </ul>
+                            </li>
+                            <li>Combining both sides:
+                                <ul>
+                                    <li>(A + (B·C))·1</li>
+                                    <li>Simplifies to: A + (B·C)</li>
+                                </ul>
+                            </li>
+                            <li>The final simplified expression is: A + B·C</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 5 (Senior)</h3>
+                <p>How many ordered triples make the Boolean expression for this circuit FALSE?</p>
+                <div class="circuit-diagram">
+                    <img src="images/circuit4.png" alt="Complex circuit with NOT, AND, and OR gates" class="problem-circuit" width="450" height="300">
+                </div>
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem5-answer" placeholder="Enter number of triples">
+                        <button onclick="checkDigitalAnswer(5)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem5-feedback" class="feedback-area"></div>
+                    <div id="problem5-explanation" class="explanation" style="display: none;">
+                        <h4>Solution Walkthrough:</h4>
+                        <ol>
+                            <li>Starting expression: !(A·!B) + (B·!C)·((!A + C)·(B + !A)) + (A·B·C)</li>
+                            <li>Let's simplify each part:
+                                <ul>
+                                    <li>Part 1: !(A·!B) = !A + B (DeMorgan's Law)</li>
+                                    <li>Part 2: (B·!C)·((!A + C)·(B + !A))
+                                        <ul>
+                                            <li>Expand (!A + C)·(B + !A)</li>
+                                            <li>= (!A·B) + (!A·!A) + (C·B) + (C·!A)</li>
+                                            <li>= (!A·B) + !A + (C·B) + (C·!A)</li>
+                                            <li>When multiplied by (B·!C): Most terms become 0</li>
+                                            <li>Simplifies to: B·!C·!A</li>
+                                        </ul>
+                                    </li>
+                                    <li>Part 3: A·B·C remains as is</li>
+                                </ul>
+                            </li>
+                            <li>Combining all parts:
+                                <ul>
+                                    <li>(!A + B) + (B·!C·!A) + (A·B·C)</li>
+                                    <li>This is TRUE in most cases except when:</li>
+                                    <li>- A is 1 (negating first term)</li>
+                                    <li>- B is 0 (negating first term)</li>
+                                    <li>- C is 1 (negating second term)</li>
+                                    <li>And A·B·C = 0</li>
+                                </ul>
+                            </li>
+                            <li>Finding FALSE cases:
+                                <ul>
+                                    <li>When A=1, B=0: C can be 0 (1 case)</li>
+                                    <li>When A=0, B=0: C can be 1 (1 case)</li>
+                                </ul>
+                            </li>
+                            <li>The answer is: 2</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
         </section>
     </main>
     <script src="lessons.js"></script>
