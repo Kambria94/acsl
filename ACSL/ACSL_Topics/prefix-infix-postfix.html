@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefix/Infix/Postfix Notation - ACSL Topics</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Prefix/Infix/Postfix Notation</h1>
+        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    </header>
+
+    <main class="topic-content">
+        <section class="content-section">
+            <h2>Overview</h2>
+            <p>Prefix, infix, and postfix notations are different ways of writing mathematical expressions. Each has its own advantages and is particularly useful in specific contexts in computer science.</p>
+            
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li><strong>Infix Notation:</strong> The standard mathematical notation where operators are placed between operands (e.g., 5 + 3)</li>
+                    <li><strong>Prefix Notation:</strong> Also known as Polish notation, where operators are placed before operands (e.g., + 5 3)</li>
+                    <li><strong>Postfix Notation:</strong> Also known as Reverse Polish notation, where operators are placed after operands (e.g., 5 3 +)</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Infix Notation</h2>
+            <p>This is the standard mathematical notation we use in everyday calculations. While it's the most natural for humans to read, it requires precedence rules and parentheses to avoid ambiguity.</p>
+
+            <div class="operator-explanation">
+                <h3>Order of Precedence (PEMDAS):</h3>
+                <ol>
+                    <li><strong>P</strong>arentheses</li>
+                    <li><strong>E</strong>xponentiation</li>
+                    <li><strong>M</strong>ultiplication and <strong>D</strong>ivision (left to right)</li>
+                    <li><strong>A</strong>ddition and <strong>S</strong>ubtraction (left to right)</li>
+                </ol>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example Expression:</div>
+                <p class="math-expression">5 + 8/(3-1)</p>
+                <div class="step-by-step">
+                    <p>Evaluation steps:</p>
+                    <ol>
+                        <li>Evaluate parentheses: (3-1) = 2</li>
+                        <li>Perform division: 8/2 = 4</li>
+                        <li>Perform addition: 5 + 4 = 9</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Prefix Notation (Polish Notation)</h2>
+            <p>In prefix notation, the operator is placed before its operands. This notation eliminates the need for parentheses and operator precedence rules.</p>
+
+            <div class="example-card">
+                <div class="title">Converting from Infix to Prefix:</div>
+                <p class="math-expression">5 + 8/(3-1) → + 5 / 8 - 3 1</p>
+                <div class="step-by-step">
+                    <p>Steps for conversion:</p>
+                    <ol>
+                        <li>Start with fully parenthesized infix: <code>(5 + (8 / (3 - 1)))</code></li>
+                        <li>Convert innermost parentheses first:
+                            <br><code>(3 - 1)</code> → <code>- 3 1</code></li>
+                        <li>Convert next operation:
+                            <br><code>(8 / (- 3 1))</code> → <code>/ 8 - 3 1</code></li>
+                        <li>Convert final operation:
+                            <br><code>(5 + (/ 8 - 3 1))</code> → <code>+ 5 / 8 - 3 1</code></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Postfix Notation (Reverse Polish Notation)</h2>
+            <p>In postfix notation, the operator follows its operands. Like prefix notation, it eliminates the need for parentheses and operator precedence rules.</p>
+
+            <div class="example-card">
+                <div class="title">Converting from Infix to Postfix:</div>
+                <p class="math-expression">5 + 8/(3-1) → 5 8 3 1 - / +</p>
+                <div class="step-by-step">
+                    <p>Steps for conversion:</p>
+                    <ol>
+                        <li>Start with fully parenthesized infix: <code>(5 + (8 / (3 - 1)))</code></li>
+                        <li>Convert innermost parentheses first:
+                            <br><code>(3 - 1)</code> → <code>3 1 -</code></li>
+                        <li>Convert next operation:
+                            <br><code>(8 / (3 1 -))</code> → <code>8 3 1 - /</code></li>
+                        <li>Convert final operation:
+                            <br><code>(5 + (8 3 1 - /))</code> → <code>5 8 3 1 - / +</code></li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Converting Prefix and Postfix to Infix</h2>
+            <p>Converting prefix and postfix expressions to infix notation is useful for understanding and verifying expressions. The key is to work systematically, identifying operators and their operands.</p>
+
+            <div class="example-card">
+                <div class="title">Converting Prefix to Infix:</div>
+                <p class="math-expression">+ * 5 3 / 8 2</p>
+                <div class="step-by-step">
+                    <p>Method: Read from right to left, identify operators and their operands:</p>
+                    <ol>
+                        <li>Start from the rightmost operator: <code>/</code>
+                            <br>Find its two operands: <code>8</code> and <code>2</code>
+                            <br>Convert: <code>/ 8 2</code> → <code>(8 / 2)</code></li>
+                        <li>Move left to next operator: <code>*</code>
+                            <br>Find its two operands: <code>5</code> and <code>3</code>
+                            <br>Convert: <code>* 5 3</code> → <code>(5 * 3)</code></li>
+                        <li>Final operator: <code>+</code>
+                            <br>Find its two operands: <code>(5 * 3)</code> and <code>(8 / 2)</code>
+                            <br>Convert: <code>+ (5 * 3) (8 / 2)</code> → <code>((5 * 3) + (8 / 2))</code></li>
+                    </ol>
+                    <p><strong>Result:</strong> <code>((5 * 3) + (8 / 2))</code> = <code>15 + 4</code> = <code>19</code></p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Converting Postfix to Infix:</div>
+                <p class="math-expression">5 3 * 8 2 / +</p>
+                <div class="step-by-step">
+                    <p>Method: Read from left to right, identify operators and their operands:</p>
+                    <ol>
+                        <li>Start from the leftmost operator: <code>*</code>
+                            <br>Find its two operands (immediately before it): <code>5</code> and <code>3</code>
+                            <br>Convert: <code>5 3 *</code> → <code>(5 * 3)</code></li>
+                        <li>Move right to next operator: <code>/</code>
+                            <br>Find its two operands: <code>8</code> and <code>2</code>
+                            <br>Convert: <code>8 2 /</code> → <code>(8 / 2)</code></li>
+                        <li>Final operator: <code>+</code>
+                            <br>Find its two operands: <code>(5 * 3)</code> and <code>(8 / 2)</code>
+                            <br>Convert: <code>(5 * 3) (8 / 2) +</code> → <code>((5 * 3) + (8 / 2))</code></li>
+                    </ol>
+                    <p><strong>Result:</strong> <code>((5 * 3) + (8 / 2))</code> = <code>15 + 4</code> = <code>19</code></p>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h3>Key Tips:</h3>
+                <ul>
+                    <li><strong>Prefix:</strong> Read right to left. Each operator applies to the two operands immediately following it.</li>
+                    <li><strong>Postfix:</strong> Read left to right. Each operator applies to the two operands immediately preceding it.</li>
+                    <li>Always add parentheses around each operation to maintain the correct order of operations in infix notation.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Practice Problems</h2>
+            
+            <div class="practice-problem">
+                <h3>Problem 1 (Junior)</h3>
+                <p>Convert the following infix expression to prefix notation (Write answer with no spaces):</p>
+                <p class="math-expression">(A * B - C / D) ↑ E</p>
+                
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem1-answer" placeholder="Enter prefix notation">
+                        <button onclick="checkNotationAnswer(1)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem1-feedback" class="feedback-area"></div>
+                    <div id="problem1-explanation" class="explanation" style="display: none;">
+                        <h4>Explanation:</h4>
+                        <p>To convert from infix to prefix, we work from the innermost operations outward:</p>
+                        <ol>
+                            <li>Start with fully parenthesized expression: <code>((A * B) - (C / D)) ↑ E</code></li>
+                            <li>Convert innermost operations first:
+                                <br><code>(A * B)</code> → <code>* A B</code>
+                                <br><code>(C / D)</code> → <code>/ C D</code></li>
+                            <li>Convert the subtraction:
+                                <br><code>((* A B) - (/ C D))</code> → <code>- * A B / C D</code></li>
+                            <li>Convert the exponentiation:
+                                <br><code>((- * A B / C D) ↑ E)</code> → <code>↑ - * A B / C D E</code></li>
+                        </ol>
+                        <p><strong>Answer:</strong> <code>^ - * A B / C D E</code></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 2 (Junior)</h3>
+                <p>Evaluate the following postfix expression:</p>
+                <p class="math-expression">5 3 + 2 * 1 -</p>
+                
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem2-answer" placeholder="Enter the numeric result">
+                        <button onclick="checkNotationAnswer(2)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem2-feedback" class="feedback-area"></div>
+                    <div id="problem2-explanation" class="explanation" style="display: none;">
+                        <h4>Explanation:</h4>
+                        <p>To evaluate a postfix expression, read from left to right and apply operators to the two most recent operands:</p>
+                        <ol>
+                            <li>Read <code>5</code> → stack: [5]</li>
+                            <li>Read <code>3</code> → stack: [5, 3]</li>
+                            <li>Read <code>+</code> → pop 3 and 5, compute 5 + 3 = 8, push 8 → stack: [8]</li>
+                            <li>Read <code>2</code> → stack: [8, 2]</li>
+                            <li>Read <code>*</code> → pop 2 and 8, compute 8 * 2 = 16, push 16 → stack: [16]</li>
+                            <li>Read <code>1</code> → stack: [16, 1]</li>
+                            <li>Read <code>-</code> → pop 1 and 16, compute 16 - 1 = 15, push 15 → stack: [15]</li>
+                        </ol>
+                        <p><strong>Answer:</strong> <code>15</code></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="practice-problem">
+                <h3>Problem 3 (Intermediate)</h3>
+                <p>Evaluate the following prefix expression:</p>
+                <p class="math-expression">↑ + * 3 4 / 8 2 - 7 5</p>
+                
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem3-answer" placeholder="Enter infix notation">
+                        <button onclick="checkNotationAnswer(3)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem3-feedback" class="feedback-area"></div>
+                    <div id="problem3-explanation" class="explanation" style="display: none;">
+                        <h4>Explanation:</h4>
+                        <p>To convert from prefix to infix, read from right to left and work from the outermost operation inward:</p>
+                        <ol>
+                            <li>Start with: <code>↑ + * 3 4 / 8 2 - 7 5</code></li>
+                            <li>The outermost operator is <code>↑</code>, so we need two operands:
+                                <br>Left operand: <code>+ * 3 4 / 8 2</code>
+                                <br>Right operand: <code>- 7 5</code></li>
+                            <li>Convert right operand: <code>- 7 5</code> → <code>(7 - 5)</code> = <code>2</code></li>
+                            <li>Convert left operand: <code>+ * 3 4 / 8 2</code>
+                                <br>Left: <code>* 3 4</code> → <code>(3 * 4)</code> = <code>12</code>
+                                <br>Right: <code>/ 8 2</code> → <code>(8 / 2)</code> = <code>4</code>
+                                <br>So: <code>+ 12 4</code> → <code>(12 + 4)</code> = <code>16</code></li>
+                            <li>Final: <code>↑ 16 2</code> → <code>(16 ↑ 2)</code> = <code>16²</code> = <code>256</code></li>
+                        </ol>
+                        <p><strong>Infix form:</strong> <code>((3 * 4) + (8 / 2)) ↑ (7 - 5)</code></p>
+                        <p><strong>Answer:</strong> <code>256</code></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Based on ACSL Category Descriptions</p>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html> 

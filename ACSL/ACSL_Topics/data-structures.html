@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structures</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header>
+        <h1>Data Structures</h1>
+        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    </header>
+
+    <main class="content-container">
+        <section class="content-section">
+            <h2>Introduction</h2>
+            <p>Data structures are fundamental building blocks in computer science that help organize and store data efficiently. They work hand-in-hand with algorithms - data structures store the data, while algorithms process it.</p>
+            
+            <div class="key-points">
+                <h3>Core Data Structures in ACSL:</h3>
+                <ul>
+                    <li><strong>Stacks:</strong> Last-In-First-Out (LIFO) structure</li>
+                    <li><strong>Queues:</strong> First-In-First-Out (FIFO) structure</li>
+                    <li><strong>Binary Search Trees:</strong> Hierarchical structure for efficient searching</li>
+                    <li><strong>Priority Queues:</strong> Special queue where items have priorities</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Stacks</h2>
+            <div class="structure-explanation">
+                <h3>Key Operations:</h3>
+                <ul>
+                    <li><strong>PUSH(item):</strong> Adds an item to the top</li>
+                    <li><strong>POP():</strong> Removes and returns the top item</li>
+                </ul>
+                <div class="visual-example">
+                    <h4>Real-world Example:</h4>
+                    <p>Think of a stack of books - you can only add or remove books from the top.</p>
+                </div>
+                <div class="implementation-note">
+                    <p>When POP() is called on an empty stack, it returns NIL (or null).</p>
+                </div>
+                <div class="implementation-note">
+                    <ul>
+                        <li>Ex. PUSH(3) on the stack [1,7,2] results in [1,7,2,3]</li>
+                        <li>Ex. X=POP() on the stack [3,8,1,8] results in [3,8,1] and X=8</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Queues</h2>
+            <div class="structure-explanation">
+                <h3>Key Operations:</h3>
+                <ul>
+                    <li><strong>PUSH(item):</strong> Adds an item to the rear</li>
+                    <li><strong>POP():</strong> Removes and returns the front item</li>
+                </ul>
+                <div class="visual-example">
+                    <h4>Real-world Example:</h4>
+                    <p>Like a line at a store - first person to arrive is the first person served.</p>
+                </div>
+                <div class="implementation-note">
+                    <p>Items enter at the rear (back) and leave from the front, just like a real queue of people.</p>
+                </div>
+                <div class="implementation-note">
+                    <ul>
+                        <li>Ex. PUSH(5) on the queue [9,2,5] results in [9,2,5,5]</li>
+                        <li>Ex. X=POP() on the queue [5,4,7,1] results in [4,7,1] and X=5</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Binary Search Trees (BST)</h2>
+            <div class="structure-explanation">
+                <h3>Key Properties:</h3>
+                <ul>
+                    <li>Each node has at most two children</li>
+                    <li>Left child's key ≤ Parent's key</li>
+                    <li>Right child's key > Parent's key</li>
+                </ul>
+                <div class="bst-terminology">
+                    <h4>Important Terms:</h4>
+                    <ul>
+                        <li><strong>Root:</strong> Top node of the tree</li>
+                        <li><strong>Leaf:</strong> Node with no children</li>
+                        <li><strong>Internal Path Length:</strong> Sum of depths of all nodes</li>
+                        <li><strong>External Path Length:</strong> Sum of depths of potential insertion points</li>
+                    </ul>
+                </div>
+                <div class="traversal-types">
+                    <h4>Tree Traversals:</h4>
+                    <ul>
+                        <li><strong>Inorder:</strong> Left → Root → Right (gives sorted order)</li>
+                        <li><strong>Preorder:</strong> Root → Left → Right</li>
+                        <li><strong>Postorder:</strong> Left → Right → Root</li>
+                    </ul>
+                </div>
+                
+                <div class="bst-example">
+                    <h4>Example: Creating a BST with the word "STACK"</h4>
+                    <p>Let's build a BST by inserting one letter at a time:</p>
+                    <ol>
+                        <li>Insert S (root):</li>
+                        <pre>
+       S</pre>
+                        <li>Insert T (greater than S):</li>
+                        <pre>
+       S
+        \
+         T</pre>
+                        <li>Insert A (less than S):</li>
+                        <pre>
+       S
+      / \
+     A   T</pre>
+                        <li>Insert C (less than S, greater than A):</li>
+                        <pre>
+       S
+      / \
+     A   T
+      \
+       C</pre>
+                        <li>Insert K (less than S, greater than A, greater than C):</li>
+                        <pre>
+       S
+      / \
+     A   T
+      \
+       C
+        \
+         K</pre>
+                    <div class="bst-analysis">
+                        <h4>Tree Analysis:</h4>
+                        <ul>
+                            <li>Root node: S (depth 0)</li>
+                            <li>First level: A, T (depth 1)</li>
+                            <li>Second level: C (depth 2)</li>
+                            <li>Third level: K (depth 3)</li>
+                            <li>Internal path length = 0 + 2(1) + 1(2) + 1(3) = 7</li>
+                            <li>Inorder traversal: A, C, K, S, T (alphabetical order)</li>
+                        </ul>
+                    </div>
+                    <div class="key-rules">
+                        <h4>Remember:</h4>
+                        <ul>
+                            <li>If new value < current node: Go left</li>
+                            <li>If new value > current node: Go right</li>
+                            <li>If spot is empty: Insert there</li>
+                            <li>If duplicate value: Go left (ACSL convention)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Priority Queues</h2>
+            <div class="structure-explanation">
+                <h3>Key Features:</h3>
+                <ul>
+                    <li>Elements have priorities</li>
+                    <li>Can only access/remove the highest priority element</li>
+                    <li>Usually implemented as a Heap</li>
+                </ul>
+                <div class="heap-properties">
+                    <h4>Heap Properties:</h4>
+                    <ul>
+                        <li>Complete binary tree (filled from left to right)</li>
+                        <li>Parent is always smaller (min-heap) or larger (max-heap) than its children</li>
+                        <li>Root is always the smallest/largest element</li>
+                    </ul>
+                </div>
+
+                <div class="heap-example">
+                    <h4>Example: Building a Min-Heap with numbers [8,3,5,1,4]</h4>
+                    <p>Let's build a min-heap by inserting one number at a time:</p>
+                    <ol>
+                        <li>Insert 8: Becomes root
+                            <pre>
+       8
+                            </pre>
+                        </li>
+                        <li>Insert 3: Less than 8, swap up
+                            <pre>
+       3
+      /
+     8
+                            </pre>
+                        </li>
+                        <li>Insert 5: Goes right, no swap needed
+                            <pre>
+       3
+      / \
+     8   5
+                            </pre>
+                        </li>
+                        <li>Insert 1: Goes left, then swaps up twice
+                            <pre>
+Before swap:     After swaps:
+       3              1
+      / \            / \
+     8   5    →     3   5
+    /              /
+   1              8
+                            </pre>
+                        </li>
+                        <li>Insert 4:
+                            <pre>
+       1
+      / \
+     3   5
+    / \
+   8   4  
+                            </pre>
+                        </li>
+                    </ol>
+                    <div class="heap-operations">
+                        <h4>Common Operations:</h4>
+                        <ol>
+                            <li><strong>Insert(value):</strong>
+                                <ul>
+                                    <li>Add at next available spot (left to right)</li>
+                                    <li>Swap up while parent is larger (bubble-up)</li>
+                                </ul>
+                            </li>
+                            <li><strong>RemoveMin():</strong>
+                                <ul>
+                                    <li>Take root value (always smallest in min-heap)</li>
+                                    <li>Move last element to root</li>
+                                    <li>Swap down with smaller child until heap property restored</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="key-rules">
+                        <h4>Remember:</h4>
+                        <ul>
+                            <li>Parent of node at index i is at (i-1)/2</li>
+                            <li>Children of node at index i are at 2i+1 and 2i+2</li>
+                            <li>Always maintain complete tree shape</li>
+                            <li>For min-heap: Parent always smaller than children</li>
+                            <li>For max-heap: Parent always larger than children</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <h2>Practice Problems</h2>
+            
+            <div class="practice-problem">
+                <h3>Problem 1 (Junior)</h3>
+                
+                <p>List the nodes at depth 5 of the binary search tree of the string "WATERBOTTLE" from left to right, capitalized.</p>
+                
+
+                <div class="problem-solution">
+                    <div class="answer-input">
+                        <input type="text" id="problem1-answer" placeholder="Enter answer">
+                        <button onclick="checkDataStructuresAnswer(1)" class="submit-btn">Submit</button>
+                    </div>
+                    <div id="problem1-feedback" class="feedback-area"></div>
+                    <div id="problem1-explanation" class="explanation" style="display: none;">
+                    <h4>Solution Explanation</h4>
+                    <p>The correct answer is: E, O, T</p>
+                    
+                    <div class="step-by-step">
+                        <p>Let's build the BST step by step:</p>
+                        <p>1. Insert W:</p>
+                        <pre>
+       W</pre>
+                        <p>2. Insert A:</p>
+                        <pre>
+       W
+      /
+     A</pre>
+                        <p>3. Insert T:</p>
+                        <pre>
+       W
+      / 
+     A
+      \
+       T</pre>
+                        <p>4. Insert E:</p>
+                        <pre>
+       W
+      / 
+     A  
+      \
+       T
+      /
+     E</pre>
+                        <p>5. Insert R:</p>
+                        <pre>
+       W
+      / 
+     A  
+      \
+       T
+      /
+     E
+      \
+       R</pre>
+                        <p>6. Insert B:</p>
+                        <pre>
+       W
+      / 
+     A  
+      \
+       T
+      /
+     E
+    / \
+   B   R
+      </pre>
+                        <p>7. Insert O:</p>
+                        <pre>
+       W
+      / 
+     A   
+      \  
+       T
+      /
+     E
+    / \
+   B   R
+      /
+     O</pre>
+                        <p>8. Insert T:</p>
+                        <pre>
+       W
+      / 
+     A   
+      \  
+       T 
+      /
+     E
+    / \
+   B   R
+      / \
+     O   T</pre>
+                        <p>9. Insert T:</p>
+                        <pre>
+       W
+      / 
+     A   
+      \  
+       T 
+      /
+     E
+    / \
+   B   R
+      / \
+     O   T
+        /
+       T</pre>
+                        <p>10. Insert L:</p>
+                        <pre>
+       W
+      / 
+     A   
+      \  
+       T 
+      /
+     E
+    / \
+   B   R
+      / \
+     O   T
+    /   /
+   L   T</pre>
+                        <p>11. Insert E:</p>
+                        <pre>
+       W
+      / 
+     A   
+      \  
+       T 
+      /
+     E
+    / \
+   B   R
+   \   / \
+    E O   T
+    /   /
+   L   T
+    </pre>
+                        <p>To find nodes at depth 5:</p>
+                        <ol>
+                            <li>Start at root (W) at depth 0</li>
+                            <li>Its child (A) is at depth 1</li>
+                            <li>T is at depth 2</li>
+                            <li>E is at depth 3</li>
+                            <li>B,R are at depth 4</li>
+                            <li>E,O,T are at depth 5</li>
+                        </ol>
+                        <p>Therefore, the nodes at depth 5 in alphabetical order are: E, O, T</p>
+                    </div>
+                </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>Problem 2 (Junior)</h3>
+                    
+                    <p>Given an initially empty queue and the following sequence of operations, what would be the next POPPED element?<br>
+                    PUSH(G), PUSH(I), PUSH(N), PUSH(N), POP(X), POP(X), POP(X),<br>
+                    PUSH(G), PUSH(E), PUSH(E), PUSH(R), POP(X), POP(X), PUSH(D),<br>
+                    PUSH(O), POP(X), POP(X), POP(X), PUSH(G), PUSH(O), PUSH(O),<br>
+                    POP(X), POP(X), POP(X), PUSH(G), PUSH(E), POP(X)</p>
+
+                    <div class="problem-solution">
+                        <div class="answer-input">
+                            <input type="text" id="problem2-answer" placeholder="Enter answer">
+                            <button onclick="checkDataStructuresAnswer(2)" class="submit-btn">Submit</button>
+                        </div>
+                        <div id="problem2-feedback" class="feedback-area"></div>
+                        <div id="problem2-explanation" class="explanation" style="display: none;">
+                            <h4>Solution Explanation</h4>
+                            <p>The correct answer is: O</p>
+                            
+                            <div class="step-by-step">
+                                <p>Let's track the queue state after each operation:</p>
+                                <ol>
+                                    <li>Initial queue: []</li>
+                                    <li>PUSH(G): [G]</li>
+                                    <li>PUSH(I): [G,I]</li>
+                                    <li>PUSH(N): [G,I,N]</li>
+                                    <li>PUSH(N): [G,I,N,N]</li>
+                                    <li>POP(X)=G: [I,N,N]</li>
+                                    <li>POP(X)=I: [N,N]</li>
+                                    <li>POP(X)=N: [N]</li>
+                                    <li>PUSH(G): [N,G]</li>
+                                    <li>PUSH(E): [N,G,E]</li>
+                                    <li>PUSH(E): [N,G,E,E]</li>
+                                    <li>PUSH(R): [N,G,E,E,R]</li>
+                                    <li>POP(X)=N: [G,E,E,R]</li>
+                                    <li>POP(X)=G: [E,E,R]</li>
+                                    <li>PUSH(D): [E,E,R,D]</li>
+                                    <li>PUSH(O): [E,E,R,D,O]</li>
+                                    <li>POP(X)=E: [E,R,D,O]</li>
+                                    <li>POP(X)=E: [R,D,O]</li>
+                                    <li>POP(X)=R: [D,O]</li>
+                                    <li>PUSH(G): [D,O,G]</li>
+                                    <li>PUSH(O): [D,O,G,O]</li>
+                                    <li>PUSH(O): [D,O,G,O,O]</li>
+                                    <li>POP(X)=D: [O,G,O,O]</li>
+                                    <li>POP(X)=O: [G,O,O]</li>
+                                    <li>POP(X)=G: [O,O]</li>
+                                    <li>PUSH(G): [O,O,G]</li>
+                                    <li>PUSH(E): [O,O,G,E]</li>
+                                    <li>POP(X)=O: [O,G,E]</li>
+                                </ol>
+                                <p>Therefore, the next element to be popped would be O.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>Problem 3 (Intermediate)</h3>
+                    
+                    <p>How many nodes only have one child in the binary search tree for RAINSTORMS?</p>
+
+                    <div class="problem-solution">
+                        <div class="answer-input">
+                            <input type="text" id="problem3-answer" placeholder="Enter answer">
+                            <button onclick="checkDataStructuresAnswer(3)" class="submit-btn">Submit</button>
+                        </div>
+                        <div id="problem3-feedback" class="feedback-area"></div>
+                        <div id="problem3-explanation" class="explanation" style="display: none;">
+                            <h4>Solution Explanation</h4>
+                            <p>The correct answer is: 3</p>
+                            
+                            <div class="step-by-step">
+                                <p>Let's build the BST step by step:</p>
+                                <p>1. Insert R:</p>
+                                <pre>
+       R</pre>
+                                <p>2. Insert A:</p>
+                                <pre>
+       R
+      /
+     A</pre>
+                                <p>3. Insert I:</p>
+                                <pre>
+       R
+      /
+     A
+      \
+       I</pre>
+                                <p>4. Insert N:</p>
+                                <pre>
+       R
+      /
+     A
+      \
+       I
+        \
+         N</pre>
+                                <p>5. Insert S:</p>
+                                <pre>
+       R
+      / \
+     A   S
+      \
+       I
+        \
+         N</pre>
+                                <p>6. Insert T:</p>
+                                <pre>
+       R
+      / \
+     A   S
+      \   \
+       I   T
+        \
+         N</pre>
+                                <p>7. Insert O:</p>
+                                <pre>
+       R
+      / \
+     A   S
+      \   \
+       I   T
+        \
+         N
+          \
+           O</pre>
+                                <p>8. Insert R:</p>
+                                <pre>
+       R
+      / \
+     A   S
+      \   \
+       I   T 
+        \
+         N
+          \
+           O
+            \
+             R</pre>
+                                <p>9. Insert M:</p>
+                                <pre>
+       R
+      / \
+     A   S
+      \   \
+       I   T 
+        \
+         N
+        / \
+       M   O
+            \
+             R</pre>
+                                <p>10. Insert S:</p>
+                                <pre>
+       R
+      / \
+     A   S
+      \  /\
+       I S T 
+        \
+         N
+        / \
+       M   O
+            \
+             R</pre>
+                                <p>Counting nodes with exactly one child:</p>
+                                <ol>
+                                    <li>A has only a right child (I)</li>
+                                    <li>I has only a right child (N)</li>
+                                    <li>O has only a right child (R)</li>
+                                </ol>
+                                <p>Therefore, there are 3 nodes that have exactly one child.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>Problem 4 (Intermediate)</h3>
+                    
+                    <p>List the nodes in the bottom row of the min-heap (priority queue) of the word BLANKET from left to right, capitalized.</p>
+
+                    <div class="problem-solution">
+                        <div class="answer-input">
+                            <input type="text" id="problem4-answer" placeholder="Enter answer">
+                            <button onclick="checkDataStructuresAnswer(4)" class="submit-btn">Submit</button>
+                        </div>
+                        <div id="problem4-feedback" class="feedback-area"></div>
+                        <div id="problem4-explanation" class="explanation" style="display: none;">
+                            <h4>Solution Explanation</h4>
+                            <p>The correct answer is: N,L,E,T</p>
+                            
+                            <div class="step-by-step">
+                                <p>Let's build the min-heap step by step. Remember in a min-heap, smaller values bubble up:</p>
+                                <p>1. Insert B:</p>
+                                <pre>
+       B</pre>
+                                <p>2. Insert L:</p>
+                                <pre>
+       B
+      /
+     L</pre>
+                                <p>3. Insert A (bubbles up to root as it's smallest):</p>
+                                <pre>
+       B        A
+      / \  →   / \
+     L   A    L   B
+            
+           </pre>
+                                <p>4. Insert N:</p>
+                                <pre>
+       A
+      / \
+     L   B
+    /
+   N</pre>
+                                <p>5. Insert K (goes under L, then swaps with L):</p>
+                                <pre>
+       A        A
+      / \      / \
+     L   B →  K   B
+    / \      / \
+   N   K    N   L</pre>
+                                <p>6. Insert E:</p>
+                                <pre>
+       A     
+      /  \   
+     K    B 
+    / \   / 
+   N   L E
+        </pre>
+                                <p>7. Insert T:</p>
+                                <pre>
+       A
+      /  \
+     K    B
+    / \  / \
+   N   L E  T</pre>
+                                
+                                <p>In a min-heap:</p>
+                                <ul>
+                                    <li>Each parent must be smaller than its children</li>
+                                    <li>The tree is filled from left to right</li>
+                                    <li>The smallest element is always at the root</li>
+                                </ul>
+                                <p>Reading the bottom row from left to right: N, L, E, T</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="practice-problem">
+                    <h3>Problem 5 (Senior)</h3>
+                    
+                    <p>Find the internal path length of the binary search tree for KALEIDOSCOPE.</p>
+
+                    <div class="problem-solution">
+                        <div class="answer-input">
+                            <input type="text" id="problem5-answer" placeholder="Enter answer">
+                            <button onclick="checkDataStructuresAnswer(5)" class="submit-btn">Submit</button>
+                        </div>
+                        <div id="problem5-feedback" class="feedback-area"></div>
+                        <div id="problem5-explanation" class="explanation" style="display: none;">
+                            <h4>Solution Explanation</h4>
+                            <p>The correct answer is: 30</p>
+                            
+                            <div class="step-by-step">
+                                <p>Let's build the BST step by step and track the depth of each node (root is at depth 0):</p>
+                                <p>1. Insert K:</p>
+                                <pre>
+ 0     K</pre>
+                                <p>2. Insert A:</p>
+                                <pre>
+ 0     K 
+      /
+ 1   A </pre>
+                                <p>3. Insert L:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L </pre>
+                                <p>4. Insert E:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \
+ 2     E </pre>
+                                <p>5. Insert I:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \
+ 2     E
+        \
+ 3       I </pre>
+                                <p>6. Insert D:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \
+ 2     E
+      / \
+ 3   D   I </pre>
+                                <p>7. Insert O:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \   \
+ 2     E   O
+      / \
+ 3   D   I</pre>
+                                <p>8. Insert S:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \   \
+ 2     E   O
+      / \   \
+ 3   D   I   S</pre>
+                                <p>9. Insert C:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \   \
+ 2     E   O
+      / \   \
+ 3   D   I   S
+    /
+ 4 C </pre>
+                                <p>10. Insert O :</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \   \
+ 2     E   O
+      /\   /\ 
+ 3   D  I O  S
+    /       
+ 4 C        </pre>
+                                <p>11. Insert P:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \   \
+ 2     E   O
+      /\   /\ 
+ 3   D  I O  S
+    /       /
+ 4 C       P </pre>
+                                <p>12. Insert E:</p>
+                                <pre>
+ 0     K 
+      / \
+ 1   A   L
+      \   \
+ 2     E   O
+      /\   /\
+ 3   D  I O  S
+    / \       \
+ 4 C   E       P </pre>
+
+                                <p>To calculate internal path length, sum the depths of all nodes:</p>
+                                <ul>
+                                    <li>Depth 0: K (1 node × 0 = 0)</li>
+                                    <li>Depth 1: A, L (2 nodes × 1 = 2)</li>
+                                    <li>Depth 2: E, O (2 nodes × 2 = 4)</li>
+                                    <li>Depth 3: D, I, O, S (4 nodes × 3 = 12)</li>
+                                    <li>Depth 4: C, E, P (3 nodes × 4 = 12)</li>
+                                </ul>
+                                <p>Internal path length = 0 + 2 + 4 + 12 + 12 = 30</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="lessons.js"></script>
+</body>
+</html> 
