@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graph Theory – ACSL Topics – AS Knowledge</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html" aria-current="page">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container container-narrow page">
+        <div class="page-header">
+            <a href="../acsl.html" class="back-link">&larr; Back to Topics</a>
+            <h1>Graph Theory</h1>
+            <p class="lead">Vertices, edges, paths, cycles, trees, and adjacency matrices.</p>
+        </div>
+
+        <section class="content-section" id="overview">
+            <h2>Overview</h2>
+            <p>Many real problems are about points and the connections between them: computers joined by cables, cities joined by flight routes, rooms joined by hallways. A <em>graph</em> is the mathematical object that models all of these situations.</p>
+            <p>A graph is a collection of <strong>vertices</strong> (also called nodes) and <strong>edges</strong>. An edge is a connection between two vertices. We usually draw a graph with dots for vertices and lines for edges, but the graph itself is defined by its sets, not by any particular picture. Two drawings that look completely different can represent exactly the same graph.</p>
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li>A graph is fully described by its set of vertices and its set of edges, e.g. V = {A, B, C, D, E, F, G, H} and E = {AB, AD, BD, CF, FG, GH, GE, HE}.</li>
+                    <li>Edges may be <strong>undirected</strong> (AB is the same as BA) or <strong>directed</strong> (AB goes from A to B only).</li>
+                    <li>Questions usually ask you to count paths or cycles, decide whether a graph is a tree, or read a graph from its adjacency matrix.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3>Terminology</h3>
+            <p>Take the undirected graph with vertices {A, B, C, D, E, F, G, H} and edges {AB, AD, BD, CF, FG, GH, GE, HE} as a running example.</p>
+            <div class="circuit-visual">
+                <svg viewBox="0 0 420 170" width="420" role="img" aria-label="Undirected graph with two components: A B D and C E F G H">
+                    <g class="gate-line">
+                        <line x1="40" y1="40" x2="120" y2="40"/>
+                        <line x1="40" y1="40" x2="80" y2="120"/>
+                        <line x1="120" y1="40" x2="80" y2="120"/>
+                        <line x1="220" y1="130" x2="280" y2="130"/>
+                        <line x1="280" y1="130" x2="340" y2="130"/>
+                        <line x1="340" y1="130" x2="380" y2="60"/>
+                        <line x1="340" y1="130" x2="300" y2="40"/>
+                        <line x1="380" y1="60" x2="300" y2="40"/>
+                    </g>
+                    <g fill="#ffffff" stroke="#1f2933" stroke-width="2">
+                        <circle cx="40" cy="40" r="14"/><circle cx="120" cy="40" r="14"/><circle cx="80" cy="120" r="14"/>
+                        <circle cx="220" cy="130" r="14"/><circle cx="280" cy="130" r="14"/><circle cx="340" cy="130" r="14"/>
+                        <circle cx="380" cy="60" r="14"/><circle cx="300" cy="40" r="14"/>
+                    </g>
+                    <g class="gate-label-large" text-anchor="middle">
+                        <text x="40" y="41">A</text><text x="120" y="41">B</text><text x="80" y="121">D</text>
+                        <text x="220" y="131">C</text><text x="280" y="131">F</text><text x="340" y="131">G</text>
+                        <text x="380" y="61">H</text><text x="300" y="41">E</text>
+                    </g>
+                </svg>
+            </div>
+            <ul>
+                <li><strong>Path:</strong> a list of vertices in which each consecutive pair is joined by an edge. FGHE is a path from F to E.</li>
+                <li><strong>Simple path:</strong> a path with no repeated vertex. FGHEG is a path but not a simple one.</li>
+                <li><strong>Connected graph:</strong> there is a path between every pair of vertices. If you picked the graph up by any vertex, it would all come along.</li>
+                <li><strong>Connected components:</strong> the separate pieces of a graph that is not connected. The example has two: {A, B, D} and {C, E, F, G, H}.</li>
+                <li><strong>Cycle:</strong> a simple path except that it starts and ends at the same vertex. HEGH is a cycle. Listing the same loop from a different starting vertex (EGHE) or in the other direction (HGEH) still names the same cycle, so count each loop once.</li>
+                <li><strong>Complete graph:</strong> every possible edge is present. A graph with few edges is <em>sparse</em>; one with few edges missing is <em>dense</em>.</li>
+            </ul>
+
+            <h3>Directed Graphs</h3>
+            <p>In a directed graph every edge has a direction. The edge XY can be used to travel from X to Y but not from Y to X unless YX is also an edge. Arrows on both ends of a line mean both directions are present, which behaves like an undirected edge. A directed graph with no cycles is called a <strong>DAG</strong> (directed acyclic graph).</p>
+            <p>For example, with vertices {A, B, C, D, E, F, G, H} and directed edges {AB, AD, DA, DB, EG, GE, HG, HE, GF, CF, FC}, there is exactly one directed path from G to C (G &rarr; F &rarr; C), but no directed path from C back to G.</p>
+
+            <h3>Trees and Forests</h3>
+            <ul>
+                <li>A <strong>tree</strong> is a connected graph with no cycles. Between any two vertices of a tree there is exactly one path.</li>
+                <li>A tree with N vertices always has exactly <strong>N - 1</strong> edges. A connected graph with N vertices and N - 1 edges must be a tree.</li>
+                <li>A <strong>forest</strong> is a collection of disconnected trees.</li>
+                <li>A <strong>weighted graph</strong> gives each edge a number (a cost or distance). A <strong>spanning tree</strong> is a subgraph that includes every vertex and forms a tree; a <em>minimal</em> spanning tree has the smallest total weight.</li>
+            </ul>
+
+            <h3>Adjacency Matrices</h3>
+            <p>A graph with N vertices can be stored as an N &times; N grid. Label the rows and columns with the vertices in the same order. Put a 1 in row X, column Y if there is an edge from X to Y, and 0 otherwise. For an undirected graph the matrix is symmetric; for a directed graph it usually is not.</p>
+            <div class="key-points">
+                <h4>Counting paths with matrix powers</h4>
+                <ul>
+                    <li>M itself counts paths of length 1 (the edges).</li>
+                    <li>M<sup>2</sup> counts paths of length 2: cell (i, j) of M<sup>2</sup> is the number of two-edge routes from i to j.</li>
+                    <li>In general, M<sup>p</sup>(i, j) is the number of paths of length p from vertex i to vertex j.</li>
+                    <li>To compute an entry of M<sup>2</sup> by hand, multiply row i of M by column j of M and add: the sum counts every middle vertex k with edges i &rarr; k and k &rarr; j.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h2>Examples</h2>
+
+            <div class="example-card">
+                <div class="title">Example 1: Counting cycles</div>
+                <p>How many different cycles are in the directed graph with vertices {A, B, C, D, E} and edges {AB, BA, BC, CD, DC, DB, DE}?</p>
+                <div class="step-by-step">
+                    <p>List the edges leaving each vertex, then look for loops that return to their start without repeating a vertex in between.</p>
+                    <ul>
+                        <li>A &rarr; B, B &rarr; A: the cycle <strong>ABA</strong>.</li>
+                        <li>C &rarr; D, D &rarr; C: the cycle <strong>CDC</strong>.</li>
+                        <li>B &rarr; C &rarr; D &rarr; B: the cycle <strong>BCDB</strong>.</li>
+                        <li>E has no outgoing edges, so nothing that reaches E can come back.</li>
+                    </ul>
+                    <p class="result">There are 3 cycles.</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 2: Building an adjacency matrix and squaring it</div>
+                <p>Directed graph with vertices {A, B, C, D} and edges {AB, AD, BC, BD, CB, DC}.</p>
+                <div class="step-by-step">
+                    <p>Matrix M (row = from, column = to):</p>
+                    <table class="solution-table">
+                        <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+                        <tbody>
+                            <tr><th>A</th><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                            <tr><th>B</th><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                            <tr><th>C</th><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+                            <tr><th>D</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                        </tbody>
+                    </table>
+                    <p>To find the number of paths of length 2 from A to C, multiply row A by column C: (0)(0) + (1)(1) + (0)(0) + (1)(1) = 2. The two paths are A &rarr; B &rarr; C and A &rarr; D &rarr; C.</p>
+                    <p>Similarly, row A times column D gives (0)(1) + (1)(1) + (0)(0) + (1)(0) = 1, the single path A &rarr; B &rarr; D. Row B times column B gives (0)(1) + (0)(0) + (1)(1) + (1)(0) = 1, the path B &rarr; C &rarr; B.</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 3: Reading a graph from its matrix</div>
+                <table class="solution-table">
+                    <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+                    <tbody>
+                        <tr><th>A</th><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                        <tr><th>B</th><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                        <tr><th>C</th><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><th>D</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                    </tbody>
+                </table>
+                <p>The matrix is 4 &times; 4, so there are 4 vertices. Every 1 is an edge, read as row &rarr; column: the seven edges are {AB, AD, BA, BD, CA, DB, DC}. The graph is directed because the matrix is not symmetric (AB is present but CA has no matching AC).</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="practice">
+            <h2>Practice Problems</h2>
+
+            <div class="practice-problem" data-answers="3">
+                <h3>Problem 1 <span class="level">Junior</span></h3>
+                <p>An undirected graph has vertices {A, B, C, D, E, F, G, H} and edges {AB, BC, DE, EF, FD, GH}. How many connected components does it have?</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem1-answer">Your answer</label>
+                    <input type="text" id="problem1-answer" class="answer-input" placeholder="Enter a number" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Group the vertices that can reach one another:</p>
+                    <ol>
+                        <li>AB and BC join A, B and C: component {A, B, C}.</li>
+                        <li>DE, EF and FD join D, E and F: component {D, E, F}. (This one contains the cycle DEFD.)</li>
+                        <li>GH joins G and H: component {G, H}.</li>
+                    </ol>
+                    <p>No edge connects any two of these groups.</p>
+                    <p class="final-answer">3 connected components</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="2">
+                <h3>Problem 2 <span class="level">Junior</span></h3>
+                <p>How many different cycles are there in the directed graph with vertices {A, B, C, D, E} and edges {AB, BC, CA, CD, DE, ED}?</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem2-answer">Your answer</label>
+                    <input type="text" id="problem2-answer" class="answer-input" placeholder="Enter a number" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Outgoing edges: A &rarr; B; B &rarr; C; C &rarr; A, D; D &rarr; E; E &rarr; D.</p>
+                    <ol>
+                        <li>Starting at A: A &rarr; B &rarr; C &rarr; A returns to A. Cycle <strong>ABCA</strong>.</li>
+                        <li>From C the other edge goes to D, and D &rarr; E &rarr; D returns to D. Cycle <strong>DED</strong>.</li>
+                        <li>Once you leave C for D you can never get back to A, B or C (D and E only point at each other), so there is no longer cycle that uses CD.</li>
+                    </ol>
+                    <p class="final-answer">2 cycles</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="2">
+                <h3>Problem 3 <span class="level">Intermediate</span></h3>
+                <p>A directed graph has vertices {A, B, C, D} and edges {AB, AC, BC, BD, CD, DA}. How many different paths of length 2 are there from A to D?</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem3-answer">Your answer</label>
+                    <input type="text" id="problem3-answer" class="answer-input" placeholder="Enter a number" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>A path of length 2 from A to D has the form A &rarr; X &rarr; D, so X must be reachable from A and must have an edge to D.</p>
+                    <ol>
+                        <li>From A you can go to B or C.</li>
+                        <li>B &rarr; D is an edge, so A &rarr; B &rarr; D works.</li>
+                        <li>C &rarr; D is an edge, so A &rarr; C &rarr; D works.</li>
+                    </ol>
+                    <p>Using the adjacency matrix instead: row A = (0, 1, 1, 0) and column D = (0, 1, 1, 0), so M<sup>2</sup>(A, D) = 0 + 1 + 1 + 0 = 2.</p>
+                    <p class="final-answer">2 paths</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="2">
+                <h3>Problem 4 <span class="level">Intermediate</span></h3>
+                <p>The adjacency matrix below represents a directed graph with vertices A, B, C, D (rows are the starting vertex, columns the ending vertex). How many different paths of length 3 are there from D back to D?</p>
+                <table class="solution-table">
+                    <thead><tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr></thead>
+                    <tbody>
+                        <tr><th>A</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                        <tr><th>B</th><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                        <tr><th>C</th><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                        <tr><th>D</th><td>1</td><td>0</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem4-answer">Your answer</label>
+                    <input type="text" id="problem4-answer" class="answer-input" placeholder="Enter a number" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Read the edges from the matrix: AB, AC, BC, BD, CD, DA.</p>
+                    <ol>
+                        <li>D has only one outgoing edge, D &rarr; A, so every path from D starts D &rarr; A.</li>
+                        <li>From A the second edge goes to B or to C.</li>
+                        <li>The third edge must end at D. B &rarr; D is an edge, and C &rarr; D is an edge.</li>
+                    </ol>
+                    <p>The length-3 paths from D to D are D &rarr; A &rarr; B &rarr; D and D &rarr; A &rarr; C &rarr; D. (The third possible path from D, D &rarr; A &rarr; B &rarr; C, ends at C, not D.)</p>
+                    <p class="final-answer">2 paths</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="3">
+                <h3>Problem 5 <span class="level">Senior</span></h3>
+                <p>How many different cycles are there in the directed graph with vertices {A, B, C, D, E} and edges {AB, AC, BC, BD, CD, DE, EA}?</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem5-answer">Your answer</label>
+                    <input type="text" id="problem5-answer" class="answer-input" placeholder="Enter a number" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Outgoing edges: A &rarr; B, C; B &rarr; C, D; C &rarr; D; D &rarr; E; E &rarr; A.</p>
+                    <ol>
+                        <li>The only way back to A is through E, and the only way into E is from D. So every cycle must contain the segment D &rarr; E &rarr; A. That means every cycle passes through A, and we can count cycles by counting the simple routes from A to D.</li>
+                        <li>A &rarr; B &rarr; D: cycle <strong>ABDEA</strong>.</li>
+                        <li>A &rarr; C &rarr; D: cycle <strong>ACDEA</strong>.</li>
+                        <li>A &rarr; B &rarr; C &rarr; D: cycle <strong>ABCDEA</strong>.</li>
+                        <li>There is no route from C back to B and no other edge into D, so these are all of them.</li>
+                    </ol>
+                    <p class="final-answer">3 cycles</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Based on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html>

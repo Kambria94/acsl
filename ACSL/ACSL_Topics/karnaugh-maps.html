@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karnaugh Maps – ACSL Topics – AS Knowledge</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html" aria-current="page">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container container-narrow page">
+        <div class="page-header">
+            <a href="../acsl.html" class="back-link">&larr; Back to Topics</a>
+            <h1>Karnaugh Maps</h1>
+            <p class="lead">A visual method for minimising Boolean expressions. Invitational competition topic.</p>
+        </div>
+
+        <section class="content-section" id="overview">
+            <h2>Overview</h2>
+            <p>Logic design is about analysing, building and <em>minimising</em> Boolean functions. A circuit built from a shorter expression uses fewer gates, so finding the smallest equivalent expression matters. Simplifying by algebra alone works but takes experience and a certain amount of luck, and it gets harder quickly as the number of variables grows. Some simplifications are obvious: A<span class="overline">B</span> + <span class="overline">A</span><span class="overline">B</span> clearly depends only on <span class="overline">B</span>. Others are not: it is far from obvious that A<span class="overline">B</span> + <span class="overline">B</span>C + <span class="overline">A</span>C is the same function as A<span class="overline">B</span> + <span class="overline">A</span>C.</p>
+            <p>The <strong>Karnaugh map</strong> (Maurice Karnaugh, 1953) is a tool that turns this into pattern recognition. It lays the truth table out as a grid arranged so that any two neighbouring cells differ in exactly one variable. Groups of adjacent 1's then correspond directly to simplified product terms.</p>
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li>A map for n variables has 2<sup>n</sup> cells, one for each row of the truth table.</li>
+                    <li>Row and column headings are written in <strong>Gray code</strong> order (00, 01, 11, 10) so that neighbours differ by a single bit. The map also wraps around: the first and last rows are neighbours, as are the first and last columns.</li>
+                    <li>Circle rectangular groups of 1's whose size is a power of two. Each group becomes one product term containing only the variables that are constant across the group.</li>
+                    <li>The minimal expression is the OR of the group terms.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3>Laying Out the Map</h3>
+            <p>Write 1 for an uncomplemented variable and 0 for a complemented one, so the term A<span class="overline">B</span>C corresponds to the binary cell 101. Each cell is filled with the function's value for that input combination.</p>
+            <div class="card-grid">
+                <div class="card">
+                    <h4>Two variables</h4>
+                    <table class="solution-table">
+                        <thead><tr><th>A \ B</th><th>0</th><th>1</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>00</td><td>01</td></tr>
+                            <tr><th>1</th><td>10</td><td>11</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="note">Cell labels show the values of AB.</p>
+                </div>
+                <div class="card">
+                    <h4>Three variables</h4>
+                    <table class="solution-table">
+                        <thead><tr><th>C \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>000</td><td>010</td><td>110</td><td>100</td></tr>
+                            <tr><th>1</th><td>001</td><td>011</td><td>111</td><td>101</td></tr>
+                        </tbody>
+                    </table>
+                    <p class="note">Cell labels show ABC. Note the column order 00, 01, 11, 10.</p>
+                </div>
+            </div>
+            <div class="card">
+                <h4>Four variables</h4>
+                <table class="solution-table">
+                    <thead><tr><th>CD \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                    <tbody>
+                        <tr><th>00</th><td>0000</td><td>0100</td><td>1100</td><td>1000</td></tr>
+                        <tr><th>01</th><td>0001</td><td>0101</td><td>1101</td><td>1001</td></tr>
+                        <tr><th>11</th><td>0011</td><td>0111</td><td>1111</td><td>1011</td></tr>
+                        <tr><th>10</th><td>0010</td><td>0110</td><td>1110</td><td>1010</td></tr>
+                    </tbody>
+                </table>
+                <p class="note">Cell labels show ABCD. Both the rows and the columns use Gray code order.</p>
+            </div>
+
+            <h3>Grouping Rules</h3>
+            <div class="key-points">
+                <ul>
+                    <li>Groups contain only 1's; no zeros are allowed.</li>
+                    <li>Groups are rectangles (no diagonals) of 1, 2, 4, 8 or 16 cells.</li>
+                    <li>Make each group as large as possible.</li>
+                    <li>Every 1 must be in at least one group.</li>
+                    <li>Groups may overlap.</li>
+                    <li>Groups may wrap around the edges of the map.</li>
+                    <li>Use the fewest groups possible.</li>
+                </ul>
+            </div>
+
+            <h3>Reading a Group as a Term</h3>
+            <p>Within a group, look at each variable. If it has the same value in every cell of the group, keep it (uncomplemented for 1, complemented for 0). If it changes, drop it. In a four-variable map a group of two cells eliminates one variable, a group of four eliminates two, and a group of eight eliminates three.</p>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h2>Examples</h2>
+
+            <div class="example-card">
+                <div class="title">Example 1: Two variables</div>
+                <p>Minimise f(A, B) = A<span class="overline">B</span> + <span class="overline">A</span><span class="overline">B</span>.</p>
+                <table class="solution-table">
+                    <thead><tr><th>A \ B</th><th>0</th><th>1</th></tr></thead>
+                    <tbody>
+                        <tr><th>0</th><td>1</td><td>0</td></tr>
+                        <tr><th>1</th><td>1</td><td>0</td></tr>
+                    </tbody>
+                </table>
+                <p>The two 1's form a vertical pair in the B = 0 column. A changes within the group (0 then 1), so it is dropped; B is 0 throughout, so the term is <span class="overline">B</span>.</p>
+                <p class="result">f = <span class="overline">B</span></p>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 2: Three variables</div>
+                <p>Minimise f(A, B, C) = A<span class="overline">B</span> + <span class="overline">B</span>C + <span class="overline">A</span>C.</p>
+                <div class="step-by-step">
+                    <p>First find which cells are 1. A<span class="overline">B</span> covers 100 and 101; <span class="overline">B</span>C covers 001 and 101; <span class="overline">A</span>C covers 001 and 011.</p>
+                    <table class="solution-table">
+                        <thead><tr><th>C \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                            <tr><th>1</th><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <ol>
+                        <li>The two 1's in the AB = 10 column (cells 100 and 101) form a group. C changes; A = 1 and B = 0 are constant. Term: A<span class="overline">B</span>.</li>
+                        <li>The two 1's in the C = 1 row under AB = 00 and 01 (cells 001 and 011) form a group. B changes; A = 0 and C = 1 are constant. Term: <span class="overline">A</span>C.</li>
+                        <li>Every 1 is now covered, so the <span class="overline">B</span>C term from the original expression was redundant.</li>
+                    </ol>
+                    <p class="result">f = A<span class="overline">B</span> + <span class="overline">A</span>C</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 3: Wrapping around</div>
+                <p>Minimise f(A, B, C) = <span class="overline">A</span><span class="overline">B</span><span class="overline">C</span> + AB<span class="overline">C</span> + A<span class="overline">B</span> + <span class="overline">A</span><span class="overline">C</span>.</p>
+                <div class="step-by-step">
+                    <p>Cells that are 1: 000 (from the first and fourth terms), 110, 100 and 101 (from A<span class="overline">B</span>), and 010 (from <span class="overline">A</span><span class="overline">C</span>).</p>
+                    <table class="solution-table">
+                        <thead><tr><th>C \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><th>1</th><td>0</td><td>0</td><td>0</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <ol>
+                        <li>The whole C = 0 row is 1's: a group of four. Only C is constant. Term: <span class="overline">C</span>.</li>
+                        <li>The remaining 1 at 101 pairs with 100 directly above it. Term: A<span class="overline">B</span>.</li>
+                    </ol>
+                    <p class="result">f = <span class="overline">C</span> + A<span class="overline">B</span></p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="practice">
+            <h2>Practice Problems</h2>
+            <p class="note">Type complements with an apostrophe (<code>A'</code> for <span class="overline">A</span>), write AND as juxtaposition (<code>AB</code>) and OR as <code>+</code>. Terms may be given in any order.</p>
+
+            <div class="practice-problem" data-answers="A'+B|B+A'">
+                <h3>Problem 1 <span class="level">Junior</span></h3>
+                <p>Use a Karnaugh map to minimise the function whose truth table gives f(A, B) = 1 for (A, B) = (0, 0), (0, 1) and (1, 1), and f = 0 for (1, 0).</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem1-answer">Your answer</label>
+                    <input type="text" id="problem1-answer" class="answer-input" placeholder="Enter the minimal expression" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <table class="solution-table">
+                        <thead><tr><th>A \ B</th><th>0</th><th>1</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>1</td><td>1</td></tr>
+                            <tr><th>1</th><td>0</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <ol>
+                        <li>The top row (A = 0) is all 1's. B changes, A is constant at 0. Term: <span class="overline">A</span>.</li>
+                        <li>The right column (B = 1) is all 1's. A changes, B is constant at 1. Term: B.</li>
+                        <li>The two groups overlap at cell 01, which is allowed, and together they cover all three 1's.</li>
+                    </ol>
+                    <p class="final-answer">f = <span class="overline">A</span> + B (typed as A'+B)</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="B'|~B|!B|NOT B">
+                <h3>Problem 2 <span class="level">Junior</span></h3>
+                <p>Use a Karnaugh map to minimise f = <span class="overline">A</span><span class="overline">B</span><span class="overline">C</span> + <span class="overline">A</span><span class="overline">B</span>C + A<span class="overline">B</span><span class="overline">C</span> + A<span class="overline">B</span>C.</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem2-answer">Your answer</label>
+                    <input type="text" id="problem2-answer" class="answer-input" placeholder="Enter the minimal expression" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>The four terms are the cells 000, 001, 100 and 101.</p>
+                    <table class="solution-table">
+                        <thead><tr><th>C \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                            <tr><th>1</th><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <ol>
+                        <li>The 1's sit in the first and last columns. Because the map wraps around, those two columns are adjacent, so all four 1's form a single group of four.</li>
+                        <li>Within the group A changes (0 and 1) and C changes (0 and 1), but B is 0 in every cell.</li>
+                    </ol>
+                    <p class="final-answer">f = <span class="overline">B</span> (typed as B')</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="C+AB|AB+C">
+                <h3>Problem 3 <span class="level">Intermediate</span></h3>
+                <p>Use a Karnaugh map to minimise f = <span class="overline">A</span><span class="overline">B</span>C + <span class="overline">A</span>BC + ABC + A<span class="overline">B</span>C + AB<span class="overline">C</span>.</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem3-answer">Your answer</label>
+                    <input type="text" id="problem3-answer" class="answer-input" placeholder="Enter the minimal expression" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>The terms are the cells 001, 011, 111, 101 and 110.</p>
+                    <table class="solution-table">
+                        <thead><tr><th>C \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                        <tbody>
+                            <tr><th>0</th><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><th>1</th><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <ol>
+                        <li>The entire C = 1 row is 1's: a group of four in which only C is constant. Term: C.</li>
+                        <li>The remaining 1 at 110 pairs with 111 directly below it. A = 1 and B = 1 are constant, C changes. Term: AB.</li>
+                    </ol>
+                    <p class="final-answer">f = C + AB</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="B'C'+A'C|A'C+B'C'|C'B'+A'C|A'C+C'B'|B'C'+CA'|CA'+B'C'|C'B'+CA'|CA'+C'B'">
+                <h3>Problem 4 <span class="level">Intermediate</span></h3>
+                <p>The Karnaugh map below shows a three-variable function. Write its minimal sum-of-products expression.</p>
+                <table class="solution-table">
+                    <thead><tr><th>C \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                    <tbody>
+                        <tr><th>0</th><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                        <tr><th>1</th><td>1</td><td>1</td><td>0</td><td>0</td></tr>
+                    </tbody>
+                </table>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem4-answer">Your answer</label>
+                    <input type="text" id="problem4-answer" class="answer-input" placeholder="Enter the minimal expression" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>The 1's are in cells 000, 100, 001 and 011. No group of four is possible, so look for pairs.</p>
+                    <ol>
+                        <li>Cells 000 and 100 are in the first and last columns of the top row. The map wraps around, so they are neighbours. A changes; B = 0 and C = 0 are constant. Term: <span class="overline">B</span><span class="overline">C</span>. This pair is forced, because 100 has no other neighbouring 1.</li>
+                        <li>Cells 001 and 011 are side by side in the bottom row. B changes; A = 0 and C = 1 are constant. Term: <span class="overline">A</span>C. This pair is also forced, because 011 has no other neighbouring 1.</li>
+                        <li>Those two pairs already cover every 1, so the pair 000 and 001 (which would give <span class="overline">A</span><span class="overline">B</span>) is not needed.</li>
+                    </ol>
+                    <p class="final-answer">f = <span class="overline">B</span><span class="overline">C</span> + <span class="overline">A</span>C (typed as B'C'+A'C)</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="BD+AD'|AD'+BD">
+                <h3>Problem 5 <span class="level">Senior</span></h3>
+                <p>Use a four-variable Karnaugh map to minimise f = A<span class="overline">B</span><span class="overline">D</span> + AB<span class="overline">C</span><span class="overline">D</span> + ABC + B<span class="overline">C</span>D + <span class="overline">A</span>BCD.</p>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem5-answer">Your answer</label>
+                    <input type="text" id="problem5-answer" class="answer-input" placeholder="Enter the minimal expression" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>First expand each term into the ABCD cells it covers:</p>
+                    <ul>
+                        <li>A<span class="overline">B</span><span class="overline">D</span>: 1000, 1010</li>
+                        <li>AB<span class="overline">C</span><span class="overline">D</span>: 1100</li>
+                        <li>ABC: 1110, 1111</li>
+                        <li>B<span class="overline">C</span>D: 0101, 1101</li>
+                        <li><span class="overline">A</span>BCD: 0111</li>
+                    </ul>
+                    <table class="solution-table">
+                        <thead><tr><th>CD \ AB</th><th>00</th><th>01</th><th>11</th><th>10</th></tr></thead>
+                        <tbody>
+                            <tr><th>00</th><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                            <tr><th>01</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                            <tr><th>11</th><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                            <tr><th>10</th><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                        </tbody>
+                    </table>
+                    <ol>
+                        <li>The 2 &times; 2 block in the middle (columns 01 and 11, rows 01 and 11) is cells 0101, 0111, 1101, 1111. B = 1 and D = 1 throughout; A and C change. Term: BD.</li>
+                        <li>The four corner-ish cells 1100, 1000, 1110, 1010 (columns 11 and 10, rows 00 and 10) form a group of four that wraps from the top row to the bottom row. A = 1 and D = 0 throughout; B and C change. Term: A<span class="overline">D</span>.</li>
+                        <li>All eight 1's are covered by these two groups.</li>
+                    </ol>
+                    <p class="final-answer">f = BD + A<span class="overline">D</span> (typed as BD+AD')</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Based on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html>

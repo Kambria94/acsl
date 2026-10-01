@@ -1,344 +1,135 @@
-function showExplanation(explanationElement) {
-    explanationElement.style.display = 'block';
-}
+/*
+ * Shared practice-problem checker for every ACSL topic page.
+ *
+ * Markup contract (identical on all topic pages):
+ *
+ *   <div class="practice-problem" data-answers="7BE|07BE">
+ *       ...
+ *       <div class="answer-row">
+ *           <input type="text" class="answer-input" ...>
+ *           <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+ *           <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+ *           <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+ *       </div>
+ *       <p class="feedback" aria-live="polite"></p>
+ *       <div class="solution" hidden> ... </div>
+ *   </div>
+ *
+ * data-answers holds one or more accepted answers separated by "|".
+ * Both the user's input and each accepted answer are normalised with
+ * trim -> uppercase -> remove all whitespace before comparison.
+ */
 
-function createSeeAnswerButton(feedbackElement, explanationElement) {
-    // Remove existing see answer button if there is one
-    const existingButton = feedbackElement.querySelector('.see-answer-btn');
-    if (existingButton) {
-        existingButton.remove();
+(function () {
+    'use strict';
+
+    function normalizeAnswer(value) {
+        return String(value == null ? '' : value)
+            .trim()
+            .toUpperCase()
+            .replace(/\s+/g, '');
     }
-    
-    // Create new button
-    const seeAnswerBtn = document.createElement('button');
-    seeAnswerBtn.textContent = 'See Answer';
-    seeAnswerBtn.className = 'see-answer-btn';
-    seeAnswerBtn.style.marginLeft = '10px';
-    seeAnswerBtn.style.padding = '8px 16px';
-    seeAnswerBtn.style.backgroundColor = '#FFD700'; // Yellow color
-    seeAnswerBtn.style.border = 'none';
-    seeAnswerBtn.style.borderRadius = '4px';
-    seeAnswerBtn.style.cursor = 'pointer';
-    seeAnswerBtn.style.color = '#000000';
-    seeAnswerBtn.style.fontWeight = 'bold';
 
-    // Hover effect
-    seeAnswerBtn.onmouseover = () => {
-        seeAnswerBtn.style.backgroundColor = '#FFC000';
+    function isAcceptedAnswer(input, acceptedList) {
+        var normalized = normalizeAnswer(input);
+        if (normalized === '') {
+            return false;
+        }
+        return acceptedList.some(function (answer) {
+            return normalizeAnswer(answer) === normalized;
+        });
+    }
+
+    function getProblem(el) {
+        return el && el.closest ? el.closest('.practice-problem') : null;
+    }
+
+    function getParts(problem) {
+        return {
+            input: problem.querySelector('.answer-input'),
+            feedback: problem.querySelector('.feedback'),
+            solution: problem.querySelector('.solution')
+        };
+    }
+
+    function setFeedback(feedback, text, state) {
+        if (!feedback) {
+            return;
+        }
+        feedback.textContent = text;
+        feedback.classList.remove('correct', 'incorrect');
+        if (state) {
+            feedback.classList.add(state);
+        }
+    }
+
+    /* Check the answer typed for the problem that contains `button`. */
+    window.checkAnswer = function (button) {
+        var problem = getProblem(button);
+        if (!problem) {
+            return;
+        }
+        var parts = getParts(problem);
+        var accepted = (problem.getAttribute('data-answers') || '').split('|');
+        var value = parts.input ? parts.input.value : '';
+
+        if (normalizeAnswer(value) === '') {
+            setFeedback(parts.feedback, 'Enter an answer first.', 'incorrect');
+            return;
+        }
+
+        if (isAcceptedAnswer(value, accepted)) {
+            setFeedback(parts.feedback, 'Correct.', 'correct');
+            if (parts.solution) {
+                parts.solution.hidden = false;
+            }
+        } else {
+            setFeedback(parts.feedback, 'Not quite. Try again, or show the solution.', 'incorrect');
+        }
     };
-    seeAnswerBtn.onmouseout = () => {
-        seeAnswerBtn.style.backgroundColor = '#FFD700';
+
+    /* Toggle the worked solution for the problem that contains `button`. */
+    window.showSolution = function (button) {
+        var problem = getProblem(button);
+        if (!problem) {
+            return;
+        }
+        var solution = problem.querySelector('.solution');
+        if (solution) {
+            solution.hidden = !solution.hidden;
+        }
     };
 
-    seeAnswerBtn.onclick = () => showExplanation(explanationElement);
-    feedbackElement.appendChild(seeAnswerBtn);
-}
-
-function checkComputerNumberSystemsAnswer(problemNumber) {
-    const answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    const feedback = document.getElementById(`problem${problemNumber}-feedback`);
-    const explanation = document.getElementById(`problem${problemNumber}-explanation`);
-    
-    let isCorrect = false;
-    
-    switch(problemNumber) {
-        // Computer Number Systems problems
-        case 1:
-            const correctAnswer = '7BE';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 2:
-            const correctAnswer2 = '15';
-            isCorrect = answer === correctAnswer2;
-            break;
-        
-        case 3:
-            isCorrect = answer === 'CB';
-            break;
-        
-        case 4:
-            isCorrect = answer === '73F';
-            break;
-        
-        case 5:
-            isCorrect = answer === '953';
-            break;
-    }
-    
-    if (isCorrect) {
-        feedback.innerHTML = "Correct! Well done!";
-        feedback.className = "feedback-area correct";
-        explanation.style.display = "block";
-    } else {
-        feedback.innerHTML = "That's not correct. Try again!";
-        feedback.className = "feedback-area incorrect";
-        explanation.style.display = "none";
-        createSeeAnswerButton(feedback, explanation);
-    }
-}
-
-function checkAssemblyAnswer(problemNumber) {
-    let answer, correctAnswer, feedback, explanation;
-    answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    feedback = document.getElementById(`problem${problemNumber}-feedback`);
-    explanation = document.getElementById(`problem${problemNumber}-explanation`);
-
-    switch(problemNumber) {
-        case 1:
-            correctAnswer = '25';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 2:
-            correctAnswer = '-8';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 3:
-            correctAnswer = '13';
-            isCorrect = answer === correctAnswer;
-            break;
-    }
-
-    if (isCorrect) {
-        feedback.innerHTML = "Correct! Well done!";
-        feedback.className = "feedback-area correct";
-        explanation.style.display = "block";
-    } else {
-        feedback.innerHTML = "That's not correct. Try again!";
-        feedback.className = "feedback-area incorrect";
-        explanation.style.display = "none";
-        createSeeAnswerButton(feedback, explanation);
-    }
-}
-
-function checkBitStringAnswer(problemNumber) {
-    let answer, correctAnswer, feedback, explanation;
-    answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    feedback = document.getElementById(`problem${problemNumber}-feedback`);
-    explanation = document.getElementById(`problem${problemNumber}-explanation`);
-
-    switch(problemNumber) {
-        case 1:
-            correctAnswer = '11110';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 2:
-            correctAnswer = '00001';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 3:
-            correctAnswer = '4D1';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 4:
-            correctAnswer = '01000';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 5:
-            correctAnswer = '11111';
-            isCorrect = answer === correctAnswer;
-            break;
-    }
-
-    if (isCorrect) {
-        feedback.innerHTML = "Correct! Well done!";
-        feedback.className = "feedback-area correct";
-        explanation.style.display = "block";
-    } else {
-        feedback.innerHTML = "That's not correct. Try again!";
-        feedback.className = "feedback-area incorrect";
-        explanation.style.display = "none";
-        createSeeAnswerButton(feedback, explanation);
-    }
-}
-
-function checkBooleanAnswer(problemNumber) {
-    let answer, correctAnswer, feedback, explanation;
-    answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    feedback = document.getElementById(`problem${problemNumber}-feedback`);
-    explanation = document.getElementById(`problem${problemNumber}-explanation`);
-
-    switch(problemNumber) {
-        case 1:
-            correctAnswer = 'A';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 2:
-            correctAnswer = '5';
-            isCorrect = answer === correctAnswer;
-            break;  
-        case 4:
-            correctAnswer = '2';
-            isCorrect = answer === correctAnswer;
-            break;
-        case 5:
-            correctAnswer = '0';
-            isCorrect = answer === correctAnswer;
-            break;
-    }
-
-    if (isCorrect) {
-        feedback.innerHTML = "Correct! Well done!";
-        feedback.className = "feedback-area correct";
-        explanation.style.display = "block";
-    } else {
-        feedback.innerHTML = "That's not correct. Try again!";
-        feedback.className = "feedback-area incorrect";
-        explanation.style.display = "none";
-        createSeeAnswerButton(feedback, explanation);
-    }
-}
-
-function checkDigitalAnswer(problemNumber) {
-    const answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    const feedback = document.getElementById(`problem${problemNumber}-feedback`);
-    const explanation = document.getElementById(`problem${problemNumber}-explanation`);
-    let isCorrect = false;
-    
-    switch(problemNumber) {
-        case 1:
-            const correctAnswer = "A";
-            isCorrect = answer === correctAnswer;
-            break;
-        case 2:
-            const correctAnswer2 = "3";
-            isCorrect = answer === correctAnswer2;
-            break;
-        case 3:
-            const correctAnswer3 = "0";
-            isCorrect = answer === correctAnswer3;
-            break;
-        case 4:
-            const correctAnswers4 = [
-                "A+BC",
-                "A+B*C"
-            ];
-            isCorrect = correctAnswers4.includes(answer);
-            break;
-        case 5:
-            const correctAnswer5 = "2";
-            isCorrect = answer === correctAnswer5;
-            break;
-    }
-    
-    if (isCorrect) {
-        feedback.innerHTML = "Correct! Well done!";
-        feedback.className = "feedback-area correct";
-        explanation.style.display = "block";
-    } else {
-        feedback.innerHTML = "That's not correct. Try again!";
-        feedback.className = "feedback-area incorrect";
-        explanation.style.display = "none";
-        createSeeAnswerButton(feedback, explanation);
-    }
-}
-
-function checkDataStructuresAnswer(problemNumber) {
-    const answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    const feedback = document.getElementById(`problem${problemNumber}-feedback`);
-    const explanation = document.getElementById(`problem${problemNumber}-explanation`);
-    
-    let isCorrect = false;
-    
-    switch(problemNumber) {
-        case 1:
-            const correctAnswer1 = 'EOT';
-            isCorrect = answer === correctAnswer1;
-            break;
-        case 2:
-            const correctAnswer2 = 'O';
-            isCorrect = answer === correctAnswer2;
-            break;
-        case 3:
-            const correctAnswer3 = '3';
-            isCorrect = answer === correctAnswer3;
-            break;
-        case 4:
-            const correctAnswer4 = 'NLET';
-            isCorrect = answer === correctAnswer4;
-            break;
-        case 5:
-            const correctAnswer5 = '30';
-            isCorrect = answer === correctAnswer5;
-            break;
-    }
-
-    if (isCorrect) {
-        feedback.innerHTML = "Correct! Well done!";
-        feedback.className = "feedback-area correct";
-        explanation.style.display = "block";
-    } else {
-        feedback.innerHTML = "That's not correct. Try again!";
-        feedback.className = "feedback-area incorrect";
-        explanation.style.display = "none";
-        createSeeAnswerButton(feedback, explanation);
-    }
-}
-
-// Function for Prefix/Infix/Postfix Notation problems
-function checkNotationAnswer(problemNumber) {
-    const answer = document.getElementById(`problem${problemNumber}-answer`).value.trim().toUpperCase().replace(/\s+/g, '');
-    const feedbackArea = document.getElementById(`problem${problemNumber}-feedback`);
-    
-    // Clear previous feedback
-    feedbackArea.innerHTML = '';
-    
-    const notationAnswers = {
-        1: ['↑-*AB/CDE', "^-*AB/CDE", "^-*AB/CDE", ],  // (A * B - C / D) ↑ E
-        2: '15',  // 5 3 + 2 * 1 - = ((5+3)*2)-1 = 16-1 = 15
-        3: '256'  // ↑ + * 3 4 / 8 2 - 7 5
+    /* Clear the input, feedback and solution for the problem that contains `button`. */
+    window.tryAgain = function (button) {
+        var problem = getProblem(button);
+        if (!problem) {
+            return;
+        }
+        var parts = getParts(problem);
+        if (parts.input) {
+            parts.input.value = '';
+            parts.input.focus();
+        }
+        setFeedback(parts.feedback, '', null);
+        if (parts.solution) {
+            parts.solution.hidden = true;
+        }
     };
-    
-    if (answer === notationAnswers[problemNumber]) {
-        feedbackArea.innerHTML = `
-            <p class="correct">Correct! ✓</p>
-            <button onclick="showExplanation(${problemNumber})" class="why-btn">Why?</button>
-        `;
-    } else {
-        feedbackArea.innerHTML = `
-            <p class="incorrect">Incorrect. Try again!</p>
-            <button onclick="showExplanation(${problemNumber})" class="why-btn">Why?</button>
-            <button onclick="resetAnswer(${problemNumber})" class="try-again-btn">Try Again</button>
-        `;
-    }
-}
 
-// Shared helper functions
-function showExplanation(problemNumber) {
-    const explanation = document.getElementById(`problem${problemNumber}-explanation`);
-    if (explanation) {
-        explanation.style.display = 'block';
-    }
-}
+    /* Allow pressing Enter inside an answer box to check the answer. */
+    document.addEventListener('keydown', function (event) {
+        if (event.key !== 'Enter') {
+            return;
+        }
+        var target = event.target;
+        if (target && target.classList && target.classList.contains('answer-input')) {
+            event.preventDefault();
+            window.checkAnswer(target);
+        }
+    });
 
-function resetAnswer(problemNumber) {
-    const input = document.getElementById(`problem${problemNumber}-answer`);
-    input.value = '';
-    input.focus();
-}
-
-// Function for What Does This Program Do? (Branching) problems
-function checkWDTPDAnswer(problemNumber) {
-    const answer = document.getElementById(`problem${problemNumber}-answer`).value.trim();
-    const feedbackArea = document.getElementById(`problem${problemNumber}-feedback`);
-    
-    // Clear previous feedback
-    feedbackArea.innerHTML = '';
-    
-    const wdtpdAnswers = {
-        1: '31',  // Problem 1: output = 31
-        2: '226'   // Problem 2: output = 226
-    };
-    
-    if (answer === wdtpdAnswers[problemNumber]) {
-        feedbackArea.innerHTML = `
-            <p class="correct">Correct! ✓</p>
-            <button onclick="showExplanation(${problemNumber})" class="why-btn">Why?</button>
-        `;
-    } else {
-        feedbackArea.innerHTML = `
-            <p class="incorrect">Incorrect. Try again!</p>
-            <button onclick="showExplanation(${problemNumber})" class="why-btn">Why?</button>
-            <button onclick="resetAnswer(${problemNumber})" class="try-again-btn">Try Again</button>
-        `;
-    }
-} 
+    /* Exposed for testing. */
+    window.ACSL_normalizeAnswer = normalizeAnswer;
+    window.ACSL_isAcceptedAnswer = isAcceptedAnswer;
+})();

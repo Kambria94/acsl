@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LISP – ACSL Topics – AS Knowledge</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html" aria-current="page">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container container-narrow page">
+        <div class="page-header">
+            <a href="../acsl.html" class="back-link">&larr; Back to Topics</a>
+            <h1>LISP</h1>
+            <p class="lead">Evaluating expressions in the list-processing language used by ACSL.</p>
+        </div>
+
+        <section class="content-section" id="overview">
+            <h2>Overview</h2>
+            <p>LISP (for "LISt Processing") was created by John McCarthy at M.I.T. in the mid-1950s. It has one of the simplest syntaxes of any programming language and yet is extremely powerful. For decades it was the language of choice for artificial intelligence work, and it encourages a very different way of thinking about programs compared with algorithmic languages such as Python, C++ or Java.</p>
+            <p>ACSL questions in this category give you one LISP expression, or a short sequence of statements, and ask for the value of the final expression. Success depends on knowing a small set of built-in functions and on evaluating carefully from the inside out.</p>
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li>Everything in LISP is either an <strong>atom</strong> (a number or a symbol) or a <strong>list</strong> (items inside parentheses). NIL, also written <code>()</code>, is the only thing that is both.</li>
+                    <li>Every statement is a function call written as <code>(function arg1 arg2 ... argn)</code>.</li>
+                    <li>Arguments are evaluated first (innermost parentheses first), then the function is applied.</li>
+                    <li>A leading quote <code>'</code> means "take this literally, do not evaluate it".</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3>Syntax</h3>
+            <p>A list is built by writing its elements inside parentheses. The list <code>(23 (this is easy) hello 821)</code> has four elements; the second element is itself a list. The atoms in that list are 23, this, is, easy, hello and 821.</p>
+            <p>To evaluate <code>(MULT (ADD 2 3) (ADD 1 4 2))</code>: (ADD 2 3) is 5, (ADD 1 4 2) is 7, and (MULT 5 7) is 35. Some functions take any number of arguments; others take a fixed number. Every statement returns a value, which is an atom or a list.</p>
+
+            <h3>Basic Functions: SET, SETQ, EVAL, ATOM</h3>
+            <ul>
+                <li><code>(SET 'x value)</code> binds the atom x to the value and returns the value. The quote on x is needed because SET evaluates its first argument.</li>
+                <li><code>(SETQ x value)</code> is the same as SET but automatically treats its first argument as quoted, so no quote is written.</li>
+                <li><code>(EVAL expr)</code> returns the value of its argument after evaluating it one more time.</li>
+                <li><code>(ATOM expr)</code> returns true if the argument is an atom and NIL if it is a list.</li>
+            </ul>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Statement</th><th>Value</th><th>Comment</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>(SET 'a (MULT 2 3))</code></td><td>6</td><td>a is an atom with a value of 6</td></tr>
+                        <tr><td><code>(SET 'a '(MULT 2 3))</code></td><td>(MULT 2 3)</td><td>a is a list with 3 elements</td></tr>
+                        <tr><td><code>(SET 'b 'a)</code></td><td>a</td><td>b is an atom whose value is the symbol a</td></tr>
+                        <tr><td><code>(SET 'c a)</code></td><td>(MULT 2 3)</td><td>c is a copy of a's value, a 3-element list</td></tr>
+                        <tr><td><code>(SETQ EX (ADD 3 (MULT 2 5)))</code></td><td>13</td><td>EX has a value of 13</td></tr>
+                        <tr><td><code>(SETQ VOWELS '(A E I O U))</code></td><td>(A E I O U)</td><td>VOWELS is a list of 5 elements</td></tr>
+                        <tr><td><code>(SETQ p '(ADD 1 2 3 4))</code></td><td>(ADD 1 2 3 4)</td><td>p is a list with 5 elements</td></tr>
+                        <tr><td><code>(ATOM 'p)</code></td><td>true</td><td>The quoted p is an atom</td></tr>
+                        <tr><td><code>(ATOM p)</code></td><td>NIL</td><td>Unquoted p evaluates to the 5-element list</td></tr>
+                        <tr><td><code>(EVAL p)</code></td><td>10</td><td>The list (ADD 1 2 3 4) is evaluated</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>List Functions: CAR, CDR, CONS, REVERSE</h3>
+            <ul>
+                <li><code>(CAR x)</code> returns the <strong>first element</strong> of list x.</li>
+                <li><code>(CDR x)</code> (pronounced "could-er") returns the list x <strong>without its first element</strong>. The result is always a list.</li>
+                <li><code>(CONS a x)</code> returns a new list made by putting a at the front of list x.</li>
+                <li><code>(REVERSE x)</code> returns list x in reverse order (only the top level is reversed).</li>
+                <li>CAR and CDR can be chained with a shorthand: <code>(CADR x)</code> means <code>(CAR (CDR x))</code>, the second element; <code>(CDDAR x)</code> means <code>(CDR (CDR (CAR x)))</code>. Read the letters between C and R from <em>right to left</em>.</li>
+            </ul>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Statement</th><th>Value</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>(CAR '(This is a list))</code></td><td>This</td></tr>
+                        <tr><td><code>(CDR '(This is a list))</code></td><td>(is a list)</td></tr>
+                        <tr><td><code>(CONS 'red '(white blue))</code></td><td>(red white blue)</td></tr>
+                        <tr><td><code>(SETQ z (CONS '(red white blue) (CDR '(This is a list))))</code></td><td>((red white blue) is a list)</td></tr>
+                        <tr><td><code>(REVERSE z)</code></td><td>(list a is (red white blue))</td></tr>
+                        <tr><td><code>(CDDAR z)</code></td><td>(blue)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Arithmetic Functions</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Function</th><th>Result</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>(ADD x1 x2 ...)</code> or <code>(+ ...)</code></td><td>sum of all arguments</td></tr>
+                        <tr><td><code>(SUB a b)</code> or <code>(- a b)</code></td><td>a - b</td></tr>
+                        <tr><td><code>(MULT x1 x2 ...)</code> or <code>(* ...)</code></td><td>product of all arguments</td></tr>
+                        <tr><td><code>(DIV a b)</code> or <code>(/ a b)</code></td><td>a / b (exact division, so 54/4 is 13.5)</td></tr>
+                        <tr><td><code>(SQUARE a)</code></td><td>a &times; a</td></tr>
+                        <tr><td><code>(EXP a n)</code></td><td>a<sup>n</sup></td></tr>
+                        <tr><td><code>(EQ a b)</code></td><td>true if a and b are equal, NIL otherwise</td></tr>
+                        <tr><td><code>(POS a)</code></td><td>true if a is positive, NIL otherwise</td></tr>
+                        <tr><td><code>(NEG a)</code></td><td>true if a is negative, NIL otherwise</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>User-defined Functions</h3>
+            <p><code>(DEF name (parameters) body)</code> defines a new function. (DEFUN is sometimes used instead of DEF.) For example, <code>(DEF SECOND (args) (CAR (CDR args)))</code> defines SECOND, which returns the second element of its argument: <code>(SECOND '(a b c d e))</code> is b. When a user-defined function is called, substitute the argument for the parameter name in the body and evaluate as usual.</p>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h2>Examples</h2>
+
+            <div class="example-card">
+                <div class="title">Example 1: Nested arithmetic</div>
+                <p>Evaluate <code>(MULT (ADD 6 5 0) (MULT 5 1 2 2) (DIV 6 (SUB 2 5)))</code>.</p>
+                <div class="step-by-step">
+                    <ol>
+                        <li>(ADD 6 5 0) = 11</li>
+                        <li>(MULT 5 1 2 2) = 20</li>
+                        <li>(SUB 2 5) = -3, so (DIV 6 -3) = -2</li>
+                        <li>(MULT 11 20 -2) = -440</li>
+                    </ol>
+                    <p class="result">Value: -440</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 2: CDR of a nested list</div>
+                <p>Evaluate <code>(CDR '((2 (3)) (4 (5 6) 7)))</code>.</p>
+                <p>The quoted list has two elements: <code>(2 (3))</code> and <code>(4 (5 6) 7)</code>. CDR removes the first element and returns what is left, which is a list containing one element.</p>
+                <p class="result">Value: ((4 (5 6) 7))</p>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 3: A short program</div>
+                <pre><code>(SETQ X '(RI VA FL CA TX))
+(CAR (CDR (REVERSE X)))</code></pre>
+                <div class="step-by-step">
+                    <ol>
+                        <li>X is bound to the list (RI VA FL CA TX).</li>
+                        <li>(REVERSE X) = (TX CA FL VA RI)</li>
+                        <li>(CDR ...) = (CA FL VA RI)</li>
+                        <li>(CAR ...) = CA</li>
+                    </ol>
+                    <p class="result">Value: CA</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 4: User-defined functions</div>
+                <pre><code>(SETQ X '(a c s l))
+(DEF WHAT (args) (CONS args (REVERSE (CDR args))))
+(DEF SECOND (args) (CONS (CAR (CDR args)) NIL))</code></pre>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Statement</th><th>Value</th><th>Why</th></tr></thead>
+                        <tbody>
+                            <tr><td><code>(WHAT X)</code></td><td>((a c s l) l s c)</td><td>CDR is (c s l), reversed is (l s c); CONS puts the whole list X in front</td></tr>
+                            <tr><td><code>(SECOND X)</code></td><td>(c)</td><td>second element c, CONSed onto the empty list</td></tr>
+                            <tr><td><code>(SECOND (WHAT X))</code></td><td>(l)</td><td>second element of ((a c s l) l s c) is l</td></tr>
+                            <tr><td><code>(WHAT (SECOND X))</code></td><td>((c))</td><td>CDR of (c) is NIL, reversed is NIL; CONS gives ((c))</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section" id="practice">
+            <h2>Practice Problems</h2>
+            <p class="note">Write list answers with parentheses and single spaces, for example <code>(A B C)</code>. Spacing and capitalisation are ignored when checking.</p>
+
+            <div class="practice-problem" data-answers="22">
+                <h3>Problem 1 <span class="level">Junior</span></h3>
+                <p>Evaluate the following expression:</p>
+                <pre><code>(ADD (MULT 3 4) (SUB 10 4) (DIV 12 3))</code></pre>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem1-answer">Your answer</label>
+                    <input type="text" id="problem1-answer" class="answer-input" placeholder="Enter the value" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>(MULT 3 4) = 12</li>
+                        <li>(SUB 10 4) = 6</li>
+                        <li>(DIV 12 3) = 4</li>
+                        <li>(ADD 12 6 4) = 22</li>
+                    </ol>
+                    <p class="final-answer">Value: 22</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="GREEN">
+                <h3>Problem 2 <span class="level">Junior</span></h3>
+                <p>Evaluate the following expression:</p>
+                <pre><code>(CAR (CDR '(RED GREEN BLUE YELLOW)))</code></pre>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem2-answer">Your answer</label>
+                    <input type="text" id="problem2-answer" class="answer-input" placeholder="Enter the value" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>(CDR '(RED GREEN BLUE YELLOW)) removes the first element: (GREEN BLUE YELLOW)</li>
+                        <li>(CAR (GREEN BLUE YELLOW)) returns the first element: GREEN</li>
+                    </ol>
+                    <p>This is the same as <code>(CADR '(RED GREEN BLUE YELLOW))</code>, the second element of the list.</p>
+                    <p class="final-answer">Value: GREEN</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="(A F E D)|A F E D">
+                <h3>Problem 3 <span class="level">Intermediate</span></h3>
+                <p>Evaluate the following expression:</p>
+                <pre><code>(CONS (CAR '(A B C)) (REVERSE '(D E F)))</code></pre>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem3-answer">Your answer</label>
+                    <input type="text" id="problem3-answer" class="answer-input" placeholder="Enter the resulting list" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>(CAR '(A B C)) = A</li>
+                        <li>(REVERSE '(D E F)) = (F E D)</li>
+                        <li>(CONS A (F E D)) puts A at the front of the list: (A F E D)</li>
+                    </ol>
+                    <p class="final-answer">Value: (A F E D)</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="38">
+                <h3>Problem 4 <span class="level">Intermediate</span></h3>
+                <p>What is the value of the last expression?</p>
+                <pre><code>(SETQ X '(3 5 7 9))
+(SUB (MULT (CADR X) (CAR (REVERSE X))) (CADDR X))</code></pre>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem4-answer">Your answer</label>
+                    <input type="text" id="problem4-answer" class="answer-input" placeholder="Enter the value" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>X = (3 5 7 9)</li>
+                        <li>(CADR X) = (CAR (CDR X)) = (CAR (5 7 9)) = 5</li>
+                        <li>(REVERSE X) = (9 7 5 3), so (CAR (REVERSE X)) = 9</li>
+                        <li>(MULT 5 9) = 45</li>
+                        <li>(CADDR X) = (CAR (CDR (CDR X))) = (CAR (7 9)) = 7</li>
+                        <li>(SUB 45 7) = 38</li>
+                    </ol>
+                    <p class="final-answer">Value: 38</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="(S R)|S R">
+                <h3>Problem 5 <span class="level">Senior</span></h3>
+                <p>What is the value of the last expression?</p>
+                <pre><code>(DEF F (L) (CONS (CAR (CDR L)) (REVERSE (CDR (CDR L)))))
+(SETQ Y '(P Q R S))
+(F (F Y))</code></pre>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem5-answer">Your answer</label>
+                    <input type="text" id="problem5-answer" class="answer-input" placeholder="Enter the resulting list" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>F takes the second element of its argument and puts it in front of the reversed remainder (everything after the second element). Apply it twice.</p>
+                    <ol>
+                        <li><strong>Inner call, (F Y) with L = (P Q R S):</strong>
+                            <ul>
+                                <li>(CAR (CDR L)) = (CAR (Q R S)) = Q</li>
+                                <li>(CDR (CDR L)) = (R S), reversed = (S R)</li>
+                                <li>(CONS Q (S R)) = (Q S R)</li>
+                            </ul>
+                        </li>
+                        <li><strong>Outer call, F of (Q S R):</strong>
+                            <ul>
+                                <li>(CAR (CDR L)) = (CAR (S R)) = S</li>
+                                <li>(CDR (CDR L)) = (R), reversed = (R)</li>
+                                <li>(CONS S (R)) = (S R)</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p class="final-answer">Value: (S R)</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Based on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html>

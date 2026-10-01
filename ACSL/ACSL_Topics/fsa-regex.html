@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FSAs and Regular Expressions – ACSL Topics – AS Knowledge</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html" aria-current="page">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container container-narrow page">
+        <div class="page-header">
+            <a href="../acsl.html" class="back-link">&larr; Back to Topics</a>
+            <h1>FSAs and Regular Expressions</h1>
+            <p class="lead">Finite state automata, the regular expressions that describe them, and pattern matching.</p>
+        </div>
+
+        <section class="content-section" id="overview">
+            <h2>Overview</h2>
+            <p>A <strong>Finite State Automaton</strong> (FSA) is a simple model of a machine. It has a finite number of states, exactly one of which is active at any moment; a set of transition rules that move the machine from one state to another when it reads an input symbol; one initial state; and one or more final (accepting) states.</p>
+            <p>In ACSL, FSAs are used to <em>parse</em> strings: the machine reads the string one character at a time, following the transitions, and the string is <strong>accepted</strong> if the machine finishes in a final state. If at any point there is no transition for the character being read, or the machine ends somewhere other than a final state, the string is rejected.</p>
+            <p>A <strong>Regular Expression</strong> (RE) is an algebraic way of writing the same thing: a compact pattern that describes exactly the set of strings an FSA accepts. Every FSA has an equivalent RE and every RE has an equivalent FSA.</p>
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li>Drawing conventions: states are circles, the final state is a double circle, the start state has an incoming arrow from nowhere, and transitions are labelled arrows.</li>
+                    <li>The three RE operators are concatenation, union (<code>U</code> or <code>|</code>) and the Kleene star (<code>*</code>).</li>
+                    <li>Typical questions: convert an FSA to an RE, simplify an RE, pick equivalent REs, or decide which strings a pattern matches.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3>Reading an FSA</h3>
+            <div class="circuit-visual">
+                <svg viewBox="0 0 400 130" width="400" role="img" aria-label="FSA with states A, B and C. A goes to B on x, B loops on x and goes to C on y, C loops on y. C is final.">
+                    <defs>
+                        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                            <path d="M0,0 L10,5 L0,10 z" fill="#1f2933"/>
+                        </marker>
+                    </defs>
+                    <g fill="none" stroke="#1f2933" stroke-width="2">
+                        <line x1="10" y1="75" x2="46" y2="75" marker-end="url(#arrow)"/>
+                        <circle cx="70" cy="75" r="22"/>
+                        <circle cx="200" cy="75" r="22"/>
+                        <circle cx="330" cy="75" r="22"/>
+                        <circle cx="330" cy="75" r="16"/>
+                        <line x1="92" y1="75" x2="176" y2="75" marker-end="url(#arrow)"/>
+                        <line x1="222" y1="75" x2="306" y2="75" marker-end="url(#arrow)"/>
+                        <path d="M188,55 C170,10 230,10 212,55" marker-end="url(#arrow)"/>
+                        <path d="M318,55 C300,10 360,10 342,55" marker-end="url(#arrow)"/>
+                    </g>
+                    <g class="gate-label-large" text-anchor="middle">
+                        <text x="70" y="76">A</text><text x="200" y="76">B</text><text x="330" y="76">C</text>
+                    </g>
+                    <g font-family="ui-monospace, Consolas, monospace" font-size="14" fill="#1f2933" text-anchor="middle">
+                        <text x="134" y="68">x</text><text x="264" y="68">y</text>
+                        <text x="200" y="22">x</text><text x="330" y="22">y</text>
+                    </g>
+                </svg>
+            </div>
+            <p>This FSA has three states. A is the initial state and C is the final state. Reading an x in state A moves to B. In B, an x stays in B and a y moves to C. In C, a y stays in C. So the machine accepts one or more x's followed by one or more y's: xy, xxy, xxxyy, xyyy and so on, but not yx, x, or xyx. The equivalent regular expression is <code>xx*yy*</code>.</p>
+
+            <h3>Rules for Building Regular Expressions</h3>
+            <ol>
+                <li>The null string, written &lambda;, is an RE.</li>
+                <li>Any single symbol of the alphabet is an RE.</li>
+                <li>If a and b are REs, so are:
+                    <ul>
+                        <li><strong>Concatenation</strong> <code>ab</code>: a followed by b.</li>
+                        <li><strong>Union</strong> <code>a U b</code> (also written <code>a|b</code>): a or b.</li>
+                        <li><strong>Kleene star</strong> <code>a*</code>: a repeated zero or more times.</li>
+                    </ul>
+                </li>
+            </ol>
+            <div class="key-points">
+                <h4>Precedence</h4>
+                <p>Kleene star binds tightest, then concatenation, then union. Parentheses group sub-expressions. So <code>dca*b</code> generates dcb, dcab, dcaab, ..., while <code>d(ca)*b</code> generates db, dcab, dcacab, ...</p>
+            </div>
+
+            <h3>Regular Expression Identities</h3>
+            <p>These identities let you simplify an RE or recognise that two REs are equivalent.</p>
+            <div class="law-equations">
+                <p>1. (a*)* = a*</p>
+                <p>2. aa* = a*a</p>
+                <p>3. aa* U &lambda; = a*</p>
+                <p>4. a(b U c) = ab U ac</p>
+                <p>5. a(ba)* = (ab)*a</p>
+                <p>6. (a U b)* = (a* U b*)*</p>
+                <p>7. (a U b)* = (a*b*)*</p>
+                <p>8. (a U b)* = a*(ba*)*</p>
+            </div>
+
+            <h3>Regex in Practice</h3>
+            <p>Programmers use regular expressions ("regex") constantly to describe search patterns. Every modern language has a regex library. The exact syntax varies slightly between tools, but ACSL uses the following additions, which are nearly universal:</p>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Pattern</th><th>Meaning</th><th>Example</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>|</code></td><td>Alternatives (union)</td><td><code>gray|grey</code> matches gray or grey</td></tr>
+                        <tr><td><code>*</code></td><td>Zero or more of the preceding element</td><td><code>ab*c</code> matches ac, abc, abbc, ...</td></tr>
+                        <tr><td><code>?</code></td><td>Zero or one of the preceding element</td><td><code>colou?r</code> matches color and colour</td></tr>
+                        <tr><td><code>+</code></td><td>One or more of the preceding element</td><td><code>ab+c</code> matches abc, abbc, ... but not ac</td></tr>
+                        <tr><td><code>.</code></td><td>Any single character</td><td><code>a.b</code> matches a7b, a&amp;b, arb; <code>a.*b</code> matches ab, acb, a123b</td></tr>
+                        <tr><td><code>[ ]</code></td><td>One character from the set; ranges allowed</td><td><code>[abc]</code>, <code>[a-z]</code>, <code>[a-cx-z]</code></td></tr>
+                        <tr><td><code>[^ ]</code></td><td>One character <em>not</em> in the set</td><td><code>[^abc]</code> matches any character except a, b or c</td></tr>
+                        <tr><td><code>( )</code></td><td>Grouping</td><td><code>H(&auml;|ae?)ndel</code> matches Handel, H&auml;ndel, Haendel</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h2>Examples</h2>
+
+            <div class="example-card">
+                <div class="title">Example 1: FSA to regular expression</div>
+                <p>An FSA has states A (start), B and C (final). Transitions: A goes to B on 0; B loops to itself on 1; B goes to C on 0; C goes to a further final state D on 1.</p>
+                <p>Follow the only route from start to finish and write down what is read: a 0, then any number of 1's (the loop), then a 0, then a 1.</p>
+                <p class="result">Regular expression: 01*01</p>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 2: Which strings does "00*1*1 U 11*0*0" accept?</div>
+                <p>Candidates: (A) 0000001111111, (B) 1010101010, (C) 1111111, (D) 0110, (E) 10.</p>
+                <div class="step-by-step">
+                    <ol>
+                        <li>The union has two halves. <code>00*1*1</code> means one or more 0's followed by one or more 1's: 01, 001, 0001111, ...</li>
+                        <li><code>11*0*0</code> means one or more 1's followed by one or more 0's: 10, 1110, 1111100, ...</li>
+                        <li>A is all 0's then all 1's, so it matches the first half. E is 10, which matches the second half.</li>
+                        <li>B alternates, C has no 0, and D switches direction twice, so none of them match.</li>
+                    </ol>
+                    <p class="result">Accepted: A and E</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 3: Which strings match "[A-D]*[a-d]*[0-9]"?</div>
+                <p>Candidates: 1. ABCD8, 2. abcd5, 3. ABcd9, 4. AbCd7, 5. X, 6. abCD7, 7. DCCBBBaaaa5.</p>
+                <p>The pattern is: zero or more uppercase A-D, then zero or more lowercase a-d, then exactly one digit. Once you have started the lowercase part you cannot go back to uppercase (that rules out 4 and 6), and the string must end with a digit (rules out 5).</p>
+                <p class="result">Matches: 1, 2, 3 and 7</p>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 4: Which strings match "Hi?g+h+[^a-ceiou]"?</div>
+                <p>Candidates: 1. Highb, 2. HiiighS, 3. HigghhhC, 4. Hih, 5. Hghe, 6. Highd, 7. HgggggghX.</p>
+                <p>H, then an optional single i, then one or more g's, then one or more h's, then one character that is not a, b, c, e, i, o or u. String 1 ends in b (excluded); 2 has three i's; 4 has no g; 5 ends in e (excluded).</p>
+                <p class="result">Matches: 3, 6 and 7</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="practice">
+            <h2>Practice Problems</h2>
+            <p class="note">For "which strings" questions, enter the matching numbers separated by commas, for example <code>1,3,5</code>.</p>
+
+            <div class="practice-problem" data-answers="1,2,3|123">
+                <h3>Problem 1 <span class="level">Junior</span></h3>
+                <p>Which of the following strings are accepted by the regular expression <code>ab*a</code>?</p>
+                <ol>
+                    <li>aa</li>
+                    <li>aba</li>
+                    <li>abba</li>
+                    <li>ab</li>
+                    <li>baa</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem1-answer">Your answer</label>
+                    <input type="text" id="problem1-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p><code>ab*a</code> is an a, then zero or more b's, then an a. Every accepted string starts and ends with a and has only b's in between.</p>
+                    <ol>
+                        <li>aa: zero b's. Accepted.</li>
+                        <li>aba: one b. Accepted.</li>
+                        <li>abba: two b's. Accepted.</li>
+                        <li>ab: does not end with a. Rejected.</li>
+                        <li>baa: does not start with a. Rejected.</li>
+                    </ol>
+                    <p class="final-answer">Accepted: 1, 2, 3</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,2,5|125">
+                <h3>Problem 2 <span class="level">Junior</span></h3>
+                <p>Which of the following strings match the pattern <code>[A-C]+[0-9]?x</code>?</p>
+                <ol>
+                    <li>ABx</li>
+                    <li>A9x</li>
+                    <li>x</li>
+                    <li>AB99x</li>
+                    <li>C0x</li>
+                    <li>abx</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem2-answer">Your answer</label>
+                    <input type="text" id="problem2-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>The pattern is one or more uppercase letters from A to C, then at most one digit, then a lowercase x.</p>
+                    <ol>
+                        <li>ABx: two letters, no digit, x. Matches.</li>
+                        <li>A9x: one letter, one digit, x. Matches.</li>
+                        <li>x: needs at least one letter first. No match.</li>
+                        <li>AB99x: two digits, but <code>?</code> allows at most one. No match.</li>
+                        <li>C0x: one letter, one digit, x. Matches.</li>
+                        <li>abx: lowercase letters are not in [A-C]. No match.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 2, 5</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="01*01*">
+                <h3>Problem 3 <span class="level">Intermediate</span></h3>
+                <p>Write the simplified regular expression for the FSA described by this transition table. A is the start state and C is the only final state.</p>
+                <table class="solution-table">
+                    <thead><tr><th>From</th><th>Reads</th><th>To</th></tr></thead>
+                    <tbody>
+                        <tr><td>A</td><td>0</td><td>B</td></tr>
+                        <tr><td>B</td><td>1</td><td>B</td></tr>
+                        <tr><td>B</td><td>0</td><td>C</td></tr>
+                        <tr><td>C</td><td>1</td><td>C</td></tr>
+                    </tbody>
+                </table>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem3-answer">Your answer</label>
+                    <input type="text" id="problem3-answer" class="answer-input" placeholder="Enter a regular expression" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Trace the path from the start state to the final state and turn each loop into a Kleene star.</p>
+                    <ol>
+                        <li>Leaving A requires a 0.</li>
+                        <li>In B the machine may read any number of 1's (the B-to-B loop): <code>1*</code>.</li>
+                        <li>Leaving B for C requires a 0.</li>
+                        <li>In C the machine may read any number of 1's before the string ends: <code>1*</code>.</li>
+                    </ol>
+                    <p>Putting the pieces together gives <code>01*01*</code>. Example accepted strings: 00, 0100, 0011, 011011.</p>
+                    <p class="final-answer">Regular expression: 01*01*</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,2,4,5,6|12456">
+                <h3>Problem 4 <span class="level">Intermediate</span></h3>
+                <p>Which of the following strings are accepted by the regular expression <code>0(10)*1 U 11*0</code>?</p>
+                <ol>
+                    <li>01</li>
+                    <li>0101</li>
+                    <li>01011</li>
+                    <li>110</li>
+                    <li>10</li>
+                    <li>1110</li>
+                    <li>00</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem4-answer">Your answer</label>
+                    <input type="text" id="problem4-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Union has the lowest precedence, so this is either <code>0(10)*1</code> or <code>11*0</code>.</p>
+                    <ul>
+                        <li><code>0(10)*1</code>: a 0, then zero or more copies of "10", then a 1. Generates 01, 0101, 010101, ...</li>
+                        <li><code>11*0</code>: one or more 1's then a single 0. Generates 10, 110, 1110, ...</li>
+                    </ul>
+                    <ol>
+                        <li>01: first half with zero repeats. Accepted.</li>
+                        <li>0101: 0, "10", 1. Accepted.</li>
+                        <li>01011: after 0101 there is an extra 1 that nothing can absorb. Rejected.</li>
+                        <li>110: second half. Accepted.</li>
+                        <li>10: second half with zero extra 1's. Accepted.</li>
+                        <li>1110: second half. Accepted.</li>
+                        <li>00: neither half allows two 0's in a row. Rejected.</li>
+                    </ol>
+                    <p class="final-answer">Accepted: 1, 2, 4, 5, 6</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,3,5|135">
+                <h3>Problem 5 <span class="level">Senior</span></h3>
+                <p>Which of the following strings match the pattern <code>(ab|ba)+c?[^xyz].</code> exactly (the whole string must be consumed)?</p>
+                <ol>
+                    <li>abcq1</li>
+                    <li>babab</li>
+                    <li>abbac5!</li>
+                    <li>ababcx9</li>
+                    <li>bad_</li>
+                    <li>abc</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem5-answer">Your answer</label>
+                    <input type="text" id="problem5-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Break the pattern into pieces: one or more blocks that are either "ab" or "ba"; an optional c; one character that is not x, y or z; then exactly one more character of any kind. After the blocks there must be exactly two or three characters left.</p>
+                    <ol>
+                        <li>abcq1: block "ab", then c, then q (allowed), then 1. Matches.</li>
+                        <li>babab: "ba" + "ba" leaves only "b", but two characters are required. Using just one block "ba" leaves "bab", which would need c? to be absent, b for [^xyz], a for ., and then an extra b remains. No match.</li>
+                        <li>abbac5!: "ab" + "ba", then c, then 5, then !. Matches.</li>
+                        <li>ababcx9: "ab" + "ab", then c, then x, but x is excluded by [^xyz]. Skipping the c instead gives c for [^xyz] and x for ., leaving 9 unmatched. No match.</li>
+                        <li>bad_: block "ba", no c, d for [^xyz], _ for the dot. Matches.</li>
+                        <li>abc: block "ab", then only one character remains, but at least two are needed. No match.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 3, 5</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Based on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html>

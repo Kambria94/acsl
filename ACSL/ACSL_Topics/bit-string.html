@@ -3,21 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bit String Flicking - ACSL Topics</title>
-    <link rel="stylesheet" href="../styles.css">
+    <title>Bit-String Flicking – ACSL Topics – AS Knowledge</title>
+    <link rel="stylesheet" href="../../styles.css">
 </head>
 <body>
-    <header>
-        <h1>Bit String Flicking</h1>
-        <a href="../acsl.html" class="back-button">← Back to Topics</a>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html" aria-current="page">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
     </header>
 
-    <main class="topic-content">
-        <section class="content-section">
+    <main class="container container-narrow page">
+        <div class="page-header">
+            <a href="../acsl.html" class="back-link">&larr; Back to Topics</a>
+            <h1>Bit-String Flicking</h1>
+            <p class="lead">Bitwise operators, shifts, and circulates on strings of binary digits.</p>
+        </div>
+
+        <section class="content-section" id="overview">
             <h2>Overview</h2>
             <p>Bit string flicking involves manipulating strings of binary digits (0s and 1s) using various operators. This concept is fundamental in systems programming, assembly language, code optimization, and hardware design.</p>
-            
-            
             <h3>Importance in Modern Programming</h3>
             <ul>
                 <li>Most high-level languages like Python, Java, C++, etc. use bit-string operations.</li>
@@ -25,156 +37,97 @@
                 <li>Shift operations can compute multiplication/division by powers of 2</li>
                 <li>Bit string flicking can be used to manipulate binary data in databases, files, and other storage systems.</li>
             </ul>
-        
         </section>
 
-        <section class="content-section">
-            <h2>Core Operators</h2>
-            
-            <h3>Bitwise Operators (Changes a single bit)</h3>
+        <section class="content-section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3 id="operators">Bitwise Operators (Changes a single bit)</h3>
             <div class="operator-grid">
                 <div class="operator-card">
                     <h4>NOT (~)</h4>
-                    <p>Flips the value of a bit (0→1, 1→0)</p>
+                    <p>Flips the value of a bit (0&rarr;1, 1&rarr;0)</p>
                     <table class="truth-table">
-                        <thead>
-                            <tr>
-                                <th>x</th>
-                                <th>NOT x</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>x</th><th>NOT x</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td>0</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
+                            <tr><td>0</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td></tr>
                         </tbody>
                     </table>
-                    <p>Example:</p>
-                    <code>~100 = 011</code>
+                    <p>Example: <code>~100 = 011</code></p>
                 </div>
                 <div class="operator-card">
-                    <h4>AND (&)</h4>
+                    <h4>AND (&amp;)</h4>
                     <p>Both input bits must be 1 for output to be 1</p>
                     <table class="truth-table">
-                        <thead>
-                            <tr>
-                                <th>x</th>
-                                <th>y</th>
-                                <th>x AND y</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>x</th><th>y</th><th>x AND y</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
+                            <tr><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td></tr>
+                            <tr><td>1</td><td>1</td><td>1</td></tr>
                         </tbody>
                     </table>
-                    <p>Example:</p>
-                    <code>110 & 011 = 010</code>
+                    <p>Example: <code>110 &amp; 011 = 010</code></p>
                 </div>
                 <div class="operator-card">
                     <h4>OR (|)</h4>
                     <p>Output is 1 if either input bit is 1</p>
                     <table class="truth-table">
-                        <thead>
-                            <tr>
-                                <th>x</th>
-                                <th>y</th>
-                                <th>x OR y</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>x</th><th>y</th><th>x OR y</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
+                            <tr><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>1</td></tr>
                         </tbody>
                     </table>
-                    <p>Example:</p>
-                    <code>110 | 011 = 111</code>
+                    <p>Example: <code>110 | 011 = 111</code></p>
                 </div>
                 <div class="operator-card">
-                    <h4>XOR (⊕)</h4>
+                    <h4>XOR (&oplus;)</h4>
                     <p>Output is 1 if input bits are different values</p>
                     <table class="truth-table">
-                        <thead>
-                            <tr>
-                                <th>x</th>
-                                <th>y</th>
-                                <th>x XOR y</th>
-                            </tr>
-                        </thead>
+                        <thead><tr><th>x</th><th>y</th><th>x XOR y</th></tr></thead>
                         <tbody>
-                            <tr>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                            </tr>
-                            <tr>
-                                <td>0</td>
-                                <td>1</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>0</td>
-                                <td>1</td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>1</td>
-                                <td>0</td>
-                            </tr>
+                            <tr><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>0</td></tr>
                         </tbody>
                     </table>
-                    <p>Example:</p>
-                    <code>110 ⊕ 011 = 101</code>
+                    <p>Example: <code>110 &oplus; 011 = 101</code></p>
                 </div>
             </div>
 
             <h3>Shift Operators (Changes a bit string)</h3>
+            <ul>
+                <li><strong>LSHIFT-n:</strong> Shifts left n places, adds zeros on right</li>
+                <li><strong>RSHIFT-n:</strong> Shifts right n places, adds zeros on left</li>
+                <li><strong>LCIRC-n:</strong> Circular left shift (bits that fall off the left end reappear on the right)</li>
+                <li><strong>RCIRC-n:</strong> Circular right shift (bits that fall off the right end reappear on the left)</li>
+            </ul>
+
+            <h3>Order of Precedence</h3>
+            <div class="precedence-list">
+                <ol>
+                    <li>NOT (~)</li>
+                    <li>SHIFT and CIRC operations</li>
+                    <li>AND (&amp;)</li>
+                    <li>XOR (&oplus;)</li>
+                    <li>OR (|)</li>
+                </ol>
+                <p class="note">* Equal precedence operators are evaluated left to right</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h2>Examples</h2>
+
+            <h3>Shift and Circulate Examples</h3>
             <div class="operator-grid">
                 <div class="operator-card">
                     <h4>LSHIFT</h4>
-                    <p>Shifts left, adds zeros on right</p>
                     <div class="step-by-step">
                         <p>Example: LSHIFT-2 01101</p>
                         <ol>
@@ -187,7 +140,6 @@
                 </div>
                 <div class="operator-card">
                     <h4>RSHIFT</h4>
-                    <p>Shifts right, adds zeros on left</p>
                     <div class="step-by-step">
                         <p>Example: RSHIFT-3 01101</p>
                         <ol>
@@ -200,7 +152,6 @@
                 </div>
                 <div class="operator-card">
                     <h4>LCIRC</h4>
-                    <p>Circular left shift</p>
                     <div class="step-by-step">
                         <p>Example: LCIRC-3 01101</p>
                         <ol>
@@ -213,7 +164,6 @@
                 </div>
                 <div class="operator-card">
                     <h4>RCIRC</h4>
-                    <p>Circular right shift</p>
                     <div class="step-by-step">
                         <p>Example: RCIRC-1 01101</p>
                         <ol>
@@ -225,265 +175,221 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <section class="content-section">
-            <h2>Order of Precedence</h2>
-            <div class="precedence-list">
-                <ol>
-                    <li>NOT (~)</li>
-                    <li>SHIFT and CIRC operations</li>
-                    <li>AND (&)</li>
-                    <li>XOR (⊕)</li>
-                    <li>OR (|)</li>
-                </ol>
-                <p class="note">* Equal precedence operators are evaluated left to right</p>
+            <h3>Combining Operators</h3>
+            <div class="example-card">
+                <div class="title">Example: Evaluate <code>NOT 10110 AND LCIRC-2 01101 OR 00011</code></div>
+                <div class="step-by-step">
+                    <p>Follow the order of precedence: NOT first, then shifts, then AND, then OR.</p>
+                    <ol>
+                        <li>NOT 10110 = <code>01001</code></li>
+                        <li>LCIRC-2 01101 = <code>10101</code> (move the first two bits, 01, to the end)</li>
+                        <li>AND the two results: <code>01001 AND 10101 = 00001</code></li>
+                        <li>OR with 00011: <code>00001 OR 00011 = 00011</code></li>
+                    </ol>
+                    <p class="result">Result: 00011</p>
+                </div>
             </div>
         </section>
 
-        <section class="content-section">
+        <section class="content-section" id="practice">
             <h2>Practice Problems</h2>
-            
-            <div class="practice-problem">
-                <h3>Problem 1 (Junior Level)</h3>
+
+            <div class="practice-problem" data-answers="11110">
+                <h3>Problem 1 <span class="level">Junior</span></h3>
                 <p>Evaluate the following expression:</p>
                 <div class="problem-expression">
                     <code>(10111 XOR NOT 10100 AND 11101)</code>
                 </div>
-                
                 <div class="step-hint">
                     <p>Note: Keep in mind the order of operations</p>
                 </div>
-
-                <div class="problem-solution">
-                    <div class="answer-input">
-                        <input type="text" id="problem1-answer" placeholder="Enter your answer (binary)">
-                        <button onclick="checkBitStringAnswer(1)" class="submit-btn">Submit</button>
-                    </div>
-                    
-                    <div id="problem1-feedback" class="feedback-area"></div>
-                    
-                    <div id="problem1-explanation" class="explanation" style="display: none;">
-                        <h4>Explanation:</h4>
-                        <p>The order of operations in this problem is as follows:</p>
-                        <ol>
-                            <li>NOT</li>
-                            <li>AND</li>
-                            <li>XOR</li>
-                        </ol>
-                        <p>Now, let's evaluate the expression step by step:</p>
-                        <ol>
-                            <li>First, evaluate NOT 10100:
-                                <code>NOT 10100 = 01011</code>
-                            </li>
-                            <li>Then, AND with 11101:
-                                <code>01011 AND 11101 = 01001</code>
-                            </li>
-                            <li>Finally, XOR with 10111:
-                                <code>10111 XOR 01001 = 11110</code>
-                            </li>
-                        </ol>
-                        <p class="final-answer">Therefore, (10111 XOR NOT 10100 AND 11101) = 11110</p>
-                    </div>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem1-answer">Your answer</label>
+                    <input type="text" id="problem1-answer" class="answer-input" placeholder="Enter your answer (binary)" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>The order of operations in this problem is as follows:</p>
+                    <ol>
+                        <li>NOT</li>
+                        <li>AND</li>
+                        <li>XOR</li>
+                    </ol>
+                    <p>Now, let's evaluate the expression step by step:</p>
+                    <ol>
+                        <li>First, evaluate NOT 10100: <code>NOT 10100 = 01011</code></li>
+                        <li>Then, AND with 11101: <code>01011 AND 11101 = 01001</code></li>
+                        <li>Finally, XOR with 10111: <code>10111 XOR 01001 = 11110</code></li>
+                    </ol>
+                    <p class="final-answer">Therefore, (10111 XOR NOT 10100 AND 11101) = 11110</p>
                 </div>
             </div>
 
-            <div class="practice-problem">
-                <h3>Problem 2 (Intermediate Level)</h3>
+            <div class="practice-problem" data-answers="00001">
+                <h3>Problem 2 <span class="level">Intermediate</span></h3>
                 <p>Simplify the following expression:</p>
                 <div class="problem-expression">
                     <code>(LCIRC-2 (NOT 10111) OR (RSHIFT-2 (LCIRC-1 10010 AND NOT 00010)))</code>
                 </div>
-
-                <div class="problem-solution">
-                    <div class="answer-input">
-                        <input type="text" id="problem2-answer" placeholder="Enter your answer (binary)">
-                        <button onclick="checkBitStringAnswer(2)" class="submit-btn">Submit</button>
-                    </div>
-                    
-                    <div id="problem2-feedback" class="feedback-area"></div>
-                    
-                    <div id="problem2-explanation" class="explanation" style="display: none;">
-                        <h4>Explanation:</h4>
-                        <ol>
-                            <li>First, evaluate NOT 10111:
-                                <code>NOT 10111 = 01000</code>
-                            </li>
-                            <li>Next, evaluate NOT 00010:
-                                <code>NOT 00010 = 11101</code>
-                            </li>
-                            <li>Evaluate LCIRC-1 10010:
-                                <code>LCIRC-1 10010 = 00101</code>
-                            </li>
-                            <li>Apply AND operation:
-                                <code>00101 AND 11101 = 00101</code>
-                            </li>
-                            <li>Apply RSHIFT-2:
-                                <code>RSHIFT-2 00101 = 00001</code>
-                            </li>
-                            <li>Apply LCIRC-2 to first part:
-                                <code>LCIRC-2 01000 = 00001</code>
-                            </li>
-                            <li>Finally, apply OR:
-                                <code>00001 OR 00001 = 00001</code>
-                            </li>
-                        </ol>
-                        <p class="final-answer">Therefore, the final result is 00001</p>
-                    </div>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem2-answer">Your answer</label>
+                    <input type="text" id="problem2-answer" class="answer-input" placeholder="Enter your answer (binary)" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>First, evaluate NOT 10111: <code>NOT 10111 = 01000</code></li>
+                        <li>Next, evaluate NOT 00010: <code>NOT 00010 = 11101</code></li>
+                        <li>Evaluate LCIRC-1 10010: <code>LCIRC-1 10010 = 00101</code></li>
+                        <li>Apply AND operation: <code>00101 AND 11101 = 00101</code></li>
+                        <li>Apply RSHIFT-2: <code>RSHIFT-2 00101 = 00001</code></li>
+                        <li>Apply LCIRC-2 to first part: <code>LCIRC-2 01000 = 00001</code></li>
+                        <li>Finally, apply OR: <code>00001 OR 00001 = 00001</code></li>
+                    </ol>
+                    <p class="final-answer">Therefore, the final result is 00001</p>
                 </div>
             </div>
 
-            <div class="practice-problem">
-                <h3>Problem 3 (Intermediate Level)</h3>
+            <div class="practice-problem" data-answers="4D1">
+                <h3>Problem 3 <span class="level">Intermediate</span></h3>
                 <p>Evaluate the following:</p>
                 <div class="problem-expression">
                     <code>D23<sub>16</sub> XOR 9F2<sub>16</sub></code>
                 </div>
                 <p class="problem-note">Both numbers are 12-bit hexadecimal values. Express your answer as a 3-digit hexadecimal string.</p>
-                
                 <div class="step-hint">
                     <p>Tip: To convert hexadecimal to binary, you can convert each hex digit to a 4-digit binary number and then combine them.</p>
                 </div>
-
-                <div class="problem-solution">
-                    <div class="answer-input">
-                        <input type="text" id="problem3-answer" placeholder="Enter answer (3 hex digits)">
-                        <button onclick="checkBitStringAnswer(3)" class="submit-btn">Submit</button>
-                    </div>
-                    
-                    <div id="problem3-feedback" class="feedback-area"></div>
-                    
-                    <div id="problem3-explanation" class="explanation" style="display: none;">
-                        <h4>Explanation:</h4>
-                        <ol>
-                            <li>Convert D23<sub>16</sub> to binary:
-                                <code>D23<sub>16</sub> = 110100100011<sub>2</sub></code>
-                            </li>
-                            <li>Convert 9F2<sub>16</sub> to binary:
-                                <code>9F2<sub>16</sub> = 100111110010<sub>2</sub></code>
-                            </li>
-                            <li>Perform XOR operation:
-                                <div class="binary-operation">
-                                    <code>110100100011</code>
-                                    <code>100111110010</code>
-                                    <div class="operation-line"></div>
-                                    <code>010011010001</code>
-                                </div>
-                            </li>
-                            <li>Convert result back to hexadecimal:
-                                <code>010011010001<sub>2</sub> = 4D1<sub>16</sub></code>
-                            </li>
-                        </ol>
-                        <p class="final-answer">Therefore, D23<sub>16</sub> XOR 9F2<sub>16</sub> = 4D1<sub>16</sub></p>
-                    </div>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem3-answer">Your answer</label>
+                    <input type="text" id="problem3-answer" class="answer-input" placeholder="Enter answer (3 hex digits)" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>Convert D23<sub>16</sub> to binary: <code>D23<sub>16</sub> = 110100100011<sub>2</sub></code></li>
+                        <li>Convert 9F2<sub>16</sub> to binary: <code>9F2<sub>16</sub> = 100111110010<sub>2</sub></code></li>
+                        <li>Perform XOR operation:
+                            <div class="binary-operation">
+                                <code>110100100011</code>
+                                <code>100111110010</code>
+                                <div class="operation-line"></div>
+                                <code>010011010001</code>
+                            </div>
+                        </li>
+                        <li>Convert result back to hexadecimal: <code>010011010001<sub>2</sub> = 4D1<sub>16</sub></code></li>
+                    </ol>
+                    <p class="final-answer">Therefore, D23<sub>16</sub> XOR 9F2<sub>16</sub> = 4D1<sub>16</sub></p>
                 </div>
             </div>
 
-            <div class="practice-problem">
-                <h3>Problem 4 (Senior Level)</h3>
+            <div class="practice-problem" data-answers="01000">
+                <h3>Problem 4 <span class="level">Senior</span></h3>
                 <p>Solve for X (5-bits) in the following equation:</p>
                 <div class="problem-expression">
                     <code>01101 XOR (RCIRC-2 X) = 01111</code>
                 </div>
-                
-                
-
-                <div class="problem-solution">
-                    <div class="answer-input">
-                        <input type="text" id="problem4-answer" placeholder="Enter X (5 binary digits)">
-                        <button onclick="checkBitStringAnswer(4)" class="submit-btn">Submit</button>
-                    </div>
-                    
-                    <div id="problem4-feedback" class="feedback-area"></div>
-                    
-                    <div id="problem4-explanation" class="explanation" style="display: none;">
-                        <h4>Explanation:</h4>
-                        <ol>
-                            <li>Given equation:
-                                <code>01101 XOR (RCIRC-2 X) = 01111</code>
-                            </li>
-                            <li>For any XOR operation to equal 1, at exactly one operand must be 1:
-                                <div class="truth-comparison">
-                                    <code>01101 (first operand)</code>
-                                    <code>01111 (result)</code>
-                                </div>
-                                <p>To put a 1 in the result, the answer bit must be opposite of the first operand; to put a 0 in the result, the answer bit must be the same as the first operand.</p>
-                            </li>
-                            <li>Required bits in RCIRC-2 X:
-                                <code>00010</code>
-                            </li>
-                            <li>Working backwards through RCIRC-2:
-                                <ul>
-                                    <li>Original: <code>?????</code></li>
-                                    <li>After RCIRC-2: <code>00010</code></li>
-                                    <li>Therefore X must be: <code>01000</code></li>
-                                </ul>
-                            </li>
-                            <li>Verify:
-                                <ul>
-                                    <li>RCIRC-2 01000 = 00010</li>
-                                    <li>01101 XOR 00010 = 01111 ✓</li>
-                                </ul>
-                            </li>
-                        </ol>
-                        <p class="final-answer">Therefore, X = 01000</p>
-                    </div>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem4-answer">Your answer</label>
+                    <input type="text" id="problem4-answer" class="answer-input" placeholder="Enter X (5 binary digits)" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>Given equation: <code>01101 XOR (RCIRC-2 X) = 01111</code></li>
+                        <li>For any XOR operation to equal 1, at exactly one operand must be 1:
+                            <div class="truth-comparison">
+                                <code>01101 (first operand)</code>
+                                <code>01111 (result)</code>
+                            </div>
+                            <p>To put a 1 in the result, the answer bit must be opposite of the first operand; to put a 0 in the result, the answer bit must be the same as the first operand.</p>
+                        </li>
+                        <li>Required bits in RCIRC-2 X: <code>00010</code></li>
+                        <li>Working backwards through RCIRC-2:
+                            <ul>
+                                <li>Original: <code>?????</code></li>
+                                <li>After RCIRC-2: <code>00010</code></li>
+                                <li>Therefore X must be: <code>01000</code></li>
+                            </ul>
+                        </li>
+                        <li>Verify:
+                            <ul>
+                                <li>RCIRC-2 01000 = 00010</li>
+                                <li>01101 XOR 00010 = 01111, which matches the given result</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <p class="final-answer">Therefore, X = 01000</p>
                 </div>
             </div>
 
-            <div class="practice-problem">
-                <h3>Problem 5 (Senior Level)</h3>
+            <div class="practice-problem" data-answers="11111">
+                <h3>Problem 5 <span class="level">Senior</span></h3>
                 <p>Evaluate the following expression:</p>
                 <div class="problem-expression">
                     <code>(NOT 10101 OR LCIRC-2 01100 OR LCIRC-1 00111 AND RSHIFT-2 10010)</code>
                 </div>
-
-                <div class="problem-solution">
-                    <div class="answer-input">
-                        <input type="text" id="problem5-answer" placeholder="Enter your answer (binary)">
-                        <button onclick="checkBitStringAnswer(5)" class="submit-btn">Submit</button>
-                    </div>
-                    
-                    <div id="problem5-feedback" class="feedback-area"></div>
-                    
-                    <div id="problem5-explanation" class="explanation" style="display: none;">
-                        <h4>Explanation:</h4>
-                        <ol>
-                            <li>NOT 10101:
-                                <code>01010</code>
-                            </li>
-                            <li>LCIRC-2 01100:
-                                <code>10001</code>
-                            </li>
-                            <li>RSHIFT-2 10010:
-                                <code>00100</code>
-                            </li>
-                            <li>LCIRC-1 00111:
-                                <code>01110</code>
-                            </li>
-                            <li>01110 AND 00100:
-                                <code>01110 AND 00100 = 00100</code>
-                            </li>
-                            <li>Combining with OR operations:
-                                <div class="binary-operation">
-                                    <code>01010  (NOT result)</code>
-                                    <code>10001  (LCIRC-2 result)</code>
-                                    <code>00100  (AND result)</code>
-                                    <div class="operation-line"></div>
-                                    <code>11111  (final OR result)</code>
-                                </div>
-                            </li>
-                        </ol>
-                        <p class="final-answer">Therefore, the final result is 11111</p>
-                    </div>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem5-answer">Your answer</label>
+                    <input type="text" id="problem5-answer" class="answer-input" placeholder="Enter your answer (binary)" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <ol>
+                        <li>NOT 10101: <code>01010</code></li>
+                        <li>LCIRC-2 01100: <code>10001</code></li>
+                        <li>RSHIFT-2 10010: <code>00100</code></li>
+                        <li>LCIRC-1 00111: <code>01110</code></li>
+                        <li>01110 AND 00100: <code>01110 AND 00100 = 00100</code></li>
+                        <li>Combining with OR operations:
+                            <div class="binary-operation">
+                                <code>01010  (NOT result)</code>
+                                <code>10001  (LCIRC-2 result)</code>
+                                <code>00100  (AND result)</code>
+                                <div class="operation-line"></div>
+                                <code>11111  (final OR result)</code>
+                            </div>
+                        </li>
+                    </ol>
+                    <p class="final-answer">Therefore, the final result is 11111</p>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer>
-        <p>Based on ACSL Category Descriptions</p>
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Based on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
     </footer>
     <script src="lessons.js"></script>
 </body>
-</html> 
+</html>

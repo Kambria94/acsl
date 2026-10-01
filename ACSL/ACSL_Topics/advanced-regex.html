@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Regular Expressions – ACSL Topics – AS Knowledge</title>
+    <link rel="stylesheet" href="../../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html" aria-current="page">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container container-narrow page">
+        <div class="page-header">
+            <a href="../acsl.html" class="back-link">&larr; Back to Topics</a>
+            <h1>Advanced Regular Expressions</h1>
+            <p class="lead">Character classes, quantifiers, anchors, groups and backreferences. Invitational competition topic.</p>
+        </div>
+
+        <section class="content-section" id="overview">
+            <h2>Overview</h2>
+            <p>The <a href="fsa-regex.html">FSAs and Regular Expressions</a> topic introduces the core operators (concatenation, union, Kleene star) and the everyday regex additions <code>?</code>, <code>+</code>, <code>.</code>, <code>[ ]</code> and <code>( )</code>. This invitational topic adds the rest of the toolkit used by real programming languages: shorthand character classes such as <code>\d</code> and <code>\w</code>, exact repetition counts with <code>{ }</code>, anchors that pin a match to the start or end of a line, word boundaries, and backreferences that force part of a string to repeat.</p>
+            <p>Questions give you a pattern and a list of candidate strings and ask which ones match, or describe a set of strings and ask you to write a pattern. The skill is reading a dense pattern piece by piece and testing each candidate methodically.</p>
+            <div class="key-points">
+                <h3>Key Concepts:</h3>
+                <ul>
+                    <li>A backslash turns a letter into a <strong>character class</strong> (<code>\d</code>, <code>\w</code>, <code>\s</code>) or turns a special symbol into a literal (<code>\.</code>, <code>\*</code>).</li>
+                    <li>Uppercase versions negate: <code>\D</code> is anything that is <em>not</em> a digit.</li>
+                    <li><code>^</code> and <code>$</code> anchor the pattern to the beginning and end of the string; without them a pattern may match anywhere inside a longer string.</li>
+                    <li>Parentheses <strong>capture</strong> what they match, and <code>\1</code>, <code>\2</code>, ... refer back to those captures.</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="key-concepts">
+            <h2>Key Concepts</h2>
+
+            <h3>Useful Patterns</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Pattern</th><th>Meaning</th><th>Example regex</th><th>Matches</th><th>Does not match</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>\d</code></td><td>Any digit; same as <code>[0-9]</code></td><td><code>\d\d\d</code></td><td>123</td><td>1-3</td></tr>
+                        <tr><td><code>\D</code></td><td>Any character that is not a digit</td><td><code>\d\D\d</code></td><td>1-3</td><td>123</td></tr>
+                        <tr><td><code>\w</code></td><td>Word character: letter, digit or underscore; same as <code>[a-zA-Z0-9_]</code></td><td><code>\w\w\w</code></td><td>a_A</td><td>a-A</td></tr>
+                        <tr><td><code>\W</code></td><td>Any character that is not a word character</td><td><code>\W\W\W</code></td><td>+-$</td><td>+_@</td></tr>
+                        <tr><td><code>\s</code></td><td>Whitespace: space, tab or line break</td><td><code>\d\s\w</code></td><td>1 a</td><td>1ab</td></tr>
+                        <tr><td><code>\S</code></td><td>Any character that is not whitespace</td><td><code>\w\w\w\w\S\d</code></td><td>Test#1</td><td>test 1</td></tr>
+                        <tr><td><code>\b</code></td><td>Word boundary: the position between a word character and a non-word character (or the start/end of the string)</td><td><code>\bis\b</code></td><td>is; (the word "is")</td><td>This island</td></tr>
+                        <tr><td><code>{n}</code>, <code>{min,}</code>, <code>{min,max}</code></td><td>Repeat the preceding element exactly n times, at least min times, or between min and max times</td><td><code>abc{2}</code></td><td>abcc</td><td>abc</td></tr>
+                        <tr><td><code>.*</code></td><td>Zero or more of any character</td><td><code>.*</code></td><td>abbb, the empty string</td><td></td></tr>
+                        <tr><td><code>.+</code></td><td>One or more of any character</td><td><code>.+</code></td><td>a, abbcc</td><td>the empty string</td></tr>
+                        <tr><td><code>^</code></td><td>Anchor: the start of the string</td><td><code>^The\s\w+</code></td><td>The contest</td><td>One contest</td></tr>
+                        <tr><td><code>$</code></td><td>Anchor: the end of the string</td><td><code>\d{4}\sACSL$</code></td><td>2020 ACSL</td><td>2020 STAR</td></tr>
+                        <tr><td><code>\</code></td><td>Escape: match a special character literally</td><td><code>\w\w\w\.</code></td><td>cat.</td><td>lion</td></tr>
+                        <tr><td><code>( )</code></td><td>Group and capture</td><td><code>^(file.+)\.docx$</code></td><td>file_graphs.docx</td><td>data.docx</td></tr>
+                        <tr><td><code>\1</code>, <code>\2</code></td><td>Backreference: repeat exactly what group 1 (or 2) captured</td><td><code>r(\w)g\1x</code></td><td>regex (group 1 is e)</td><td>regxx</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Reading a Pattern</h3>
+            <div class="key-points">
+                <ol>
+                    <li>Split the pattern into tokens: each character class, literal, group and quantifier.</li>
+                    <li>Note which quantifier belongs to which token. <code>\d{3}</code> is three digits; <code>(ab){2}</code> is "abab".</li>
+                    <li>Check for anchors. With <code>^...$</code> the whole string must be consumed; otherwise the pattern only has to appear somewhere in the string.</li>
+                    <li>For backreferences, write down what each group captured for the specific string, then check that the later text is identical (including case).</li>
+                    <li>Test every candidate string against every token, in order. Reject as soon as one token cannot be satisfied.</li>
+                </ol>
+            </div>
+
+            <h3>Backreferences in Detail</h3>
+            <p>Groups are numbered by the position of their opening parenthesis, left to right. In <code>(\d\d)\+(\d\d)=\2\+\1</code>, group 1 is the first two digits and group 2 the second two. The string 20+21=21+20 matches because after the equals sign the text is group 2 then group 1. The string 20+21=20+21 does not, because the order is wrong. Backreferences must match the <em>captured text</em>, not just the same kind of text: if group 1 captured "e", <code>\1</code> matches only "e".</p>
+        </section>
+
+        <section class="content-section" id="examples">
+            <h2>Examples</h2>
+
+            <div class="example-card">
+                <div class="title">Example 1: Matching a domain name</div>
+                <p>Which of these strings match <code>^w{3}\.([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])+\.)+[a-z0-9][-a-z0-9]{0,61}[a-z0-9]</code>?</p>
+                <ol>
+                    <li>www.google.com</li>
+                    <li>www.-petsmart.com</li>
+                    <li>www.edu-.ro</li>
+                    <li>www.google.co.in</li>
+                    <li>www.examples.c.net</li>
+                    <li>www.edu.training.computer-science.org</li>
+                    <li>www.everglades_holidaypark.com</li>
+                </ol>
+                <div class="step-by-step">
+                    <p>Take the pattern apart:</p>
+                    <ul>
+                        <li><code>^w{3}\.</code>: the string starts with exactly "www" and a literal dot.</li>
+                        <li><code>([a-z0-9]([-a-z0-9]{0,61}[a-z0-9])+\.)+</code>: one or more domain labels, each followed by a dot. A label starts with a lowercase letter or digit, may contain hyphens in the middle, ends with a letter or digit, and is at least 2 characters long (the inner group must appear at least once and itself ends with a letter or digit).</li>
+                        <li><code>[a-z0-9][-a-z0-9]{0,61}[a-z0-9]</code>: the final top-level label, with the same rules and no trailing dot.</li>
+                    </ul>
+                    <p>String 2 has a label starting with a hyphen, string 3 has a label ending with a hyphen, string 5 has the one-character label "c", and string 7 contains an underscore, which is not allowed.</p>
+                    <p class="result">Matches: 1, 4 and 6</p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 2: Writing a pattern from a description</div>
+                <p>Describe strings that: contain only lowercase letters and the character "."; start and end with the same letter; and consist of one to three vowels, then zero or more dots, then at least one consonant, between those matching end letters.</p>
+                <div class="step-by-step">
+                    <ol>
+                        <li><code>([a-z])</code> captures the first letter as group 1.</li>
+                        <li><code>[aeiou]{1,3}</code> matches one to three vowels.</li>
+                        <li><code>\.*</code> matches zero or more literal dots (the backslash is needed because a bare dot means "any character").</li>
+                        <li><code>[b-df-hj-np-tv-z]+</code> matches one or more consonants. The ranges skip over each vowel.</li>
+                        <li><code>\1</code> requires the string to end with the same letter that group 1 captured.</li>
+                    </ol>
+                    <p class="result">Pattern: <code>([a-z])[aeiou]{1,3}\.*[b-df-hj-np-tv-z]+\1</code></p>
+                </div>
+            </div>
+
+            <div class="example-card">
+                <div class="title">Example 3: Word boundaries</div>
+                <p>Which strings contain a match for <code>\bcat\b</code>? "the cat sat" does, because "cat" is surrounded by spaces. "cat's" does, because the apostrophe is a non-word character, so there is a boundary after the t. "concatenate" and "bobcat" do not, because the letters on either side of "cat" are word characters, so there is no boundary.</p>
+            </div>
+        </section>
+
+        <section class="content-section" id="practice">
+            <h2>Practice Problems</h2>
+            <p class="note">Enter the numbers of the matching strings separated by commas, for example <code>1,3,5</code>. Every pattern below is anchored with <code>^</code> and <code>$</code> unless stated otherwise, so the whole string must match.</p>
+
+            <div class="practice-problem" data-answers="1,4|14">
+                <h3>Problem 1 <span class="level">Junior</span></h3>
+                <p>Which of the following strings match the pattern <code>^\d{3}-\d{4}$</code>?</p>
+                <ol>
+                    <li>555-1234</li>
+                    <li>5551234</li>
+                    <li>55-12345</li>
+                    <li>123-4567</li>
+                    <li>123-45678</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem1-answer">Your answer</label>
+                    <input type="text" id="problem1-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>The pattern is exactly three digits, a hyphen, exactly four digits, and nothing else.</p>
+                    <ol>
+                        <li>555-1234: 3 digits, hyphen, 4 digits. Matches.</li>
+                        <li>5551234: no hyphen. No match.</li>
+                        <li>55-12345: only 2 digits before the hyphen and 5 after. No match.</li>
+                        <li>123-4567: 3 digits, hyphen, 4 digits. Matches.</li>
+                        <li>123-45678: 5 digits after the hyphen; the <code>$</code> anchor rejects the extra digit. No match.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 4</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,3,4|134">
+                <h3>Problem 2 <span class="level">Junior</span></h3>
+                <p>Which of the following strings match the pattern <code>^[A-Z]\w+\s\d+$</code>?</p>
+                <ol>
+                    <li>Room 101</li>
+                    <li>room 7</li>
+                    <li>A1 22</li>
+                    <li>Hall_B 3</li>
+                    <li>Room101</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem2-answer">Your answer</label>
+                    <input type="text" id="problem2-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>One uppercase letter, then one or more word characters, then one whitespace character, then one or more digits.</p>
+                    <ol>
+                        <li>Room 101: R, "oom", space, 101. Matches.</li>
+                        <li>room 7: starts with a lowercase letter. No match.</li>
+                        <li>A1 22: A, "1" (a digit is a word character), space, 22. Matches.</li>
+                        <li>Hall_B 3: H, "all_B" (underscore is a word character), space, 3. Matches.</li>
+                        <li>Room101: there is no whitespace, so <code>\s</code> cannot be satisfied. No match.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 3, 4</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,4,5|145">
+                <h3>Problem 3 <span class="level">Intermediate</span></h3>
+                <p>Which of the following strings match the pattern <code>^(\w+)\s\1$</code>?</p>
+                <ol>
+                    <li>ha ha</li>
+                    <li>ha haha</li>
+                    <li>go Go</li>
+                    <li>22 22</li>
+                    <li>hi_hi hi_hi</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem3-answer">Your answer</label>
+                    <input type="text" id="problem3-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Group 1 captures a word; after a single space the string must end with exactly that same word.</p>
+                    <ol>
+                        <li>ha ha: group 1 = "ha", followed by "ha". Matches.</li>
+                        <li>ha haha: group 1 = "ha", but the rest is "haha", not "ha". No match.</li>
+                        <li>go Go: group 1 = "go", but "Go" differs in case. Backreferences are exact. No match.</li>
+                        <li>22 22: digits are word characters; group 1 = "22", repeated. Matches.</li>
+                        <li>hi_hi hi_hi: underscores are word characters; group 1 = "hi_hi", repeated. Matches.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 4, 5</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,3,4|134">
+                <h3>Problem 4 <span class="level">Intermediate</span></h3>
+                <p>The pattern <code>\bcat\b</code> is <strong>not</strong> anchored. Which of the following strings contain a match for it?</p>
+                <ol>
+                    <li>cat</li>
+                    <li>concatenate</li>
+                    <li>the cat sat</li>
+                    <li>cat's</li>
+                    <li>bobcat</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem4-answer">Your answer</label>
+                    <input type="text" id="problem4-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p><code>\b</code> matches the position between a word character and a non-word character (or the edge of the string). The pattern therefore matches "cat" only as a whole word.</p>
+                    <ol>
+                        <li>cat: boundaries at both ends of the string. Matches.</li>
+                        <li>concatenate: "cat" is preceded by n and followed by e, both word characters, so there is no boundary on either side. No match.</li>
+                        <li>the cat sat: "cat" is surrounded by spaces. Matches.</li>
+                        <li>cat's: boundary at the start, and the apostrophe after t is a non-word character, so there is a boundary there too. Matches.</li>
+                        <li>bobcat: preceded by b, a word character, so no boundary before c. No match.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 3, 4</p>
+                </div>
+            </div>
+
+            <div class="practice-problem" data-answers="1,2,4|124">
+                <h3>Problem 5 <span class="level">Senior</span></h3>
+                <p>Which of the following strings match the pattern <code>^(\w)(\w)\w*\2\1$</code>?</p>
+                <ol>
+                    <li>abccba</li>
+                    <li>abba</li>
+                    <li>abab</li>
+                    <li>xy12yx</li>
+                    <li>aaa</li>
+                    <li>a-bb-a</li>
+                </ol>
+                <div class="answer-row">
+                    <label class="visually-hidden" for="problem5-answer">Your answer</label>
+                    <input type="text" id="problem5-answer" class="answer-input" placeholder="e.g. 1,2" autocomplete="off">
+                    <button type="button" class="btn" onclick="checkAnswer(this)">Check Answer</button>
+                    <button type="button" class="btn btn-secondary" onclick="showSolution(this)">Show Solution</button>
+                    <button type="button" class="btn btn-ghost" onclick="tryAgain(this)">Try Again</button>
+                </div>
+                <p class="feedback" aria-live="polite"></p>
+                <div class="solution" hidden>
+                    <h4>Solution</h4>
+                    <p>Group 1 is the first character and group 2 the second. After any number of word characters, the string must end with group 2 followed by group 1. In other words: the last two characters are the first two reversed, and everything is a word character. The string must be at least 4 characters long.</p>
+                    <ol>
+                        <li>abccba: groups a, b; middle "cc"; ends "ba". Matches.</li>
+                        <li>abba: groups a, b; middle is empty (<code>\w*</code> allows zero); ends "ba". Matches.</li>
+                        <li>abab: groups a, b; would need to end "ba" but ends "ab". No match.</li>
+                        <li>xy12yx: groups x, y; middle "12"; ends "yx". Matches.</li>
+                        <li>aaa: groups a, a; the ending "aa" needs two more characters but only one remains. No match.</li>
+                        <li>a-bb-a: the hyphen is not a word character, so <code>(\w)</code> fails at position 2. No match.</li>
+                    </ol>
+                    <p class="final-answer">Matches: 1, 2, 4</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Based on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../../index.html">Home</a>
+                <a href="../acsl.html">ACSL Topics</a>
+                <a href="../../practice-tests/index.html">Practice Tests</a>
+                <a href="../../contact/index.html">Contact</a>
+                <a href="../../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+    <script src="lessons.js"></script>
+</body>
+</html>
