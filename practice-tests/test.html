@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practice Test – AS Knowledge</title>
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+    <header class="site-header">
+        <div class="container site-header-inner">
+            <a href="../index.html" class="site-brand">AS Knowledge</a>
+            <nav class="site-nav" aria-label="Main">
+                <a href="../index.html">Home</a>
+                <a href="../ACSL/acsl.html">ACSL Topics</a>
+                <a href="index.html" aria-current="page">Practice Tests</a>
+                <a href="../contact/index.html">Contact</a>
+                <a href="../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container container-narrow page" data-page="test">
+        <div class="page-header">
+            <a href="index.html" class="back-link">&larr; All practice tests</a>
+            <h1 id="test-title">Practice Test</h1>
+            <div class="test-meta" id="test-meta"></div>
+        </div>
+
+        <div id="test-message" class="message-box" hidden></div>
+
+        <div class="test-toolbar" id="test-toolbar" hidden>
+            <div class="timer" aria-live="off">
+                <span class="muted">Time</span>
+                <span id="timer-display">00:00</span>
+                <button type="button" class="btn btn-ghost" id="timer-toggle">Pause</button>
+            </div>
+            <p class="muted" id="test-instructions">Answer all six problems, then submit to see your score.</p>
+        </div>
+
+        <form id="test-form" novalidate hidden>
+            <div id="problems"></div>
+            <div class="btn-row">
+                <button type="submit" class="btn" id="submit-btn">Submit Test</button>
+                <button type="button" class="btn btn-ghost" id="reset-btn">Reset</button>
+            </div>
+        </form>
+
+        <div id="score-panel" class="score-panel" hidden aria-live="polite"></div>
+
+        <nav class="test-nav" id="test-nav" aria-label="Test navigation" hidden></nav>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container site-footer-inner">
+            <p>Practice tests are original material modelled on the ACSL Category Descriptions.</p>
+            <nav aria-label="Footer">
+                <a href="../index.html">Home</a>
+                <a href="../ACSL/acsl.html">ACSL Topics</a>
+                <a href="index.html">Practice Tests</a>
+                <a href="../contact/index.html">Contact</a>
+                <a href="../privacy/index.html">Privacy</a>
+            </nav>
+        </div>
+    </footer>
+
+    <script src="tests-data.js"></script>
+    <script src="practice.js"></script>
+</body>
+</html>
